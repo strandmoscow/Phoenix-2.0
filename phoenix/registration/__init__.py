@@ -4,8 +4,9 @@ import psycopg2
 from string import Template
 
 registration = Blueprint('registration', __name__, template_folder='templates')
+
 try:
-    conn = psycopg2.connect("dbname='Phoenix' user='net_user' host='80.211.80.219' password='net_user_password'")
+    conn = psycopg2.connect("dbname='Phoenix' user='postgres' host='70.34.250.137' password='p_admin_p'")
     cur = conn.cursor()
     cur.execute("ROLLBACK")
     conn.commit()
