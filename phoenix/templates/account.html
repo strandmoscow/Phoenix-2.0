@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block title %}Account{% endblock %}
+{% block body %}
+
+
+<main class="d-flex flex-nowrap">
+    <div class="sidebar" id="side_nav">
+         <div class="header-box px-2 pt-3 pb-4">
+<!--             <h1 class="fs-4"><span class="bg-white text-dark rounded shadow px-2 me-2">Px</span><span class="text-white">Феникс</span></h1>-->
+             <a class="navbar-brand fs-4 px-3 text-white" href="/">Феникс</a>
+
+             <button class="btn d-md-none d-block close-btn px-1 py-0 text-white"><i class="fal fa-stream"></i></button>
+         </div>
+        <ul class="list-unstyled px-2">
+        <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">Занятия</a></li>
+        <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">Посещаемость</a></li>
+        <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">Тренер</a></li>
+        <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">Клубы</a></li>
+        </ul>
+        <hr class="h-color mx-3">
+        <ul class="list-unstyled px-2">
+            <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">Настройки</a></li>
+        </ul>
+    </div>
+    <div class="content">
+    <nav class="navbar navbar-expand-lg" id="nav_account">
+        <div class="container-fluid">
+<!--            <a class="navbar-brand" href="/">Феникс</a>-->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Переключатель навигации">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link active" aria-current="page" href="/account">Личный кабинет</a>-->
+<!--                    </li>-->
+    <!--                <li class="nav-item">-->
+    <!--                    <a class="nav-link disabled" href="#">Рекомендуемые</a>-->
+    <!--                </li>-->
+    <!--                <li class="nav-item">-->
+    <!--                    <a class="nav-link disabled" href="#">Цена</a>-->
+    <!--                </li>-->
+    <!--                <li class="nav-item">-->
+    <!--                    <a class="nav-link disabled">Отключенная</a>-->
+    <!--                </li>-->
+                </ul>
+            </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a class="btn btn-outline-secondary text-white" href="#" type="button">Выйти</a>
+            </div>
+        </div>
+
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+        <div class="col-2">
+            <div>
+                <img class="img-fluid" src="{{ img }}">
+
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="py-4" id="fio">
+                <p style="color:darkblue; font-size: 150%;">Рябухина</p>
+                <p style="color:darkblue; font-size: 150%;">Анастасия</p>
+                <p style="color:darkblue; font-size: 150%;">Константиновна</p>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+
+</main>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script>
+    $(".sidebar ul li").on('click', function (){
+        $(".sidebar ul li.active").removeClass('active');
+        $(this).addClass('active');
+    })
+</script>
+
+
+{% endblock %}

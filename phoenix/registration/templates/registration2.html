@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Регистрация{% endblock %}
+{% block body %}
+
+
+<div class="container-fluid position-absolute top-50 start-50 translate-middle">
+    <div class="row">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-6">
+            <form method="post">
+                <h1>Регистрация</h1>
+                <h6>Осталось еще немного</h6>
+                <div class="mb-2">
+                    <label for="inputPassword" class="form-label">Придумайте пароль</label>
+                    <input type="password" name="inputPassword" class="form-control" placeholder="" id="inputPassword">
+                </div>
+                <div class="mb-2">
+                    <label for="confirmPassword" class="form-label">Подтвердите пароль</label>
+                    <input type="password" name="confirmPassword" class="form-control" placeholder=""
+                           id="confirmPassword">
+                </div>
+                {% if password_dont_match %}
+                <h6 style="color:red;">
+                    Пароли не совпадают. Попробуйте еще раз
+                </h6>
+                {% endif %}
+                <div>
+                    <a href="{{url_for('registration.regi1')}}">Вернуться к заполнению данных регистрации</a>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">Отправить</button>
+            </form>
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+</div>
+
+{% endblock %}
