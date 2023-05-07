@@ -31,14 +31,16 @@ def create_app():
     with app.app_context():
 
         # include the routes
-        # from eeazycrm import routes
+        # from phoenix import routes
         from phoenix.main import main
         from phoenix.registration.routes import registration
         from phoenix.auth import authentication
+        from phoenix.account.routes import account
 
         # register routes with blueprint
         app.register_blueprint(main)
         app.register_blueprint(registration)
         app.register_blueprint(authentication)
+        app.register_blueprint(account)
 
         return app
