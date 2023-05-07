@@ -1,6 +1,8 @@
 from flask import Blueprint, redirect, render_template, session, request
 from .forms import RegistrationForm1, RegistrationForm2
+from .models import account
 from werkzeug.security import generate_password_hash, check_password_hash
+from .. import db
 
 registration = Blueprint('registration', __name__, template_folder='templates')
 
@@ -35,5 +37,18 @@ def regi2():
 @registration.route("/regi3", methods=['GET', 'POST'])
 def regi3():
     print(session)
+    # try:
+    a = account(
+        account_name=session['regi']['fname'],
+        account_surname=session['regi']['surname'],
+        account_email=session['regi']['email'],
+        account_birthday=session['regi']['DOB'],
+        account_phone=session['regi']['phone']
+    )
+    db.session.add(a)
+    db.session.commit()
+    # except:
+    #     db.session.rollback()
+    #     print("Ошибка добавления в БД")
 
     return render_template('registration/registration3.html', password_dont_match=False)
