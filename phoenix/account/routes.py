@@ -11,8 +11,8 @@ def base_acc():
     return render_template('account/account.html', img=profile_icon, eye=eye_icon)
 
 
-# @account.route("/acc_edit", methods=['GET', 'POST'])
-# def acc_edit():
-#     profile_icon = './static/abstract-user-flat-4.svg'
-#     eye_icon = './static/eye.svg'
-#     return render_template('account_edit.html', img=profile_icon, eye=eye_icon)
+@account.route("/acc_edit", methods=['GET', 'POST'])
+def acc_edit():
+    profile_icon = './static/svg/abstract-user-flat-4.svg'
+    eye_icon = './static/svg/eye.svg'
+    return render_template('account/account_edit.html', img=profile_icon, eye=eye_icon)

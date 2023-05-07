@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% block title %}Аккаунт{% endblock %}
+{% block body %}
+
+<main class="d-flex flex-nowrap">
+    <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-info border-start-0 rounded-end fixed-start bg-light" id="side_nav">
+<!--         <div class="header-box px-2 pt-3 pb-4">-->
+<!--         </div>-->
+        <ul class="list-unstyled px-2">
+            <li class=""><a href="{{url_for('account.base_acc')}}" class="nav-link text-black">Аккаунт</a></li>
+            <li class=""><a href="#" class="nav-link text-black">Ученики</a></li>
+            <li class=""><a href="#" class="nav-link text-black">Занятия/Расписание</a></li>
+            <li class=""><a href="#" class="nav-link text-black">Посещаемость</a></li>
+            <li class=""><a href="#" class="nav-link text-black">Тренер</a></li>
+            <li class=""><a href="#" class="nav-link text-black">Клубы</a></li>
+            <li class=""><a href="#" class="nav-link text-black">Залы</a></li>
+            <li class=""><a href="#" class="nav-link text-black">Группы</a></li>
+        </ul>
+        <ul class="list-unstyled px-2">
+            <li class=""><a href="#" class="nav-link text-black">Настройки</a></li>
+        </ul>
+    </aside>
+    <div class="content">
+    <div class="container-fluid flex-nowrap">
+        <div class="row d-flex flex-row flex-nowrap" id="account_first_row">
+        <div class="col-2 d-flex flex-column" id="account_first_row_first_col">
+            <div class="container-fluid px-0 py-3">
+                <img class="img-fluid" width="150" height="150" src="{{ img }}" alt="">
+            </div>
+        </div>
+        <div class="col-5 d-flex flex-column">
+            <div class="container-fluid py-4" id="fio">
+                <label>
+                    <input class="validation-input" type="text" placeholder=Фамилия></input>
+                </label>
+                <label>
+                    <input class="validation-input" type="text" placeholder=Имя></input>
+                </label>
+                <label>
+                    <input class="validation-input" type="text" placeholder=Отчество></input>
+                </label>
+            </div>
+        </div>
+        <div class="col-5 d-flex flex-column" id="account_first_row_final_column">
+            <div class="container-fluid">
+                <div class="d-flex justify-content-end">
+                <p class="py-4" style="color:black;">Тип аккаунта: <span class="text-dark rounded shadow px-2 me-2">Ученик</span></p>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="row d-flex flex-row">
+            <div class="col-7 d-flex flex-column">
+                <p class="py-4 px-4" style="color:black;">Дата рождения:
+                    <label>
+                        <input class="validation-input" type="text" placeholder=dd.mm.yyyy></input>
+                    </label>
+                </p>
+            </div>
+        </div>
+        <div class="row d-flex flex-row">
+            <div class="col-7 d-flex flex-column" id="contact_info">
+                <p class="py-4 px-4" style="color:black;">Мобильный телефон:
+                    <label>
+                        <input class="validation-input" type="text" placeholder=+79998887766></input>
+                    </label>
+                </p>
+                <p class="py-0 px-4" style="color:black;">Email:
+                    <label>
+                        <input class="validation-input" type="text" placeholder=email@email.com></input>
+                    </label>
+                </p>
+            </div>
+        </div>
+        <div class="row d-flex flex-row">
+            <div class="col-7 d-flex flex-column" id="passport_info">
+                <p class="py-4 px-4" style="color:black;">Паспорт</p>
+                <p class="py-0 px-4" style="color:black;">Серия:
+                    <label>
+                        <input class="validation-input" type="text" placeholder=1234></input>
+                    </label>
+                </p>
+                <p class="py-0 px-4" style="color:black;">Номер:
+                    <label>
+                        <input class="validation-input" type="text" placeholder=123456></input>
+                    </label>
+                </p>
+                <p class="py-0 px-4" style="color:black;">Номер подразделения:
+                    <label>
+                        <input class="validation-input" type="text" placeholder=123></input>
+                    </label>
+                </p>
+                <p class="py-0 px-4" style="color:black;">Подразделение:
+                    <label>
+                        <input class="validation-input" type="text" placeholder=Подразделение></input>
+                    </label>
+                </p>
+            </div>
+        </div>
+    </div>
+    </div>
+
+</main>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script>
+    $(".sidenav ul li").on('click', function (){
+        $(".sidenav ul li.active").removeClass('active');
+        $(this).addClass('active');
+    })
+</script>
+
+
+
+{% endblock %}
