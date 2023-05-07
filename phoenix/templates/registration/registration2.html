@@ -11,20 +11,19 @@
             <form method="post">
                 <h1>Регистрация</h1>
                 <h6>Осталось еще немного</h6>
-                <div class="mb-2">
-                    <label for="inputPassword" class="form-label">Придумайте пароль</label>
-                    <input type="password" name="inputPassword" class="form-control" placeholder="" id="inputPassword">
-                </div>
-                <div class="mb-2">
-                    <label for="confirmPassword" class="form-label">Подтвердите пароль</label>
-                    <input type="password" name="confirmPassword" class="form-control" placeholder=""
-                           id="confirmPassword">
-                </div>
-                {% if password_dont_match %}
-                <h6 style="color:red;">
-                    Пароли не совпадают. Попробуйте еще раз
-                </h6>
-                {% endif %}
+                {% for field in form if field.name not in ['csrf_token', 'submit'] %}
+                    <p>{{ field.label() }}
+                    {% if field.errors %}
+                        {{ field(class="invalid") }}
+                    <span class="invalid-feedback">
+                        {% for e in field.errors %}
+                        {{ e }}
+                        {% endfor %}
+                    </span>
+                    {% else %}
+                        {{ field(class="form-control") }}
+                    {% endif %}
+                {% endfor %}
                 <div>
                     <a href="{{url_for('registration.regi1')}}">Вернуться к заполнению данных регистрации</a>
                 </div>

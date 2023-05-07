@@ -34,11 +34,9 @@ def regi2():
 
 @registration.route("/regi3", methods=['GET', 'POST'])
 def regi3():
-    a = session['regi']
+    a = dict()
+    a['regi'] = session['regi']
     a['hash'] = session['hash']
-    with open('scenario_registration/sql/regi.sql', 'r') as f:
-        src = Template(f.read())
-        result = src.substitute(a)
-        print(result)
-        cur.execute(result)
+    print(a)
+
     return render_template('registration/registration3.html', password_dont_match=False)
