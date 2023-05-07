@@ -33,7 +33,7 @@ def create_app():
         # include the routes
         # from eeazycrm import routes
         from phoenix.main import main
-        from phoenix.registration import registration
+        from phoenix.registration.routes import registration
         from phoenix.auth import authentication
 
         # register routes with blueprint
