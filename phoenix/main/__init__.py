@@ -1,5 +1,4 @@
 from flask import render_template, flash, url_for, redirect, Blueprint, current_app
-from phoenix import conn
 # from flask_login import login_required
 from configparser import ConfigParser
 

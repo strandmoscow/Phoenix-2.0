@@ -1,40 +1,37 @@
 from flask import Flask, render_template
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
-import psycopg2
+from flask_sqlalchemy import SQLAlchemy
 import os
-from .config_vars import DB_HOST, DB_USER, DB_PASS, DB_NAME
+from .config_vars import *
+
+
+# app initialisation
+app = Flask(__name__, instance_relative_config=True)
+app.config.from_mapping(
+        SECRET_KEY=SECRET_KEY
+    )
 
 # database handle
-try:
-    conn = psycopg2.connect(f"dbname='{DB_NAME}' user='{DB_USER}' host='{DB_HOST}' password='{DB_PASS}'")
-    cur = conn.cursor()
-except:
-    print("I am unable to connect to the database")
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}'
+db = SQLAlchemy(app)
 
 # encryptor handle
 bcrypt = Bcrypt()
 
 # manage user login
-login_manager = LoginManager()
+login_manager = LoginManager(app)
 
 UPLOAD_FOLDER = os.path.join('static')
 
 
 def create_app():
-    app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(
-        SECRET_KEY='dev',
-        UPLOAD_FOLDER=UPLOAD_FOLDER
-    )
-
     with app.app_context():
-
         # include the routes
         # from eeazycrm import routes
         from phoenix.main import main
         from phoenix.registration.routes import registration
-        from phoenix.auth import authentication
+        from phoenix.auth.routes import authentication
 
         # register routes with blueprint
         app.register_blueprint(main)
