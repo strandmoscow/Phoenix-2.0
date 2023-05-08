@@ -12,10 +12,4 @@ class group(db.Model):
         return f"group('{self.group_id}')"
 
 
-class trainer(db.Model):
-    trainer_id = db.Column(db.Integer, primary_key=True, unique=True)
-    federation_federation_id = db.Column(db.Integer)
-    account = db.relationship('account', backref='trainer')
 
-    def __repr__(self):
-        return f"trainer'{self.trainer_id}')"

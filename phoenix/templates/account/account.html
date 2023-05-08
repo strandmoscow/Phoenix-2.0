@@ -7,7 +7,7 @@
 <!--         <div class="header-box px-2 pt-3 pb-4">-->
 <!--         </div>-->
         <ul class="list-unstyled px-2">
-            <li class=""><a href="{{url_for('account.base_acc')}}" class="nav-link text-black">Аккаунт</a></li>
+            <li class=""><a href="{{url_for('account.accountfull', account_id=cu)}}" class="nav-link text-black">Аккаунт</a></li>
             <li class=""><a href="{{url_for('students.student')}}" class="nav-link text-black">Ученики</a></li>
             <li class=""><a href="#" class="nav-link text-black">Занятия/Расписание</a></li>
             <li class=""><a href="#" class="nav-link text-black">Посещаемость</a></li>
@@ -85,7 +85,62 @@
                 <p class="py-0 px-4" style="color:black;">Мобильный телефон: <span class="text-dark rounded shadow px-2 me-2">{{acc.account_phone}}</span></p>
                 <p class="py-0 px-4" style="color:black;">Email: <span class="text-dark rounded shadow px-2 me-2">{{acc.account_email}}</span></p>
             </div>
+
         </div>
+
+        {% if trainer %}
+        <div class="row d-flex flex-row">
+            <div class="col-7 d-flex flex-column">
+                <p class="py-0 px-4" style="color:black;">Номер федерации тренера: <span class="text-dark rounded shadow px-2 me-2">{{ trainer.federation_federation_id}}</span></p>
+            </div>
+        </div>
+        {% elif student %}
+         <div class="row d-flex flex-row">
+            <div class="col-7 d-flex flex-column">
+                <p class="py-0 px-4" style="color:black;">ОМС:
+                    <span class="text-dark rounded shadow px-2 me-2">
+                        {{ student.student_health_insurance}}
+                    </span>
+                </p>
+                <p class="py-0 px-4" style="color:black;">Свидетельство о рождении:
+                    <span class="text-dark rounded shadow px-2 me-2">
+                        {{ student.student_birth_certificate}}
+                    </span>
+                </p>
+                <p class="py-0 px-4" style="color:black;">СНИЛС:
+                    <span class="text-dark rounded shadow px-2 me-2">
+                        {{ student.student_snils}}
+                    </span>
+                </p>
+                <p class="py-0 px-4" style="color:black;">Номер группы:
+                    <span class="text-dark rounded shadow px-2 me-2">
+                        {{ student.student_group_id}}
+                    </span>
+                </p>
+            </div>
+        </div>
+        {% elif parent %}
+        <div class="row d-flex flex-row">
+            <div class="col-7 d-flex flex-column">
+                <p class="py-0 px-4" style="color:black;">Номер типа законного представителя:
+                    <span class="text-dark rounded shadow px-2 me-2">
+                        {{ parent.parent_type_parent_type_id}}
+                    </span>
+                </p>
+            </div>
+        </div>
+        {% elif manager %}
+        <div class="row d-flex flex-row">
+            <div class="col-7 d-flex flex-column">
+                <p class="py-0 px-4" style="color:black;">Номер:
+                    <span class="text-dark rounded shadow px-2 me-2">
+                        {{ manager.manager_id}}
+                    </span>
+                </p>
+            </div>
+        </div>
+        {% endif %}
+
         <div class="row d-flex flex-row">
             <div class="col-7 d-flex flex-column" id="passport_info">
                 <p class="py-4 px-4" style="color:black;">Паспорт</p>
