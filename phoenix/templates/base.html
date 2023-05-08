@@ -15,31 +15,30 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">Феникс</a>
+        <a href="/">
+            <img class="navbar-brand" height="75px" src="https://yt3.googleusercontent.com/ytc/AL5GRJU-CaLfToqGMMbtThv-eHztrGPo0pE7pxJgG9Q9=s900-c-k-c0x00ffffff-no-rj">
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Переключатель навигации">
             <span class="navbar-toggler-icon"></span>
         </button>
+        {% if cu %}
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{url_for('account.base_acc')}}">Личный кабинет</a>
                 </li>
-                <!--                <li class="nav-item">-->
-                <!--                    <a class="nav-link disabled" href="#">Рекомендуемые</a>-->
-                <!--                </li>-->
-                <!--                <li class="nav-item">-->
-                <!--                    <a class="nav-link disabled" href="#">Цена</a>-->
-                <!--                </li>-->
-                <!--                <li class="nav-item">-->
-                <!--                    <a class="nav-link disabled">Отключенная</a>-->
-                <!--                </li>-->
             </ul>
         </div>
+        {% endif %}
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            {% if cu %}
+            <a class="btn btn-outline-secondary" href="{{url_for('auth.exit')}}" type="button">Выйти</a>
+            {% else %}
             <a class="btn btn-outline-secondary" href="{{url_for('auth.auth')}}" type="button">Войти</a>
             <a class="btn btn-outline-primary" href="{{url_for('registration.regi1')}}"
                type="button">Зарегистрироваться</a>
+            {% endif %}
         </div>
     </div>
 </nav>

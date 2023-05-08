@@ -1,4 +1,5 @@
-from flask import Blueprint, redirect, render_template, session, request, flash
+from flask import Blueprint, redirect, render_template, session, request
+from flask_login import current_user, user_logged_in
 from werkzeug.security import generate_password_hash, check_password_hash
 from .forms import AccountForm1
 from ..registration.models import account as accountdata
@@ -14,7 +15,7 @@ def base_acc():
     profile_icon = './static/svg/abstract-user-flat-4.svg'
     eye_icon = './static/svg/eye.svg'
     acc = accountdata.query.filter_by(account_id=current_user.get_id()).first()
-    return render_template('account/account.html', img=profile_icon, eye=eye_icon, acc=acc)
+    return render_template('account/account.html', img=profile_icon, eye=eye_icon, acc=acc, cu=user_logged_in)
 
 
 @account.route("/acc_edit", methods=['GET', 'POST'])
@@ -37,5 +38,5 @@ def acc_edit():
 
     profile_icon = './static/svg/abstract-user-flat-4.svg'
     eye_icon = './static/svg/eye.svg'
-    return render_template('account/account_edit.html', img=profile_icon, eye=eye_icon, form=form)
-
+    return render_template('account/account_edit.html', img=profile_icon, eye=eye_icon, form=form,
+                           cu=user_logged_in)
