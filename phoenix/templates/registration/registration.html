@@ -13,7 +13,7 @@
                 <h1>Регистрация</h1>
                 <h6>Мы никогда никому не передадим ваши данные.</h6>
                 {% for field in form if field.name not in ['csrf_token', 'submit'] %}
-                    <p>{{ field.label() }}
+                    <p><h5>{{ field.label() }}</h5>
                     {% if field.errors %}
                         {{ field(class="invalid") }}
                     <span class="invalid-feedback">
@@ -24,8 +24,8 @@
                     {% else %}
                         {{ field(class="form-control") }}
                     {% endif %}
+                </p>
                 {% endfor %}
-                <br>
                 <button type="submit" class="btn btn-primary">Продолжить</button>
             </form>
         </div>
