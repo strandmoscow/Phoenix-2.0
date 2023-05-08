@@ -1,14 +1,20 @@
 body{
-    background: aliceblue;
+    background: white;
+    font-size: calc(14px + (26 - 14) * ((100vw - 300px) / (1600 - 300)));
 }
+
 #side_nav{
-    background: darkblue;
     min-width: 250px;
     max-width: 250px;
 }
 
+.img-fluid {
+   min-width: 100px;
+   min-height: 50px;
+}
+
 #nav_account{
-     background: darkblue;
+     background: white;
 }
 
 
@@ -18,18 +24,18 @@ body{
 }
 
 hr.h-color{
-    background: aliceblue;
+    background: white;
 }
 
-.sidebar li.active{
-    background: aliceblue;
+.sidenav li.active{
+    background: gray;
     border-radius: 8px;
 }
 
-.sidebar li.active a, sidebar li.active a:hover{
-    color: darkblue;
+.sidenav li.active a, sidebar li.active a:hover{
+    color: black;
 }
 
-.sidebar li a{
-    color: aliceblue;
+.sidenav li a{
+    color: gray;
 }
