@@ -37,36 +37,18 @@
             </tr>
             </thead>
             <tbody>
+            {% for acc in accs %}
                 <tr>
-                    <th scope="row">1</th>
-                    <td>Рябухина</td>
-                    <td>Анастасия</td>
-                    <td>Константиновна</td>
-                    <td>1234567</td>
-                    <td>1234567</td>
-                    <td>187-422-873-988</td>
-                    <td>3</td>
+                    <th scope="row"></th>
+                    <td>{{acc.account_surname}}</td>
+                    <td>{{acc.account_name}}</td>
+                    <td>{{acc.account_patronymic}}</td>
+                    <td>{{acc.students.student_health_insurance}}</td>
+                    <td>{{acc.students.student_birth_certificate}}</td>
+                    <td>{{acc.students.student_snils}}</td>
+                    <td>{{acc.students.student_group_id}}</td>
                 </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Стрельченко</td>
-                    <td>Андрей</td>
-                    <td>Викторович</td>
-                    <td>1234567</td>
-                    <td>1234567</td>
-                    <td>187-422-873-988</td>
-                    <td>3</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Стрельченко</td>
-                    <td>Александр</td>
-                    <td>Викторович</td>
-                    <td>1234567</td>
-                    <td>1234567</td>
-                    <td>187-422-873-988</td>
-                    <td>3</td>
-                </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>
