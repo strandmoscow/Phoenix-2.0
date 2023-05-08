@@ -23,7 +23,7 @@
                     <img class="navbar-brand" height="75px" src="https://yt3.googleusercontent.com/ytc/AL5GRJU-CaLfToqGMMbtThv-eHztrGPo0pE7pxJgG9Q9=s900-c-k-c0x00ffffff-no-rj">
                 </a>
                 {% if cu %}
-                    <a href="{{url_for('account.base_acc')}}">
+                    <a href="{{url_for('account.accountfull', account_id=cu)}}">
                         <img class="navbar-brand" height="75px" src="https://cdn.onlinewebfonts.com/svg/download_519969.png">
                     </a>
                 {% endif %}
