@@ -40,7 +40,7 @@ def create_app():
         from phoenix.auth.routes import authentication
         from phoenix.account.routes import account
         from phoenix.students.routes import students
-
+        from phoenix.validation.routes import validation
 
         # register routes with blueprint
         app.register_blueprint(main)
@@ -48,5 +48,6 @@ def create_app():
         app.register_blueprint(authentication)
         app.register_blueprint(account)
         app.register_blueprint(students)
+        app.register_blueprint(validation)
 
         return app
