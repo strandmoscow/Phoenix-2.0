@@ -14,7 +14,7 @@
             <li class=""><a href="#" class="nav-link text-black">Тренер</a></li>
             <li class=""><a href="#" class="nav-link text-black">Клубы</a></li>
             <li class=""><a href="#" class="nav-link text-black">Залы</a></li>
-            <li class=""><a href="#" class="nav-link text-black">Группы</a></li>
+            <li class=""><a href="{{url_for('groups.group')}}" class="nav-link text-black">Группы</a></li>
         </ul>
         <ul class="list-unstyled px-2">
             <li class=""><a href="#" class="nav-link text-black">Настройки</a></li>
@@ -26,7 +26,6 @@
         <table class="table table-hover">
             <thead>
             <tr>
-                <th scope="col">#</th>
                 <th scope="col">Фамилия</th>
                 <th scope="col">Имя</th>
                 <th scope="col">Отчество</th>
@@ -39,7 +38,6 @@
             <tbody>
             {% for acc in accs %}
                 <tr>
-                    <th scope="row"></th>
                     <td>{{acc.account_surname}}</td>
                     <td>{{acc.account_name}}</td>
                     <td>{{acc.account_patronymic}}</td>
