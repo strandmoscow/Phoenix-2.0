@@ -38,13 +38,13 @@
             <tbody>
             {% for acc in accs %}
                 <tr>
-                    <td>{{acc.account_surname}}</td>
-                    <td>{{acc.account_name}}</td>
-                    <td>{{acc.account_patronymic}}</td>
-                    <td>{{acc.students.student_health_insurance}}</td>
-                    <td>{{acc.students.student_birth_certificate}}</td>
-                    <td>{{acc.students.student_snils}}</td>
-                    <td>{{acc.students.student_group_id}}</td>
+                    <td>{{acc[0]}}</td>
+                    <td>{{acc[1]}}</td>
+                    <td>{{acc[2]}}</td>
+                    <td>{{acc[3]}}</td>
+                    <td>{{acc[4]}}</td>
+                    <td>{{acc[5]}}</td>
+                    <td>{{acc[6]}}</td>
                 </tr>
             {% endfor %}
             </tbody>
