@@ -1,7 +1,9 @@
 from .. import db
 from .models import account
+from flask_login import UserMixin
 
-class UserLogin():
+
+class UserLogin(UserMixin):
     def getUser(self, user_id):
         try:
             res = account.query.filter_by(account_id=user_id).first()
@@ -22,15 +24,6 @@ class UserLogin():
     def create(self, user):
         self.__user = user
         return self
-
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-        return True
-
-    def is_anonymous(self):
-        return False
 
     def get_id(self):
         return str(self.__user.account_id)
