@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Аккаунт{% endblock %}
+{% block title %}Группы{% endblock %}
 {% block body %}
 
 <main class="d-flex flex-nowrap">
@@ -21,45 +21,29 @@
         </ul>
     </aside>
     <div class="content">
-    <div class="container-fluid flex-nowrap">
-        <div class="row d-flex flex-row flex-nowrap" id="account_first_row">
-        <div class="col-2 d-flex flex-column" id="account_first_row_first_col">
-            <div class="container-fluid px-0 py-3">
-                <img class="img-fluid" width="150" height="150" src="{{ img }}" alt="">
-            </div>
-        </div>
-            <div class="col-6 d-flex flex-column">
-            <form method="post">
-                {{ form.hidden_tag() }}
-                    {% for field in form if field.name not in ['csrf_token', 'submit'] %}
-                        <p>{{ field.label() }}
-                        {% if field.errors %}
-                            {{ field(class="invalid") }}
-                        <span class="invalid-feedback">
-                            {% for e in field.errors %}
-                            {{ e }}
-                            {% endfor %}
-                        </span>
-                        {% else %}
-                            {{ field(class="form-control") }}
-                        {% endif %}
-                    {% endfor %}
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
-                </form>
-                </div>
-        <div class="col-4 d-flex flex-column" id="account_first_row_final_column">
-            <div class="container-fluid">
-                <div class="d-flex justify-content-end">
-                <p class="py-4" style="color:black;">Тип аккаунта: <span class="text-dark rounded shadow px-2 me-2">Ученик</span></p>
-                </div>
-            </div>
-        </div>
-
+        <div class="container-fluid flex-nowrap">
+        <label class="py-4 px-4">Таблица групп</label>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Название</th>
+                <th scope="col">Тренер</th>
+                <th scope="col">Количество учеников</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for g in groups %}
+                <tr>
+                    <td>{{g.group_name}}</td>
+                    <td>{{g.trainer.trainer_id}}</td>
+                    <td>{{group_student_counts[loop.index0][1]}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
         </div>
     </div>
-    </div>
-
-</main>
+    </main>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -71,7 +55,5 @@
         $(this).addClass('active');
     })
 </script>
-
-
 
 {% endblock %}
