@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Вход{% endblock %}
+{% block body %}
+
+
+<div class="position-absolute top-50 start-50 translate-middle">
+    <form method="post">
+    {{ form.hidden_tag() }}
+    <h1>Вход</h1>
+        {% for field in form if field.name not in ['csrf_token', 'submit', 'remember'] %}
+            <p>{{ field.label() }}
+            {% if field.errors %}
+                {{ field(class="invalid") }}
+            <span class="invalid-feedback">
+                {% for e in field.errors %}
+                {{ e }}
+                {% endfor %}
+            </span>
+            {% else %}
+                {{ field(class="form-control") }}
+            {% endif %}
+        {% endfor %}
+        <br>
+        <button type="submit" class="btn btn-primary">Войти</button>
+    </form>
+</div>
+
+{% endblock %}

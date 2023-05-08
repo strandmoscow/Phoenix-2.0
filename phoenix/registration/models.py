@@ -14,9 +14,10 @@ class account(db.Model):
     account_parent_id = db.Column(db.Integer)
     account_manager_id = db.Column(db.Integer)
     passport_passport_id = db.Column(db.Integer)
+    account_password = db.Column(db.String)
 
     def __repr__(self):
-        return f"Account('{self.account_Id}')"
+        return f"Account('{self.account_id}')"
 
 
 
