@@ -1,10 +1,10 @@
-from flask import Blueprint, redirect, render_template, session, request
-from flask_login import current_user, user_logged_in
+from flask import Blueprint, redirect, render_template, session, request, flash
+from flask_login import login_user, login_required, current_user, user_logged_in, user_unauthorized
 from werkzeug.security import generate_password_hash, check_password_hash
 from .forms import AccountForm1
 from ..registration.models import account as accountdata
 from .. import db, auth
-from flask_login import login_user, login_required, current_user, user_logged_in, user_unauthorized
+
 
 account = Blueprint('account', __name__, template_folder='templates', static_folder='static')
 
