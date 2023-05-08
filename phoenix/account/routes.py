@@ -33,3 +33,5 @@ def acc_edit():
     profile_icon = './static/svg/abstract-user-flat-4.svg'
     eye_icon = './static/svg/eye.svg'
     return render_template('account/account_edit.html', img=profile_icon, eye=eye_icon, form=form)
+
+# rjvvtyn
