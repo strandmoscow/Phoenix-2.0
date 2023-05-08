@@ -43,8 +43,10 @@ def regi3():
         account_surname=session['regi']['surname'],
         account_email=session['regi']['email'],
         account_birthday=session['regi']['DOB'],
-        account_phone=session['regi']['phone']
+        account_phone=session['regi']['phone'],
+        account_password=session['pwdhash']
     )
+    session.pop('regi')
     db.session.add(a)
     db.session.commit()
     # except:
