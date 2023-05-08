@@ -1,10 +1,4 @@
 
-# DEVELOPMENT KEY
-DEV_SECRET_KEY = 'your_secret_key'
-
-# TESTING KEY
-TEST_SECRET_KEY = 'test_secret_key'
-
 # PRODUCTION KEY
 SECRET_KEY = 'your_production_key'
 
