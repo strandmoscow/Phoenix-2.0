@@ -19,11 +19,11 @@
             <tbody>
             {% for g in groups %}
                 <tr>
-                    <td>{{g.group_name}}</td>
+                    <td>{{g[0]}}</td>
                     <td>
-                        <a href="#">{{g.trainer.trainer_id}}</a>
+                        <a href="{{url_for('account.accountfull', account_id=g[1])}}">{{g[2]}} {{g[3]}}</a>
                     </td>
-                    <td>{{group_student_counts[loop.index0][1]}}</td>
+                    <td>{{g[4]}}</td>
                 </tr>
             {% endfor %}
             </tbody>

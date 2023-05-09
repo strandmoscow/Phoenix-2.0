@@ -12,7 +12,7 @@ students = Blueprint('students', __name__, template_folder='templates', static_f
 @students.route("/student", methods=['GET', 'POST'])
 @login_required
 def student():
-    accs = db.session.query(accountdata.account_surname, accountdata.account_name, accountdata.account_patronymic, studentsdata.student_health_insurance, studentsdata.student_birth_certificate, studentsdata.student_snils, groupdata.group_name).\
+    accs = db.session.query(accountdata.account_id, accountdata.account_surname, accountdata.account_name, accountdata.account_patronymic, studentsdata.student_health_insurance, studentsdata.student_birth_certificate, studentsdata.student_snils, groupdata.group_name).\
         join(studentsdata, accountdata.account_student_id == studentsdata.student_id).\
         join(groupdata, studentsdata.student_group_id == groupdata.group_id).all()
 

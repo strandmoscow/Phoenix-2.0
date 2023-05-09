@@ -25,12 +25,12 @@
                     {% for acc in accs %}
                         <tr>
                             <td>
-                                <a href="{{url_for('account.accountfull', account_id=acc.account_id)}}">{{acc.account_surname}} {{acc.account_name}} {% if acc.account_patronymic %} {{acc.account_patronymic}} {% endif %}</a>
+                                <a href="{{url_for('account.accountfull', account_id=acc[0])}}">{{acc[1]}} {{acc[2]}} {% if acc[3] %} {{acc[3]}} {% endif %}</a>
                             </td>
-                            <td>{{acc.students.student_health_insurance}}</td>
-                            <td>{{acc.students.student_birth_certificate}}</td>
-                            <td>{{acc.students.student_snils}}</td>
-                            <td>{{acc.students.student_group_id}}</td>
+                            <td>{{acc[4]}}</td>
+                            <td>{{acc[5]}}</td>
+                            <td>{{acc[6]}}</td>
+                            <td>{{acc[7]}}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
