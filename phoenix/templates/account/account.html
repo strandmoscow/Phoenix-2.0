@@ -11,7 +11,15 @@
               <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
                 alt="Avatar" class="img-fluid my-5" style="width: 160px;" />
               <h4>{{acc.account_name}} {{acc.account_surname}} {% if account_patronymic %}{{acc.account_patronymic}}{% endif %}</h4>
+              {% if trainer %}
+              <p>Тренер</p>
+              {% elif student %}
               <p>Ученик</p>
+              {% elif parent %}
+              <p>Опекун</p>
+              {% elif manager %}
+              <p>Менеджер</p>
+              {% endif %}
             </div>
             <div class="col-md-8">
               <div class="card-body p-4">
@@ -23,7 +31,7 @@
                     <p class="text-muted">{{acc.account_email}}</p>
                   </div>
                   <div class="col-6 mb-3">
-                    <h5>Phone</h5>
+                    <h5>Телефон</h5>
                     <p class="text-muted">{{acc.account_phone}}</p>
                   </div>
                 </div>
