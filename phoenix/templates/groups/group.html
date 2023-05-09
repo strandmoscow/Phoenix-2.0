@@ -39,7 +39,7 @@
                         {% for student in students %}
                             <tr>
                                 <td>
-                                    <a href="{{url_for('groups.singlegroup', group_id=student.account_id)}}">{{student.account_surname}} {{student.account_name}} {% if account_patronymic %} {{student.patronymic}} {% endif %}</a>
+                                    <a href="{{url_for('account.accountfull', account_id=student.account_id)}}">{{student.account_surname}} {{student.account_name}} {% if account_patronymic %} {{student.patronymic}} {% endif %}</a>
                                 </td>
                             </tr>
                         {% endfor %}

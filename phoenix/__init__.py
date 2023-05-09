@@ -43,6 +43,8 @@ def create_app():
         from phoenix.groups.routes import groups
         from phoenix.validation.routes import validation
         from phoenix.trainer.routes import trainer
+        from phoenix.clubs.routes import club
+        from phoenix.gyms.routes import gym
 
         # register routes with blueprint
         app.register_blueprint(main)
@@ -53,5 +55,7 @@ def create_app():
         app.register_blueprint(groups)
         app.register_blueprint(validation)
         app.register_blueprint(trainer)
+        app.register_blueprint(club)
+        app.register_blueprint(gym)
 
         return app
