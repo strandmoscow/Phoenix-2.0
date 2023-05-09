@@ -3,176 +3,100 @@
 {% block body %}
 
 <main class="d-flex flex-nowrap">
-    <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-info border-start-0 rounded-end fixed-start bg-light" id="side_nav">
-<!--         <div class="header-box px-2 pt-3 pb-4">-->
-<!--         </div>-->
-        <ul class="list-unstyled px-2">
-            <li class=""><a href="{{url_for('account.accountfull', account_id=cu)}}" class="nav-link text-black">Аккаунт</a></li>
-            <li class=""><a href="{{url_for('students.student')}}" class="nav-link text-black">Ученики</a></li>
-            <li class=""><a href="#" class="nav-link text-black">Занятия/Расписание</a></li>
-            <li class=""><a href="#" class="nav-link text-black">Посещаемость</a></li>
-            <li class=""><a href="#" class="nav-link text-black">Тренер</a></li>
-            <li class=""><a href="#" class="nav-link text-black">Клубы</a></li>
-            <li class=""><a href="#" class="nav-link text-black">Залы</a></li>
-            <li class=""><a href="{{url_for('groups.group')}}" class="nav-link text-black">Группы</a></li>
-        </ul>
-        <ul class="list-unstyled px-2">
-            <li class=""><a href="#" class="nav-link text-black">Настройки</a></li>
-        </ul>
-    </aside>
-    <div class="content">
-<!--    <nav class="navbar navbar-expand-lg" id="nav_account">-->
-<!--        <div class="container-fluid">-->
-<!--&lt;!&ndash;            <a class="navbar-brand" href="/">Феникс</a>&ndash;&gt;-->
-<!--            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"-->
-<!--                    aria-controls="navbarNav" aria-expanded="false" aria-label="Переключатель навигации">-->
-<!--                <span class="navbar-toggler-icon"></span>-->
-<!--            </button>-->
-<!--            <div class="collapse navbar-collapse" id="navbarNav">-->
-<!--                <ul class="navbar-nav">-->
-<!--&lt;!&ndash;                    <li class="nav-item">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <a class="nav-link active" aria-current="page" href="/account">Личный кабинет</a>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </li>&ndash;&gt;-->
-<!--    &lt;!&ndash;                <li class="nav-item">&ndash;&gt;-->
-<!--    &lt;!&ndash;                    <a class="nav-link disabled" href="#">Рекомендуемые</a>&ndash;&gt;-->
-<!--    &lt;!&ndash;                </li>&ndash;&gt;-->
-<!--    &lt;!&ndash;                <li class="nav-item">&ndash;&gt;-->
-<!--    &lt;!&ndash;                    <a class="nav-link disabled" href="#">Цена</a>&ndash;&gt;-->
-<!--    &lt;!&ndash;                </li>&ndash;&gt;-->
-<!--    &lt;!&ndash;                <li class="nav-item">&ndash;&gt;-->
-<!--    &lt;!&ndash;                    <a class="nav-link disabled">Отключенная</a>&ndash;&gt;-->
-<!--    &lt;!&ndash;                </li>&ndash;&gt;-->
-<!--                </ul>-->
-<!--            </div>-->
-<!--            <div class="d-grid gap-2 d-md-flex justify-content-md-end">-->
+    {% include 'side_menu.html' %}
 
-<!--            </div>-->
-<!--        </div>-->
-
-<!--    </nav>-->
-    <div class="container-fluid flex-nowrap">
-        <div class="row d-flex flex-row flex-nowrap" id="account_first_row">
-        <div class="col-2 d-flex flex-column" id="account_first_row_first_col">
-            <div class="container-fluid px-0 py-3">
-                <img class="img-fluid" width="150" height="150" src="{{ img }}">
+    <div class="container-fluid h-200">
+        <div class="row">
+            <div class="col-md-3 gradient-custom text-center text-white" style="border-radius: .5rem;">
+              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                alt="Avatar" class="img-fluid my-5" style="width: 160px;" />
+              <h4>{{acc.account_name}} {{acc.account_surname}} {% if account_patronymic %}{{acc.account_patronymic}}{% endif %}</h4>
+              <p>Ученик</p>
             </div>
-        </div>
-        <div class="col-5 d-flex flex-column">
-            <div class="container-fluid py-4" id="fio">
-                <p style="color:black;">Фамилия: <span class="text-dark rounded shadow px-2 me-2">{{acc.account_surname}}</span></p>
-                <p style="color:black;">Имя: <span class="text-dark rounded shadow px-2 me-2">{{acc.account_name}}</span></p>
-                <p style="color:black;">Отчетство: <span class="text-dark rounded shadow px-2 me-2">{{acc.account_patronymic}}</span></p>
-            </div>
-        </div>
-        <div class="col-5 d-flex flex-column" id="account_first_row_final_column">
-            <div class="container-fluid">
-                <div class="d-flex justify-content-end">
-                <p class="py-4" style="color:black;">Тип аккаунта: <span class="text-dark rounded shadow px-2 me-2">Ученик</span></p>
+            <div class="col-md-8">
+              <div class="card-body p-4">
+                <h4>Общая информация</h4>
+                <hr class="mt-0 mb-4">
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <h5>Email</h5>
+                    <p class="text-muted">{{acc.account_email}}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h5>Phone</h5>
+                    <p class="text-muted">{{acc.account_phone}}</p>
+                  </div>
                 </div>
-                <div class="d-grid d-md-flex justify-content-md-end">
-                    <a class="btn btn-secondary text-white" type="button" href="{{url_for('account.acc_edit')}}">Редактировать</a>
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <h5>Дата рождения</h5>
+                    <p class="text-muted">{{acc.account_birthday}}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                  </div>
                 </div>
-            </div>
-        </div>
-        </div>
-        <div class="row d-flex flex-row">
-            <div class="col-7 d-flex flex-column">
-                <p class="py-4 px-4" style="color:black;">Дата рождения: <span class="text-dark rounded shadow px-2 me-2">{{acc.account_birthday}}</span></p>
-            </div>
-        </div>
-        <div class="row d-flex flex-row">
-            <div class="col-7 d-flex flex-column" id="contact_info">
-                <p class="py-0 px-4" style="color:black;">Мобильный телефон: <span class="text-dark rounded shadow px-2 me-2">{{acc.account_phone}}</span></p>
-                <p class="py-0 px-4" style="color:black;">Email: <span class="text-dark rounded shadow px-2 me-2">{{acc.account_email}}</span></p>
-            </div>
-
-        </div>
-
-        {% if trainer %}
-        <div class="row d-flex flex-row">
-            <div class="col-7 d-flex flex-column">
-                <p class="py-0 px-4" style="color:black;">Номер федерации тренера: <span class="text-dark rounded shadow px-2 me-2">{{ trainer.federation_federation_id}}</span></p>
-            </div>
-        </div>
-        {% elif student %}
-         <div class="row d-flex flex-row">
-            <div class="col-7 d-flex flex-column">
-                <p class="py-0 px-4" style="color:black;">ОМС:
-                    <span class="text-dark rounded shadow px-2 me-2">
-                        {{ student.student_health_insurance}}
-                    </span>
-                </p>
-                <p class="py-0 px-4" style="color:black;">Свидетельство о рождении:
-                    <span class="text-dark rounded shadow px-2 me-2">
-                        {{ student.student_birth_certificate}}
-                    </span>
-                </p>
-                <p class="py-0 px-4" style="color:black;">СНИЛС:
-                    <span class="text-dark rounded shadow px-2 me-2">
-                        {{ student.student_snils}}
-                    </span>
-                </p>
-                <p class="py-0 px-4" style="color:black;">Номер группы:
-                    <span class="text-dark rounded shadow px-2 me-2">
-                        {{ student.student_group_id}}
-                    </span>
-                </p>
-            </div>
-        </div>
-        {% elif parent %}
-        <div class="row d-flex flex-row">
-            <div class="col-7 d-flex flex-column">
-                <p class="py-0 px-4" style="color:black;">Номер типа законного представителя:
-                    <span class="text-dark rounded shadow px-2 me-2">
-                        {{ parent.parent_type_parent_type_id}}
-                    </span>
-                </p>
-            </div>
-        </div>
-        {% elif manager %}
-        <div class="row d-flex flex-row">
-            <div class="col-7 d-flex flex-column">
-                <p class="py-0 px-4" style="color:black;">Номер:
-                    <span class="text-dark rounded shadow px-2 me-2">
-                        {{ manager.manager_id}}
-                    </span>
-                </p>
-            </div>
-        </div>
-        {% endif %}
-
-        <div class="row d-flex flex-row">
-            <div class="col-7 d-flex flex-column" id="passport_info">
-                <p class="py-4 px-4" style="color:black;">Паспорт</p>
-                <p class="py-0 px-4" style="color:black;">Серия:
-                    <span class="text-dark rounded shadow px-2 me-2">****</span>
-                    <button style="background: white">
-                    <img width="30" height="30" src="{{ eye }}">
-                    </button>
-                </p>
-                <p class="py-0 px-4" style="color:black;">Номер:
-                    <span class="text-dark rounded shadow px-2 me-2">******</span>
-                    <button style="background: white">
-                    <img width="30" height="30" src="{{ eye }}">
-                    </button>
-                </p>
-                <p class="py-0 px-4" style="color:black;">Номер подразделения:
-                    <span class="text-dark rounded shadow px-2 me-2">***</span>
-                    <button style="background: white">
-                    <img width="30" height="30" src="{{ eye }}">
-                    </button>
-                </p>
-                <p class="py-0 px-4" style="color:black;">Подразделение:
-                    <span class="text-dark rounded shadow px-2 me-2">************</span>
-                    <button style="background: white">
-                    <img width="30" height="30" src="{{ eye }}">
-                    </button>
-                </p>
+                {% if trainer %}
+                <h4>Информация о тренере</h4>
+                <hr class="mt-0 mb-4">
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <h6>Спортивная федерация</h6>
+                    <p class="text-muted">{{ trainer.federation_federation_id}}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                  </div>
+                </div>
+                {% elif student %}
+                <h4>Информация об ученике</h4>
+                <hr class="mt-0 mb-4">
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <h5>ОМС</h5>
+                    <p class="text-muted">{{student.student_health_insurance}}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h5>Свидетельство о рождении</h5>
+                    <p class="text-muted">{{student.student_birth_certificate}}</p>
+                  </div>
+                </div>
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <h5>СНИЛС</h5>
+                    <p class="text-muted">{{student.student_health_insurance}}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h5>Номер группы</h5>
+                    <p class="text-muted">{{student.student_group_id}}</p>
+                  </div>
+                </div>
+                {% elif parent %}
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <h5>Тип законного представителя</h5>
+                    <p class="text-muted">{{parent.parent_type_parent_type_id}}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                  </div>
+                </div>
+                {% elif manager %}
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <h5>Номер</h5>
+                    <p class="text-muted">{{manager.manager_id}}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                  </div>
+                </div>
+                {% endif %}
+                <div class="d-flex justify-content-start">
+                  <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
+                  <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
+                  <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
+                </div>
+              </div>
             </div>
         </div>
     </div>
-    </div>
-
 </main>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
