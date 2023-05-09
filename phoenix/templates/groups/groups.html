@@ -3,23 +3,7 @@
 {% block body %}
 
 <main class="d-flex flex-nowrap">
-    <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-info border-start-0 rounded-end fixed-start bg-light" id="side_nav">
-<!--         <div class="header-box px-2 pt-3 pb-4">-->
-<!--         </div>-->
-        <ul class="list-unstyled px-2">
-            <li class=""><a href="{{url_for('account.base_acc')}}" class="nav-link text-black">Аккаунт</a></li>
-            <li class=""><a href="{{url_for('students.student')}}" class="nav-link text-black">Ученики</a></li>
-            <li class=""><a href="#" class="nav-link text-black">Занятия/Расписание</a></li>
-            <li class=""><a href="#" class="nav-link text-black">Посещаемость</a></li>
-            <li class=""><a href="#" class="nav-link text-black">Тренер</a></li>
-            <li class=""><a href="#" class="nav-link text-black">Клубы</a></li>
-            <li class=""><a href="#" class="nav-link text-black">Залы</a></li>
-            <li class=""><a href="{{url_for('groups.group')}}" class="nav-link text-black">Группы</a></li>
-        </ul>
-        <ul class="list-unstyled px-2">
-            <li class=""><a href="#" class="nav-link text-black">Настройки</a></li>
-        </ul>
-    </aside>
+    {% include 'side_menu.html' %}
     <div class="content">
         <div class="container-fluid flex-nowrap">
         <label class="py-4 px-4">Таблица групп</label>
@@ -35,7 +19,9 @@
             {% for g in groups %}
                 <tr>
                     <td>{{g.group_name}}</td>
-                    <td>{{g.trainer.trainer_id}}</td>
+                    <td>
+                        <a href="#">{{g.trainer.trainer_id}}</a>
+                    </td>
                     <td>{{group_student_counts[loop.index0][1]}}</td>
                 </tr>
             {% endfor %}

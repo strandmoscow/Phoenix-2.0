@@ -42,7 +42,7 @@ def create_app():
         from phoenix.students.routes import students
         from phoenix.groups.routes import groups
         from phoenix.validation.routes import validation
-
+        from phoenix.trainer.routes import trainer
 
         # register routes with blueprint
         app.register_blueprint(main)
@@ -52,5 +52,6 @@ def create_app():
         app.register_blueprint(students)
         app.register_blueprint(groups)
         app.register_blueprint(validation)
+        app.register_blueprint(trainer)
 
         return app
