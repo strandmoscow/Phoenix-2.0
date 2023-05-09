@@ -11,7 +11,7 @@
         <table class="table table-hover">
             <thead>
             <tr>
-                <th scope="col">Название</th>
+                <th scope="col">Название группы</th>
                 <th scope="col">Тренер</th>
                 <th scope="col">Количество учеников</th>
             </tr>
@@ -19,7 +19,9 @@
             <tbody>
             {% for g in groups %}
                 <tr>
-                    <td>{{g[0]}}</td>
+                    <td>
+                        <a href="{{url_for('groups.singlegroup', group_id=g[5])}}">{{g[0]}}</a>
+                    </td>
                     <td>
                         <a href="{{url_for('account.accountfull', account_id=g[1])}}">{{g[2]}} {{g[3]}}</a>
                     </td>

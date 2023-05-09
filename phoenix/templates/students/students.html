@@ -30,7 +30,9 @@
                             <td>{{acc[4]}}</td>
                             <td>{{acc[5]}}</td>
                             <td>{{acc[6]}}</td>
-                            <td>{{acc[7]}}</td>
+                            <td>
+                                <a href="{{url_for('groups.singlegroup', group_id=acc[8])}}">{{acc[7]}}</a>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
