@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Ученики{% endblock %}
+{% block title %}Клубы{% endblock %}
 {% block body %}
 
 <main class="d-flex flex-nowrap">
@@ -9,28 +9,23 @@
         <div class="row">
             <div class="col-md-12">
                 <br>
-                <h1>Таблица учеников</h1>
+                <h1>Клубы</h1>
                 <br>
                 <table class="table table-hover">
                     <thead>
                     <tr>
-                        {% for item in ["ФИО","ОМС", "Свидетельство о рождении", "СНИЛС", "Группа"] %}
+                        {% for item in ["Название","Город", "Адрес", "Спорт"] %}
                         <th scope="col">{{ item }}</th>
                         {% endfor %}
                     </tr>
                     </thead>
                     <tbody>
-                    {% for acc in accs %}
+                    {% for club in clubs %}
                         <tr>
-                            <td>
-                                <a href="{{url_for('account.accountfull', account_id=acc[0])}}">{{acc[1]}} {{acc[2]}} {% if acc[3] %} {{acc[3]}} {% endif %}</a>
-                            </td>
-                            <td>{{acc[4]}}</td>
-                            <td>{{acc[5]}}</td>
-                            <td>{{acc[6]}}</td>
-                            <td>
-                                <a href="{{url_for('groups.singlegroup', group_id=acc[8])}}">{{acc[7]}}</a>
-                            </td>
+                            <td>{{club.club_name}}</td>
+                            <td>{{club.address.city.city_name}}</td>
+                            <td>{{ club.address.address_street }} {{ club.address.address_house }} {{ club.address.address_building }}</td>
+                            <td>{{ club.federation.sport.sport_name }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
