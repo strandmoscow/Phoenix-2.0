@@ -20,6 +20,8 @@ class federation(db.Model):
     federation_id = db.Column(db.Integer, primary_key=True)
     federation_sport = db.Column(db.Integer, db.ForeignKey('sport.sport_id'), nullable=False)
 
+    sport = db.relationship('sport')
+
     def __repr__(self):
         return f"<federation {self.federation_id}>"
 
@@ -40,6 +42,8 @@ class address(db.Model):
     address_street = db.Column(db.String(64), nullable=False)
     address_house = db.Column(db.Integer, nullable=False)
     address_building = db.Column(db.String(64), nullable=False)
+
+    city = db.relationship('city')
 
     def __repr__(self):
         return f'<аddress {self.address_id}>'
