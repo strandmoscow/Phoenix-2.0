@@ -9,23 +9,31 @@
         <div class="row">
             <div class="col-md-3 gradient-custom text-center text-white" style="border-radius: .5rem;">
                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                     alt="Avatar" class="img-fluid my-5" style="width: 160px;" />
-                <h4>{{acc.account_name}} {{acc.account_surname}} {% if acc.account_patronymic %}{{acc.account_patronymic}}{% endif %}</h4>
-                <p>Ученик</p>
+                alt="Avatar" class="img-fluid my-5" style="width: 160px;" />
+              <h4>{{acc.account_name}} {{acc.account_surname}} {% if account_patronymic %}{{acc.account_patronymic}}{% endif %}</h4>
+              {% if trainer %}
+              <p>Тренер</p>
+              {% elif student %}
+              <p>Ученик</p>
+              {% elif parent %}
+              <p>Опекун</p>
+              {% elif manager %}
+              <p>Менеджер</p>
+              {% endif %}
             </div>
             <div class="col-md-8">
-                <div class="card-body p-4">
-                    <h4>Общая информация</h4>
-                    <hr class="mt-0 mb-4">
-                    <div class="row pt-1">
-                        <div class="col-6 mb-3">
-                            <h5>Email</h5>
-                            <p class="text-muted">{{acc.account_email}}</p>
-                        </div>
-                        <div class="col-6 mb-3">
-                            <h5>Phone</h5>
-                            <p class="text-muted">{{acc.account_phone}}</p>
-                        </div>
+              <div class="card-body p-4">
+                <h4>Общая информация</h4>
+                <hr class="mt-0 mb-4">
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <h5>Email</h5>
+                    <p class="text-muted">{{acc.account_email}}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h5>Телефон</h5>
+                    <p class="text-muted">{{acc.account_phone}}</p>
+                  </div>
                     </div>
                     <div class="row pt-1">
                         <div class="col-6 mb-3">
