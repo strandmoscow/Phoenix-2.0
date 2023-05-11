@@ -3,97 +3,102 @@
 {% block body %}
 
 <main class="d-flex flex-nowrap">
-    {% include 'side_menu.html' %}
+<!--    {% include 'side_menu.html' %}-->
 
     <div class="container-fluid h-200">
         <div class="row">
             <div class="col-md-3 gradient-custom text-center text-white" style="border-radius: .5rem;">
-              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                alt="Avatar" class="img-fluid my-5" style="width: 160px;" />
-              <h4>{{acc.account_name}} {{acc.account_surname}} {% if account_patronymic %}{{acc.account_patronymic}}{% endif %}</h4>
-              <p>Ученик</p>
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                     alt="Avatar" class="img-fluid my-5" style="width: 160px;" />
+                <h4>{{acc.account_name}} {{acc.account_surname}} {% if acc.account_patronymic %}{{acc.account_patronymic}}{% endif %}</h4>
+                <p>Ученик</p>
             </div>
             <div class="col-md-8">
-              <div class="card-body p-4">
-                <h4>Общая информация</h4>
-                <hr class="mt-0 mb-4">
-                <div class="row pt-1">
-                  <div class="col-6 mb-3">
-                    <h5>Email</h5>
-                    <p class="text-muted">{{acc.account_email}}</p>
-                  </div>
-                  <div class="col-6 mb-3">
-                    <h5>Phone</h5>
-                    <p class="text-muted">{{acc.account_phone}}</p>
-                  </div>
+                <div class="card-body p-4">
+                    <h4>Общая информация</h4>
+                    <hr class="mt-0 mb-4">
+                    <div class="row pt-1">
+                        <div class="col-6 mb-3">
+                            <h5>Email</h5>
+                            <p class="text-muted">{{acc.account_email}}</p>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <h5>Phone</h5>
+                            <p class="text-muted">{{acc.account_phone}}</p>
+                        </div>
+                    </div>
+                    <div class="row pt-1">
+                        <div class="col-6 mb-3">
+                            <h5>Дата рождения</h5>
+                            <p class="text-muted">{{acc.account_birthday}}</p>
+                        </div>
+                        <div class="col-6 mb-3">
+                        </div>
+                    </div>
+                    {% if trainer %}
+                    <h4>Информация о тренере</h4>
+                    <hr class="mt-0 mb-4">
+                    <div class="row pt-1">
+                        <div class="col-6 mb-3">
+                            <h6>Спортивная федерация</h6>
+                            <p class="text-muted">{{ trainer.federation_federation_id}}</p>
+                        </div>
+                        <div class="col-6 mb-3">
+                        </div>
+                    </div>
+                    {% elif student %}
+                    <h4>Информация об ученике</h4>
+                    <hr class="mt-0 mb-4">
+                    <div class="row pt-1">
+                        <div class="col-6 mb-3">
+                            <h5>ОМС</h5>
+                            <p class="text-muted">{{student.student_health_insurance}}</p>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <h5>Свидетельство о рождении</h5>
+                            <p class="text-muted">{{student.student_birth_certificate}}</p>
+                        </div>
+                    </div>
+                    <div class="row pt-1">
+                        <div class="col-6 mb-3">
+                            <h5>СНИЛС</h5>
+                            <p class="text-muted">{{student.student_health_insurance}}</p>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <h5>Номер группы</h5>
+                            <p class="text-muted">{{student.student_group_id}}</p>
+                        </div>
+                    </div>
+                    {% elif parent %}
+                    <div class="row pt-1">
+                        <div class="col-6 mb-3">
+                            <h5>Тип законного представителя</h5>
+                            <p class="text-muted">{{parent.parent_type_parent_type_id}}</p>
+                        </div>
+                        <div class="col-6 mb-3">
+                        </div>
+                    </div>
+                    {% elif manager %}
+                    <div class="row pt-1">
+                        <div class="col-6 mb-3">
+                            <h5>Номер</h5>
+                            <p class="text-muted">{{manager.manager_id}}</p>
+                        </div>
+                        <div class="col-6 mb-3">
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if cu == acc.account_id %}
+                    <a class="btn btn-outline-primary" href="{{url_for('account.acc_edit')}}" type="button">
+                        Редактировать аккаунт
+                    </a>
+                    {% endif %}
+                    {% if acc.account_validated %}
+                    <b style="color:green">Аккаунт проверен, все хорошо</b>
+                    {% else %}
+                    <b style="color:red">Данные на проверке</b>
+                    {% endif %}
                 </div>
-                <div class="row pt-1">
-                  <div class="col-6 mb-3">
-                    <h5>Дата рождения</h5>
-                    <p class="text-muted">{{acc.account_birthday}}</p>
-                  </div>
-                  <div class="col-6 mb-3">
-                  </div>
-                </div>
-                {% if trainer %}
-                <h4>Информация о тренере</h4>
-                <hr class="mt-0 mb-4">
-                <div class="row pt-1">
-                  <div class="col-6 mb-3">
-                    <h6>Спортивная федерация</h6>
-                    <p class="text-muted">{{ trainer.federation_federation_id}}</p>
-                  </div>
-                  <div class="col-6 mb-3">
-                  </div>
-                </div>
-                {% elif student %}
-                <h4>Информация об ученике</h4>
-                <hr class="mt-0 mb-4">
-                <div class="row pt-1">
-                  <div class="col-6 mb-3">
-                    <h5>ОМС</h5>
-                    <p class="text-muted">{{student.student_health_insurance}}</p>
-                  </div>
-                  <div class="col-6 mb-3">
-                    <h5>Свидетельство о рождении</h5>
-                    <p class="text-muted">{{student.student_birth_certificate}}</p>
-                  </div>
-                </div>
-                <div class="row pt-1">
-                  <div class="col-6 mb-3">
-                    <h5>СНИЛС</h5>
-                    <p class="text-muted">{{student.student_health_insurance}}</p>
-                  </div>
-                  <div class="col-6 mb-3">
-                    <h5>Номер группы</h5>
-                    <p class="text-muted">{{student.student_group_id}}</p>
-                  </div>
-                </div>
-                {% elif parent %}
-                <div class="row pt-1">
-                  <div class="col-6 mb-3">
-                    <h5>Тип законного представителя</h5>
-                    <p class="text-muted">{{parent.parent_type_parent_type_id}}</p>
-                  </div>
-                  <div class="col-6 mb-3">
-                  </div>
-                </div>
-                {% elif manager %}
-                <div class="row pt-1">
-                  <div class="col-6 mb-3">
-                    <h5>Номер</h5>
-                    <p class="text-muted">{{manager.manager_id}}</p>
-                  </div>
-                  <div class="col-6 mb-3">
-                  </div>
-                </div>
-                {% endif %}
-                <div class="d-flex justify-content-start">
-                  <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
-                  <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
-                  <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
-                </div>
-              </div>
             </div>
         </div>
     </div>

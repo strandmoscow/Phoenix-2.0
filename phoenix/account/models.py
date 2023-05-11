@@ -35,6 +35,7 @@ class manager(db.Model):
     def __repr__(self):
         return f"manager('{self.manager_id}')"
 
+
 class trainer(db.Model):
     trainer_id = db.Column(db.Integer, primary_key=True, unique=True)
     federation_federation_id = db.Column(db.Integer)
@@ -42,3 +43,4 @@ class trainer(db.Model):
 
     def __repr__(self):
         return f"trainer'{self.trainer_id}')"
+
