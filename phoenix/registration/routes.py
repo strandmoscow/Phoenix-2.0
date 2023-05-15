@@ -1,7 +1,7 @@
 from flask import Blueprint, redirect, render_template, session, request
 from flask_login import current_user, user_logged_in
 from .forms import RegistrationForm1, RegistrationForm2
-from .models import account
+from .models import account, val_account
 from werkzeug.security import generate_password_hash, check_password_hash
 from .. import db
 
@@ -39,7 +39,6 @@ def regi2():
 
 @registration.route("/regi3", methods=['GET', 'POST'])
 def regi3():
-    print(session)
     # try:
     a = account(
         account_name=session['regi']['fname'],
@@ -48,11 +47,26 @@ def regi3():
         account_email=session['regi']['email'],
         account_birthday=session['regi']['DOB'],
         account_phone=session['regi']['phone'],
-        account_password=session['pwdhash']
+        account_password=session['pwdhash'],
+        account_validated=False
     )
-    session.pop('regi')
     db.session.add(a)
     db.session.commit()
+
+    aid = db.session.query(account.account_id).filter(account.account_email == session['regi']['email']).first()
+    v = val_account(
+        account_id=aid[0],
+        val_account_name=session['regi']['fname'],
+        val_account_surname=session['regi']['surname'],
+        val_account_patronymic=session['regi']['patronymic'],
+        val_account_email=session['regi']['email'],
+        val_account_birthday=session['regi']['DOB'],
+        val_account_phone=session['regi']['phone']
+    )
+    db.session.add(v)
+    db.session.commit()
+
+    session.pop('regi')
     # except:
     #     db.session.rollback()
     #     print("Ошибка добавления в БД")

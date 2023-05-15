@@ -35,13 +35,12 @@ class manager(db.Model):
     def __repr__(self):
         return f"manager('{self.manager_id}')"
 
+
 class trainer(db.Model):
     trainer_id = db.Column(db.Integer, primary_key=True, unique=True)
     federation_federation_id = db.Column(db.Integer)
     account = db.relationship('account', backref='trainer')
 
-    def full_name(self):
-        return f"{self.account[0].account_name} {self.account[0].account_patronymic} {self.account[0].account_surname}"
-
     def __repr__(self):
         return f"trainer'{self.trainer_id}')"
+      
