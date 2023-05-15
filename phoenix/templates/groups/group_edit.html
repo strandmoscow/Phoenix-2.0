@@ -7,23 +7,23 @@
     <div class="container-fluid h-200">
         <div class="row">
             <form method="post">
-                {{ form.hidden_tag() }}
-                    {% for field in form if field.name not in ['csrf_token', 'submit'] %}
-                        <p>{{ field.label() }}
-                        {% if field.errors %}
-                            {{ field(class="invalid") }}
-                        <span class="invalid-feedback">
-                            {% for e in field.errors %}
-                            {{ e }}
-                            {% endfor %}
-                        </span>
-                        {% else %}
-                            {{ field(class="form-control") }}
-                        {% endif %}
-                    {% endfor %}
-                    <br>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
-                </form>
+            {{ form.hidden_tag() }}
+                <div class="form-group">
+                  {{ form.group_name.label }} {{ form.group_name(class='form-control') }}
+                  {% for error in form.group_name.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                  {% endfor %}
+                </div>
+                <div class="form-group">
+                  {{ form.group_trainer.label }} {{ form.group_trainer(class='form-control') }}
+                  {% for error in form.group_trainer.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                  {% endfor %}
+                </div>
+                <div class="form-group">
+                  <input type="submit" value="Сохранить" class="btn btn-primary">
+                </div>
+            </form>
             </div>
             </div>
         </div>
