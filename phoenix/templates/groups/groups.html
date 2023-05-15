@@ -8,7 +8,10 @@
     <div class="content">
         <div class="container-fluid flex-nowrap">
             <br>
-            <h1>Группы</h1>
+            <div class="d-flex align-items-center">
+                <h1 class="mr-3">Группы</h1>
+                <a href="{{url_for('groups.group_add')}}" class="btn btn-primary">+</a>
+            </div>
             <br>
         <table class="table table-hover">
             <thead>
