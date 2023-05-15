@@ -78,3 +78,75 @@ def group_add():
         return redirect("group")
 
     return render_template('groups/group_add.html', form=form, cu=current_user.get_id())
+
+
+@groups.route("/group_edit/<int:group_id>", methods=['GET', 'POST'])
+@login_required
+def group_edit(group_id):
+    gp = groupdata.query.get_or_404(group_id)
+    form = GroupForm2(obj=groupdata.query.get_or_404(group_id))
+
+    if form.validate_on_submit():
+        form.populate_obj(groupdata.query.get_or_404(group_id))
+        gp.group_trainer_id = form.group_trainer.data
+        db.session.commit()
+        flash('Информация о группе успешно обновлена', 'success')
+        return redirect(url_for('groups.singlegroup', group_id=group_id))
+
+    # Установить выбранное значение для поля group_trainer
+    form.group_trainer.data = gp.group_trainer_id
+
+    return render_template('groups/group_edit.html', form=form, cu=current_user.get_id())
+
+
+@groups.route("/add_students/<int:group_id>", methods=['GET', 'POST'])
+@login_required
+def add_students(group_id):
+    sts_gp = groupdata.query.get_or_404(group_id)
+    form = GroupForm3()
+
+    if form.validate_on_submit():
+        selected_students = form.students.data
+        for account_id in selected_students:
+            acc = accountdata.query.filter_by(account_id=account_id).first()
+            if acc:
+                student = students.query.filter(students.student_id == acc.account_student_id).first()
+                if student:
+                    student.student_group_id = group_id
+
+        db.session.commit()
+
+        flash('Студенты успешно добавлены в группу', 'success')
+        return redirect(url_for('groups.singlegroup', group_id=group_id))
+
+    return render_template('groups/add_students.html', group=sts_gp, form=form,
+                           cu=current_user.get_id())
+
+
+@groups.route("/remove_student/<int:group_id>/<int:student_id>", methods=['GET', 'POST'])
+@login_required
+def remove_student(group_id, student_id):
+    st_group = groupdata.query.get_or_404(group_id)
+    student = students.query.get_or_404(student_id)
+
+    if student.student_group_id == group_id:
+        student.student_group_id = None
+        db.session.commit()
+        flash('Студент успешно удален из группы', 'success')
+    else:
+        flash('Студент не состоит в данной группе', 'error')
+
+    return redirect(url_for('groups.singlegroup', group_id=group_id))
+
+
+@groups.route("/remove_group/<int:group_id>", methods=['GET', 'POST'])
+@login_required
+def remove_group(group_id):
+    group_del = groupdata.query.get_or_404(group_id)
+
+    db.session.delete(group_del)
+    db.session.commit()
+
+    flash('Группа успешно удалена', 'success')
+
+    return redirect(url_for('groups.group', cu=current_user.get_id()))
