@@ -43,4 +43,4 @@ class trainer(db.Model):
 
     def __repr__(self):
         return f"trainer'{self.trainer_id}')"
-
+      

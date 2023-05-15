@@ -5,6 +5,7 @@ from flask_login import login_user, login_required, current_user
 from .models import group as groupdata
 from ..account.models import trainer
 from ..students.models import students
+from .forms import GroupForm1
 
 groups = Blueprint('groups', __name__, template_folder='templates', static_folder='static')
 
@@ -47,3 +48,33 @@ def singlegroup(group_id):
         .count()
     return render_template('groups/group.html', group=gr, grinf=grinf, students=sts, num_students=num_students,
                            cu=current_user.get_id())
+
+
+@groups.route("/group_add", methods=['GET', 'POST'])
+@login_required
+def group_add():
+    form = GroupForm1()
+
+    if form.validate_on_submit():
+        g = groupdata(
+            group_name=form.group_name.data,
+            group_trainer_id=form.group_trainer.data,
+        )
+
+        db.session.add(g)
+        db.session.commit()
+
+        selected_students = form.group_students.data
+        for account_id in selected_students:
+            acc = accountdata.query.filter_by(account_id=account_id).first()
+            if acc:
+                student = students.query.filter(students.student_id == acc.account_student_id).first()
+                if student:
+                    student.student_group_id = g.group_id
+
+        db.session.commit()
+
+        flash('Группа успешно создана', 'success')
+        return redirect("group")
+
+    return render_template('groups/group_add.html', form=form, cu=current_user.get_id())
