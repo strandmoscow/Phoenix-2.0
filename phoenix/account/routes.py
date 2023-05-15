@@ -23,7 +23,7 @@ account = Blueprint('account', __name__, template_folder='templates', static_fol
 @account.route("/acc_edit", methods=['GET', 'POST'])
 @login_required
 def acc_edit():
-
+    acc = accountdata.query.get(current_user.get_id())
     form = AccountForm1()
 
     if form.validate_on_submit():
@@ -41,7 +41,8 @@ def acc_edit():
     profile_icon = './static/svg/abstract-user-flat-4.svg'
     eye_icon = './static/svg/eye.svg'
     return render_template('account/account_edit.html', img=profile_icon, eye=eye_icon, form=form,
-                           cu=current_user.get_id())
+                           cu=current_user.get_id(), acc=acc)
+
 
 @account.route('/account/<int:account_id>')
 def accountfull(account_id):
@@ -51,16 +52,16 @@ def accountfull(account_id):
     if acc:
         if acc.account_trainer_id:
             tr = trainer.query.get(acc.account_trainer_id)
-            return render_template('account/account.html', img=profile_icon, eye=eye_icon, acc=acc, trainer=tr, cu=current_user.get_id())
+            return render_template('account/account.html', img=profile_icon, eye=eye_icon, acc=acc, trainer=tr, cu=int(current_user.get_id()))
         elif acc.account_student_id:
             st = students.query.get(acc.account_student_id)
-            return render_template('account/account.html', img=profile_icon, eye=eye_icon, acc=acc, student=st, cu=current_user.get_id())
+            return render_template('account/account.html', img=profile_icon, eye=eye_icon, acc=acc, student=st, cu=int(current_user.get_id()))
         elif acc.account_parent_id:
             pr = parents.query.get(acc.account_parent_id)
-            return render_template('account/account.html', img=profile_icon, eye=eye_icon, acc=acc, parent=pr, cu=current_user.get_id())
+            return render_template('account/account.html', img=profile_icon, eye=eye_icon, acc=acc, parent=pr, cu=int(current_user.get_id()))
         elif acc.account_manager_id:
             mr = manager.query.get(acc.account_manager_id)
-            return render_template('account/account.html', img=profile_icon, eye=eye_icon, acc=acc, manager=mr, cu=current_user.get_id())
+            return render_template('account/account.html', img=profile_icon, eye=eye_icon, acc=acc, manager=mr, cu=int(current_user.get_id()))
         else:
-            return render_template('account/account.html', img=profile_icon, eye=eye_icon, acc=acc, cu=current_user.get_id())
+            return render_template('account/account.html', img=profile_icon, eye=eye_icon, acc=acc, cu=int(current_user.get_id()))
     return "Account not found", 404
