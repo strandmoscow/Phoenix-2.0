@@ -1,11 +1,13 @@
 from flask import Blueprint, redirect, render_template, session, request, flash, url_for
 from flask_login import login_user, login_required, current_user, user_logged_in, user_unauthorized
 from werkzeug.security import generate_password_hash, check_password_hash
+
 from .forms import AccountForm1
+from .models import Parents, Manager, Trainer
+
 from ..registration.models import Account
 from ..registration.models import ValAccount
-from .models import Parents, Manager, Trainer
-from ..students.models import Students
+from ..student.models import Students
 from .. import db, auth
 
 
