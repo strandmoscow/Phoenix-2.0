@@ -11,7 +11,13 @@
             </div>
             <div class="col-md-8">
               <div class="card-body p-4">
-                <h4>Информация о группе</h4>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">Информация о группе</h4>
+                    <a href="{{ url_for('groups.group_edit', group_id=group.group_id) }}" class="btn btn-transparent ml-2">
+                        <img src="{{ url_for('static', filename='svg/icons8-edit.svg') }}" alt="Редактировать" width="16" height="16">
+                        Редактировать
+                    </a>
+                </div>
                 <hr class="mt-0 mb-4">
                 <div class="row pt-1">
                   <div class="col-6 mb-3">
@@ -22,8 +28,9 @@
                   </div>
                 </div>
                 <div class="row pt-1">
-                  <div class="col-6 mb-3">
-                    <h5>Ученики в группе</h5>
+                  <div class="col-6 mb-3 d-flex align-items-center">
+                        <h5 class="mr-3">Ученики в группе</h5>
+                        <a href="{{ url_for('groups.add_students', group_id=group.group_id) }}" class="btn btn-primary btn-sm align-self-center">+</a>
                   </div>
                     <div class="col-6 mb-3">
                     <h5>Общее количество учеников: {{num_students}}</h5>
@@ -33,6 +40,7 @@
                           <thead>
                             <tr>
                                 <th scope="col">ФИО</th>
+                                <th scope="col"></th>
                             </tr>
                           </thead>
                         <tbody>
@@ -40,6 +48,11 @@
                             <tr>
                                 <td>
                                     <a href="{{url_for('account.accountfull', account_id=student.account_id)}}">{{student.account_surname}} {{student.account_name}} {% if account_patronymic %} {{student.patronymic}} {% endif %}</a>
+                                </td>
+                                <td>
+                                     <a href="{{ url_for('groups.remove_student', group_id=group.group_id, student_id=student.student_id) }}" class="btn btn-transparent btn-sm">
+                                         <img src="{{ url_for('static', filename='svg/delete-button-svgrepo-com.svg') }}" alt="Удалить" width="16" height="16">
+                                     </a>
                                 </td>
                             </tr>
                         {% endfor %}

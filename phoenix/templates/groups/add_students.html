@@ -5,6 +5,9 @@
 <main class="d-flex flex-nowrap">
     {% include 'side_menu.html' %}
     <div class="container-fluid h-200">
+        <br>
+        <h4>Добавить студентов в группу "{{group.group_name}}"</h4>
+        <br>
         <div class="row">
             <form method="post">
                 {{ form.hidden_tag() }}

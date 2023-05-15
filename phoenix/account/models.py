@@ -40,8 +40,5 @@ class trainer(db.Model):
     federation_federation_id = db.Column(db.Integer)
     account = db.relationship('account', backref='trainer')
 
-    def full_name(self):
-        return f"{self.account[0].account_name} {self.account[0].account_patronymic} {self.account[0].account_surname}"
-
     def __repr__(self):
         return f"trainer'{self.trainer_id}')"
