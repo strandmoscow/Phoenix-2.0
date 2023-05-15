@@ -1,7 +1,9 @@
 from .. import db
 
 
-class students(db.Model):
+class Students(db.Model):
+    __tablename__ = 'students'
+
     student_id = db.Column(db.Integer, primary_key=True, unique=True)
     student_health_insurance = db.Column(db.Integer)
     student_birth_certificate = db.Column(db.Integer)

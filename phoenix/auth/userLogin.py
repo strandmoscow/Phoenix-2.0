@@ -1,12 +1,12 @@
 from .. import db
-from .models import account
+from .models import Account
 from flask_login import UserMixin
 
 
 class UserLogin(UserMixin):
     def getUser(self, user_id):
         try:
-            res = account.query.filter_by(account_id=user_id).first()
+            res = Account.query.filter_by(account_id=user_id).first()
             if not res:
                 print("Пользователь не найден")
                 return False

@@ -5,7 +5,7 @@ from .. import db, login_manager
 
 from .userLogin import UserLogin
 from .forms import Login
-from .models import account
+from .models import Account
 
 authentication = Blueprint('auth', __name__, template_folder='templates')
 
@@ -20,7 +20,7 @@ def load_user(user_id):
 def auth():
     form = Login()
     if form.validate_on_submit():
-        user = account.query.filter_by(account_email=form.email.data).first()
+        user = Account.query.filter_by(account_email=form.email.data).first()
         if user and check_password_hash(user.account_password, form.password.data):
             print(str(user.account_id))
             userLogin = UserLogin().create(user)

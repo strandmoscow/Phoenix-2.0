@@ -1,8 +1,8 @@
 from flask import Blueprint, redirect, render_template, session, request, flash
 from werkzeug.security import generate_password_hash, check_password_hash
-from ..registration.models import account as accountdata
-from .models import students as studentsdata
-from ..groups.models import group as groupdata
+from ..registration.models import Account
+from .models import Students
+from ..groups.models import Group
 from .. import db, auth
 from flask_login import login_user, login_required, current_user
 
@@ -12,13 +12,13 @@ students = Blueprint('students', __name__, template_folder='templates', static_f
 @students.route("/student", methods=['GET', 'POST'])
 @login_required
 def student():
-    accs = db.session.query(accountdata.account_id, accountdata.account_surname, accountdata.account_name,
-                            accountdata.account_patronymic, studentsdata.student_health_insurance,
-                            studentsdata.student_birth_certificate, studentsdata.student_snils,
-                            groupdata.group_name, groupdata.group_id).\
-        join(studentsdata, accountdata.account_student_id == studentsdata.student_id).\
-        join(groupdata, studentsdata.student_group_id == groupdata.group_id).all()
+    accs = db.session.query(Account.account_id, Account.account_surname, Account.account_name,
+                            Account.account_patronymic, Students.student_health_insurance,
+                            Students.student_birth_certificate, Students.student_snils,
+                            Group.group_name, Group.group_id).\
+        join(Students, Account.account_student_id == Students.student_id).\
+        join(Group, Students.student_group_id == Group.group_id).all()
 
-    # accs = accountdata.query.filter(accountdata.account_student_id != None).all()
+    # accs = Account.query.filter(Account.account_student_id != None).all()
 
     return render_template('students/students.html', accs=accs, cu=current_user.get_id())
