@@ -33,12 +33,15 @@
                         <td>{{v.val_account_phone}}</td>
                         <td>{{v.val_account_email}}</td>
                         <td>
-                            <a class="btn btn-outline-success" href="{{url_for('registration.regi1')}}"
-                                type="button">Подтвердить</a>
-                            <a class="btn btn-outline-warning" href="{{url_for('registration.regi1')}}"
-                                type="button">Редактировать</a>
-                            <a class="btn btn-outline-danger" href="{{url_for('registration.regi1')}}"
-                                type="button">Удалить</a>
+                            <a class="btn btn-outline-success"
+                               href="{{ url_for('validation.val_confirm', account_id=v.account_id) }}"
+                               type="button">Подтвердить</a>
+                            <a class="btn btn-outline-warning"
+                               href="#"
+                               type="button">Редактировать</a>
+                            <a class="btn btn-outline-danger"
+                               href="{{ url_for('validation.val_del', account_id=v.account_id) }}"
+                               type="button">Удалить</a>
                         </td>
                     </tr>
                 {% endfor %}

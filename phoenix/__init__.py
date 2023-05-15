@@ -48,14 +48,14 @@ def create_app():
 
         # register routes with blueprint
         app.register_blueprint(main)
-        app.register_blueprint(registration)
-        app.register_blueprint(authentication)
-        app.register_blueprint(account)
-        app.register_blueprint(students)
-        app.register_blueprint(groups)
-        app.register_blueprint(validation)
-        app.register_blueprint(trainer)
-        app.register_blueprint(club)
-        app.register_blueprint(gym)
+        app.register_blueprint(registration, url_prefix="/reg")
+        app.register_blueprint(authentication, url_prefix="/auth")
+        app.register_blueprint(account, url_prefix="/account")
+        app.register_blueprint(students, url_prefix="/students")
+        app.register_blueprint(groups, url_prefix="/group")
+        app.register_blueprint(validation, url_prefix="/val")
+        app.register_blueprint(trainer, url_prefix="/trainer")
+        app.register_blueprint(club, url_prefix="/club")
+        app.register_blueprint(gym, url_prefix="/gym")
 
         return app

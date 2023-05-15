@@ -1,8 +1,9 @@
-from flask import Blueprint, redirect, render_template, session, request, flash
+from flask import Blueprint, redirect, render_template, session, request, flash, url_for
 from flask_login import login_user, login_required, current_user, user_logged_in, user_unauthorized
 from werkzeug.security import generate_password_hash, check_password_hash
 from .forms import AccountForm1
 from ..registration.models import account as accountdata
+from ..registration.models import val_account as val_accountdata
 from .models import passport, parents, manager, trainer
 from ..students.models import students
 from .. import db, auth
@@ -10,17 +11,7 @@ from .. import db, auth
 
 account = Blueprint('account', __name__, template_folder='templates', static_folder='static')
 
-
-# @account.route("/base_acc", methods=['GET', 'POST'])
-# @login_required
-# def base_acc():
-#     profile_icon = './static/svg/abstract-user-flat-4.svg'
-#     eye_icon = './static/svg/eye.svg'
-#     acc = accountdata.query.filter_by(account_id=current_user.get_id()).first()
-#     return render_template('account/account.html', img=profile_icon, eye=eye_icon, acc=acc, cu=user_logged_in)
-
-
-@account.route("/acc_edit", methods=['GET', 'POST'])
+@account.route("/edit", methods=['GET', 'POST'])
 @login_required
 def acc_edit():
     acc = accountdata.query.get(current_user.get_id())
@@ -28,15 +19,22 @@ def acc_edit():
 
     if form.validate_on_submit():
         acc = accountdata.query.filter_by(account_id=current_user.get_id()).first()
-        acc.account_name = form.firstname.data
-        acc.account_surname = form.surname.data
-        acc.account_birthday = form.dob.data
-        acc.account_phone = form.phone.data
-        acc.account_email = form.email.data
+        v = val_accountdata(
+            account_id=int(current_user.get_id()),
+            val_account_name=form.firstname.data,
+            val_account_surname=form.surname.data,
+            val_account_patronymic=form.patronymic.data,
+            val_account_email=form.email.data,
+            val_account_birthday=form.dob.data,
+            val_account_phone=form.phone.data
+        )
+        db.session.add(v)
+
+        acc.account_validated = False
 
         db.session.commit()
-        flash('The account has been successfully updated', 'success')
-        return redirect("base_acc")
+        flash('Your data is on validation', 'success')
+        return redirect(url_for('account.accountfull', account_id=current_user.get_id()))
 
     profile_icon = './static/svg/abstract-user-flat-4.svg'
     eye_icon = './static/svg/eye.svg'
@@ -44,7 +42,7 @@ def acc_edit():
                            cu=current_user.get_id(), acc=acc)
 
 
-@account.route('/account/<int:account_id>')
+@account.route('/<int:account_id>')
 def accountfull(account_id):
     profile_icon = './static/svg/abstract-user-flat-4.svg'
     eye_icon = './static/svg/eye.svg'
