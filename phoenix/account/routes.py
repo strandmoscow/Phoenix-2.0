@@ -2,24 +2,25 @@ from flask import Blueprint, redirect, render_template, session, request, flash,
 from flask_login import login_user, login_required, current_user, user_logged_in, user_unauthorized
 from werkzeug.security import generate_password_hash, check_password_hash
 from .forms import AccountForm1
-from ..registration.models import account as accountdata
-from ..registration.models import val_account as val_accountdata
-from .models import passport, parents, manager, trainer
-from ..students.models import students
+from ..registration.models import Account
+from ..registration.models import ValAccount
+from .models import Parents, Manager, Trainer
+from ..students.models import Students
 from .. import db, auth
 
 
 account = Blueprint('account', __name__, template_folder='templates', static_folder='static')
 
+
 @account.route("/edit", methods=['GET', 'POST'])
 @login_required
 def acc_edit():
-    acc = accountdata.query.get(current_user.get_id())
+    acc = Account.query.get(current_user.get_id())
     form = AccountForm1()
 
     if form.validate_on_submit():
-        acc = accountdata.query.filter_by(account_id=current_user.get_id()).first()
-        v = val_accountdata(
+        acc = Account.query.filter_by(account_id=current_user.get_id()).first()
+        v = ValAccount(
             account_id=int(current_user.get_id()),
             val_account_name=form.firstname.data,
             val_account_surname=form.surname.data,
@@ -46,19 +47,19 @@ def acc_edit():
 def accountfull(account_id):
     profile_icon = './static/svg/abstract-user-flat-4.svg'
     eye_icon = './static/svg/eye.svg'
-    acc = accountdata.query.get(account_id)
+    acc = Account.query.get(account_id)
     if acc:
         if acc.account_trainer_id:
-            tr = trainer.query.get(acc.account_trainer_id)
+            tr = Trainer.query.get(acc.account_trainer_id)
             return render_template('account/account.html', img=profile_icon, eye=eye_icon, acc=acc, trainer=tr, cu=int(current_user.get_id()))
         elif acc.account_student_id:
-            st = students.query.get(acc.account_student_id)
+            st = Students.query.get(acc.account_student_id)
             return render_template('account/account.html', img=profile_icon, eye=eye_icon, acc=acc, student=st, cu=int(current_user.get_id()))
         elif acc.account_parent_id:
-            pr = parents.query.get(acc.account_parent_id)
+            pr = Parents.query.get(acc.account_parent_id)
             return render_template('account/account.html', img=profile_icon, eye=eye_icon, acc=acc, parent=pr, cu=int(current_user.get_id()))
         elif acc.account_manager_id:
-            mr = manager.query.get(acc.account_manager_id)
+            mr = Manager.query.get(acc.account_manager_id)
             return render_template('account/account.html', img=profile_icon, eye=eye_icon, acc=acc, manager=mr, cu=int(current_user.get_id()))
         else:
             return render_template('account/account.html', img=profile_icon, eye=eye_icon, acc=acc, cu=int(current_user.get_id()))

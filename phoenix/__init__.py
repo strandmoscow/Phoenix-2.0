@@ -45,6 +45,7 @@ def create_app():
         from phoenix.trainer.routes import trainer
         from phoenix.clubs.routes import club
         from phoenix.gyms.routes import gym
+        from phoenix.attendance.routes import attendance
 
         # register routes with blueprint
         app.register_blueprint(main)
@@ -57,5 +58,6 @@ def create_app():
         app.register_blueprint(trainer, url_prefix="/trainer")
         app.register_blueprint(club, url_prefix="/club")
         app.register_blueprint(gym, url_prefix="/gym")
+        app.register_blueprint(attendance, url_prefix="/attendance")
 
         return app

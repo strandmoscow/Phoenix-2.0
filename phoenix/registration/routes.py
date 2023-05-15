@@ -1,7 +1,7 @@
 from flask import Blueprint, redirect, render_template, session, request
 from flask_login import current_user, user_logged_in
 from .forms import RegistrationForm1, RegistrationForm2
-from .models import account, val_account
+from .models import Account, ValAccount
 from werkzeug.security import generate_password_hash, check_password_hash
 from .. import db
 
@@ -40,7 +40,7 @@ def regi2():
 @registration.route("/regi3", methods=['GET', 'POST'])
 def regi3():
     # try:
-    a = account(
+    a = Account(
         account_name=session['regi']['fname'],
         account_surname=session['regi']['surname'],
         account_patronymic=session['regi']['patronymic'],
@@ -53,8 +53,8 @@ def regi3():
     db.session.add(a)
     db.session.commit()
 
-    aid = db.session.query(account.account_id).filter(account.account_email == session['regi']['email']).first()
-    v = val_account(
+    aid = db.session.query(Account.account_id).filter(Account.account_email == session['regi']['email']).first()
+    v = ValAccount(
         account_id=aid[0],
         val_account_name=session['regi']['fname'],
         val_account_surname=session['regi']['surname'],

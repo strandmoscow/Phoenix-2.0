@@ -1,7 +1,9 @@
 from .. import db
 
 
-class account(db.Model):
+class Account(db.Model):
+    __tablename__ = 'account'
+
     account_id = db.Column(db.Integer, primary_key=True, unique=True)
     account_name = db.Column(db.String(150))
     account_patronymic = db.Column(db.String(50))
@@ -16,13 +18,15 @@ class account(db.Model):
     account_manager_id = db.Column(db.Integer, db.ForeignKey('manager.manager_id'))
     passport_passport_id = db.Column(db.Integer, db.ForeignKey('passport.passport_id'))
     account_validated = db.Column(db.Boolean)
-    students = db.relationship('students', backref='account')
+    students = db.relationship('Students', backref='account')
 
     def __repr__(self):
         return f"Account('{self.account_id}')"
 
 
-class val_account(db.Model):
+class ValAccount(db.Model):
+    __tablename__ = 'val_account'
+
     val_account_id = db.Column(db.Integer, primary_key=True, unique=True)
     account_id = db.Column(db.Integer)
     val_account_name = db.Column(db.String(150))
