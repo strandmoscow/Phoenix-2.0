@@ -13,8 +13,12 @@
               <div class="card-body p-4">
                 <div class="d-flex justify-content-between align-items-center">
                     <h4 class="mb-0">Информация о группе</h4>
+                    <a href="{{ url_for('attendance.att', group_id=group.group_id) }}" class="btn btn-transparent ml-2">
+                        <img src="{{ url_for('static', filename='svg/att.svg') }}" alt="Посещения" width="16" height="16">
+                        Посещения
+                    </a>
                     <a href="{{ url_for('groups.group_edit', group_id=group.group_id) }}" class="btn btn-transparent ml-2">
-                        <img src="{{ url_for('static', filename='svg/icons8-edit.svg') }}" alt="Редактировать" width="16" height="16">
+                        <img src="{{ url_for('static', filename='svg/edit.svg') }}" alt="Редактировать" width="16" height="16">
                         Редактировать
                     </a>
                 </div>
@@ -47,10 +51,14 @@
                         {% for student in students %}
                             <tr>
                                 <td>
-                                    <a href="{{url_for('account.accountfull', account_id=student.account_id)}}">{{student.account_surname}} {{student.account_name}} {% if account_patronymic %} {{student.patronymic}} {% endif %}</a>
+                                    <a href="{{url_for('account.accountfull', account_id=student.account_id)}}">
+                                        {{student.account_surname}} {{student.account_name}}
+                                        {% if account_patronymic %} {{student.patronymic}}
+                                        {% endif %}</a>
                                 </td>
                                 <td>
-                                     <a href="{{ url_for('groups.remove_student', group_id=group.group_id, student_id=student.student_id) }}" class="btn btn-transparent btn-sm">
+                                     <a href="{{ url_for('groups.remove_student', group_id=group.group_id, student_id=student.account_id) }}"
+                                        class="btn btn-transparent btn-sm">
                                          <img src="{{ url_for('static', filename='svg/delete-button-svgrepo-com.svg') }}" alt="Удалить" width="16" height="16">
                                      </a>
                                 </td>

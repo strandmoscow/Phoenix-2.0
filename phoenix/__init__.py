@@ -39,7 +39,7 @@ def create_app():
         from phoenix.registration.routes import registration
         from phoenix.auth.routes import authentication
         from phoenix.account.routes import account
-        from phoenix.students.routes import students
+        from phoenix.student.routes import students
         from phoenix.groups.routes import groups
         from phoenix.validation.routes import validation
         from phoenix.trainer.routes import trainer
