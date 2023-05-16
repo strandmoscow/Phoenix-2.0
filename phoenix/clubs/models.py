@@ -13,7 +13,7 @@ class Club(db.Model):
     federation = db.relationship('Federation')
 
     def __repr__(self):
-        return f"<club {self.club_id}>"
+        return f"<Club {self.club_id}>"
 
 
 class Federation(db.Model):
@@ -23,7 +23,7 @@ class Federation(db.Model):
     sport = db.relationship('Sport')
 
     def __repr__(self):
-        return f"<federation {self.federation_id}>"
+        return f"<Federation {self.federation_id}>"
 
 
 class Sport(db.Model):
@@ -31,7 +31,7 @@ class Sport(db.Model):
     sport_name = db.Column(db.String(100), nullable=False)
 
     def __repr__(self):
-        return f"<sport {self.sport_id}>"
+        return f"<Sport {self.sport_id}>"
 
 
 class Address(db.Model):
@@ -46,7 +46,7 @@ class Address(db.Model):
     city = db.relationship('City')
 
     def __repr__(self):
-        return f'<аddress {self.address_id}>'
+        return f'<Address {self.address_id}>'
 
 
 class Country(db.Model):
@@ -54,7 +54,7 @@ class Country(db.Model):
     country_name = db.Column(db.String(256), nullable=False)
 
     def __repr__(self):
-        return f'<country {self.country_id}>'
+        return f'<Country {self.country_id}>'
 
 
 class Region(db.Model):
@@ -65,7 +65,7 @@ class Region(db.Model):
     country = db.relationship('Country', backref=db.backref('region', lazy=True))
 
     def __repr__(self):
-        return f'<region {self.region_id}>'
+        return f'<Region {self.region_id}>'
 
 
 class City(db.Model):
@@ -75,4 +75,4 @@ class City(db.Model):
     region = db.relationship('Region', backref='city')
 
     def __repr__(self):
-        return f'<city {self.city_id}>'
+        return f'<City {self.city_id}>'

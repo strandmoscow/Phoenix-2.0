@@ -53,7 +53,7 @@ def att(group_id):
                 att_to_func[key].append('H')
 
     return render_template("attendance/attendance_of_group.html",
-                           group=group_id,
+                           group=group,
                            dates=att_by_date.keys(),
                            att_to_func=att_to_func,
                            cu=current_user.get_id())
