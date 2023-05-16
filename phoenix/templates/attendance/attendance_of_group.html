@@ -9,7 +9,7 @@
         <div class="container-fluid flex-nowrap">
             <br>
             <div class="d-flex align-items-center">
-                <h1 class="mr-3">Посещение группы {{ group }}</h1>
+                <h1 class="mr-3">Посещение группы {{ group.group_name }}</h1>
             </div>
             <br>
         <table class="table table-hover">
@@ -25,11 +25,17 @@
             {% for personal_attendance in att_to_func.keys() %}
                 <tr>
                     <td>
-                        <a href="#">{{ personal_attendance }}</a>
+                        <a href="{{url_for('account.accountfull', account_id=personal_attendance.split(':')[0])}}">
+                            {{ personal_attendance.split(':')[1] }}
+                        </a>
                     </td>
                 {% for pa in att_to_func[personal_attendance] %}
                     <td>
-                        <a>{{ pa }}</a>
+                        {% if pa %}
+                            <a> ✓ </a>
+                        {% else %}
+                            <a> Н </a>
+                        {% endif %}
                     </td>
                 {% endfor %}
                 </tr>

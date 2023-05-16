@@ -31,29 +31,26 @@ def att(group_id):
         .filter(Group.group_id == group_id) \
         .all()
 
-    print(sts)
-    print(att_by_date)
-
     att_to_func = dict()
 
     for p in sts:
         if p[3]:
-            key = p[1] + ' ' + p[2] + ' ' + p[3]
+            key = str(p[0]) + ":" + p[1] + ' ' + p[2] + ' ' + p[3]
         else:
-            key = p[1] + ' ' + p[2]
+            key = str(p[0]) + ":" + p[1] + ' ' + p[2]
         att_to_func[key] = []
         for date in att_by_date.keys():
             flag = True
             for a in att_by_date[date]:
                 flag = True
                 if p[0] == a.attendance_student_id:
-                    att_to_func[key].append('✓')
+                    att_to_func[key].append(True)
                     flag = False
             if flag:
-                att_to_func[key].append('H')
+                att_to_func[key].append(False)
 
     return render_template("attendance/attendance_of_group.html",
-                           group=group_id,
+                           group=group,
                            dates=att_by_date.keys(),
                            att_to_func=att_to_func,
                            cu=current_user.get_id())
