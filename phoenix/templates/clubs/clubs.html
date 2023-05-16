@@ -9,12 +9,15 @@
         <div class="row">
             <div class="col-md-12">
                 <br>
-                <h1>Клубы</h1>
+                <div class="d-flex align-items-center">
+                <h1 class="mr-3">Клубы</h1>
+                    <a href="{{url_for('club.club_add')}}" class="btn btn-primary">+</a>
+                </div>
                 <br>
                 <table class="table table-hover">
                     <thead>
                     <tr>
-                        {% for item in ["Название","Город", "Адрес", "Спорт"] %}
+                        {% for item in ["Название", "Телефон", "Email", "Город", "Адрес", "Спорт", "", ""] %}
                         <th scope="col">{{ item }}</th>
                         {% endfor %}
                     </tr>
@@ -23,9 +26,21 @@
                     {% for club in clubs %}
                         <tr>
                             <td>{{club.club_name}}</td>
+                            <td>{{club.club_phone}}</td>
+                            <td>{{club.club_email}}</td>
                             <td>{{club.address.city.city_name}}</td>
                             <td>{{ club.address.address_street }} {{ club.address.address_house }} {{ club.address.address_building }}</td>
                             <td>{{ club.federation.sport.sport_name }}</td>
+                            <td>
+                                <a href="{{ url_for('club.club_edit', club_id=club.club_id) }}" class="btn btn-transparent btn-sm">
+                                    <img src="{{ url_for('static', filename='svg/edit.svg') }}" alt="Редактировать" width="16" height="16">
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ url_for('club.remove_club', club_id=club.club_id) }}" class="btn btn-transparent btn-sm">
+                                    <img src="{{ url_for('static', filename='svg/delete-button-svgrepo-com.svg') }}" alt="Удалить" width="16" height="16">
+                                </a>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
