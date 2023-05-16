@@ -44,7 +44,7 @@ def singlegroup(group_id):
         .filter(Group.group_id == group_id) \
         .all()
 
-    print(sts)
+    # print(sts)
     return render_template('groups/group.html', group=gr, grinf=grinf, students=sts, num_students=len(sts),
                            cu=current_user.get_id())
 

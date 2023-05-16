@@ -16,20 +16,23 @@
             <thead>
             <tr>
                 <th scope="col">ФИО</th>
-                {% for day in days %}
-                    <th scope="col"> {% day %}</th>
+                {% for date in dates %}
+                    <th scope="col"> {{ date }}</th>
                 {% endfor %}
             </tr>
             </thead>
             <tbody>
-            {% for personal_attendance in students_attendance %}
-                {% for pa in personal_attendance %}
-                    <tr>
-                        <td>
-                            <a>{{ pa }}</a>
-                        </td>
-                    </tr>
+            {% for personal_attendance in att_to_func.keys() %}
+                <tr>
+                    <td>
+                        <a href="#">{{ personal_attendance }}</a>
+                    </td>
+                {% for pa in att_to_func[personal_attendance] %}
+                    <td>
+                        <a>{{ pa }}</a>
+                    </td>
                 {% endfor %}
+                </tr>
             {% endfor %}
             </tbody>
         </table>
