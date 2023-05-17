@@ -9,7 +9,7 @@ class Gym(db.Model):
     building = db.relationship('Building', backref='gym')
 
     def __repr__(self):
-        return f'<gym {self.gym_id}>'
+        return f'<Gym {self.gym_id}>'
 
 
 class Building(db.Model):
@@ -22,4 +22,4 @@ class Building(db.Model):
     club = db.relationship("Club")
 
     def __repr__(self):
-        return f'<building {self.building_id}>'
+        return f'<Building {self.building_id}>'

@@ -9,12 +9,15 @@
         <div class="row">
             <div class="col-md-12">
                 <br>
-                <h1>Залы</h1>
+                <div class="d-flex align-items-center">
+                <h1 class="mr-3">Залы</h1>
+                    <a href="{{url_for('gym.gym_add')}}" class="btn btn-primary">+</a>
+                </div>
                 <br>
                 <table class="table table-hover">
                     <thead>
                     <tr>
-                        {% for item in ["Название","Здание", "Адрес здания", "Клуб"] %}
+                        {% for item in ["Название","Здание", "Адрес здания", "Клуб", "", ""] %}
                         <th scope="col">{{ item }}</th>
                         {% endfor %}
                     </tr>
@@ -26,6 +29,16 @@
                             <td>{{ gym.building.building_name }}</td>
                             <td>г.{{ gym.building.address.city.city_name}}, {{ gym.building.address.address_street}}, {{ gym.building.address.address_house}}, {{ gym.building.address.address_building}}</td>
                             <td>{{ gym.building.club.club_name }}</td>
+                            <td>
+                                <a href="{{ url_for('gym.gym_edit', gym_id=gym.gym_id) }}" class="btn btn-transparent btn-sm">
+                                    <img src="{{ url_for('static', filename='svg/edit.svg') }}" alt="Редактировать" width="16" height="16">
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ url_for('gym.remove_gym', gym_id=gym.gym_id) }}" class="btn btn-transparent btn-sm">
+                                    <img src="{{ url_for('static', filename='svg/delete-button-svgrepo-com.svg') }}" alt="Удалить" width="16" height="16">
+                                </a>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
