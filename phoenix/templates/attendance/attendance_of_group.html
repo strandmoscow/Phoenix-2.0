@@ -22,14 +22,14 @@
                 <br>
             </div>
             <div class="row">
-                <h2 class="mr-3">Посещение группы {{ group.group_name }}</h2>
+                <h2 class="mr-3">Посещение группы "{{ group.group_name }}"</h2>
             </div>
             <table class="table table-hover">
                 <thead>
                 <tr>
                     <th scope="col">ФИО</th>
                     {% for date in dates %}
-                        <th scope="col"> {{ date }}</th>
+                        <th scope="col"> {{ date.strftime('%m.%d') }}</th>
                     {% endfor %}
                 </tr>
                 </thead>
@@ -43,11 +43,13 @@
                         </td>
                     {% for pa in att_to_func[personal_attendance] %}
                         <td>
+                            <a>
                             {% if pa %}
-                                <a> ✓ </a>
+                                ✓
                             {% else %}
-                                <a> Н </a>
+                                Н
                             {% endif %}
+                            </a>
                         </td>
                     {% endfor %}
                     </tr>

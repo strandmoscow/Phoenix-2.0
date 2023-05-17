@@ -19,7 +19,3 @@ def page_not_found(error):
     return render_template('404.html', title="Oops! Page Not Found", error=error, cu=current_user.get_id()), 404
 
 
-@current_app.errorhandler(404)
-def page_not_found(error):
-    return render_template("404.html", title="Page Not Found", cu=current_user.get_id())
-

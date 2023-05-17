@@ -13,4 +13,3 @@ class AttendanceForm(FlaskForm):
                      format='%H:%M',
                      default=datetime.now())
     gym = SelectField("Зал")
-    attendance = FieldList(BooleanField(), min_entries=1, label="Посещения")

@@ -1,9 +1,10 @@
-from flask import Blueprint, redirect, render_template, session, request, flash
+from flask import Blueprint, redirect, render_template, session, request, flash, url_for
 from flask_login import login_user, login_required, current_user
 from collections import namedtuple
 
 from .models import Attendance, Lesson
 from .forms import AttendanceForm
+from datetime import datetime
 
 from .. import db
 from ..groups.models import Group
@@ -43,7 +44,6 @@ def att(group_id):
         for date in att_by_date.keys():
             flag = True
             for a in att_by_date[date]:
-                flag = True
                 if p[0] == a.attendance_student_id:
                     att_to_func[key].append(True)
                     flag = False
@@ -77,7 +77,6 @@ def att_new(group_id):
             att_list.append(AttOfPerson(p[0], p[1] + ' ' + p[2]))
 
     data = {'att': att_list}
-    print(data)
 
     GymT = namedtuple('GymT', ['ID', 'Name'])
     gym_list = []
@@ -89,7 +88,30 @@ def att_new(group_id):
     form = AttendanceForm(data=data)
     form.gym.choices = gym_list
 
+    if form.validate_on_submit():
+        lesson = Lesson(
+            lesson_name=f"g:{group_id}_{form.date.data}_{form.time.data}",
+            lesson_datetime=datetime.combine(form.date.data, form.time.data),
+            lesson_group_id=group_id,
+            lesson_gym_id=form.gym.data
+        )
+        db.session.add(lesson)
+        db.session.commit()
+        db.session.refresh(lesson)
+
+        for s in sts:
+            print(s)
+            if request.form.get(str(s[0])):
+                a = Attendance(
+                    attendance_lesson_id=lesson.lesson_id,
+                    attendance_student_id=s[0]
+                )
+                db.session.add(a)
+                db.session.commit()
+        return redirect(url_for('attendance.att', group_id=group.group_id))
+
     return render_template("attendance/attendance_new.html",
                            group=group,
                            cu=current_user.get_id(),
-                           form=form)
+                           form=form,
+                           sts=sts)

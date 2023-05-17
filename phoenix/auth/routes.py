@@ -1,7 +1,7 @@
 from flask import Blueprint, redirect, render_template, session, request, url_for
 from werkzeug.security import check_password_hash
 from flask_login import login_user, logout_user, current_user, user_logged_in
-from .. import db, login_manager
+from .. import db, login_manager, logout_required
 
 from .userLogin import UserLogin
 from .forms import Login
@@ -16,7 +16,8 @@ def load_user(user_id):
     return UserLogin().fromDB(user_id, db)
 
 
-@authentication.route("/auth", methods=['GET', 'POST'])
+@authentication.route("/", methods=['GET', 'POST'])
+@logout_required
 def auth():
     form = Login()
     if form.validate_on_submit():
@@ -35,6 +36,7 @@ def auth():
 
 
 @authentication.route("/exit")
+@logout_required
 def exit():
     logout_user()
     return redirect(url_for('main.index'))

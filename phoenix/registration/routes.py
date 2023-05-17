@@ -3,12 +3,13 @@ from flask_login import current_user, user_logged_in
 from .forms import RegistrationForm1, RegistrationForm2
 from .models import Account, ValAccount
 from werkzeug.security import generate_password_hash, check_password_hash
-from .. import db
+from .. import db, logout_required
 
 registration = Blueprint('registration', __name__, template_folder='templates')
 
 
 @registration.route("/regi1", methods=['GET', 'POST'])
+@logout_required
 def regi1():
     form = RegistrationForm1()
     regi = dict()
@@ -26,6 +27,7 @@ def regi1():
 
 
 @registration.route("/regi2", methods=['GET', 'POST'])
+@logout_required
 def regi2():
     form = RegistrationForm2()
     if request.method == 'POST':
@@ -38,6 +40,7 @@ def regi2():
 
 
 @registration.route("/regi3", methods=['GET', 'POST'])
+@logout_required
 def regi3():
     # try:
     a = Account(
@@ -67,8 +70,5 @@ def regi3():
     db.session.commit()
 
     session.pop('regi')
-    # except:
-    #     db.session.rollback()
-    #     print("Ошибка добавления в БД")
 
     return render_template('registration/registration3.html', password_dont_match=False, cu=current_user.get_id())
