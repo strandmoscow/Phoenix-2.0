@@ -16,30 +16,59 @@
         </div>
         <div class="row">
             <div class="d-flex align-items-center">
-                <h1 class="mr-3"> Новое занятие группы "{{ group.group_name }}" </h1>
+                <h2 class="mr-3"> Новое занятие группы "{{ group.group_name }}" </h2>
             </div>
-            <br>
         </div>
-        <form method="post">
-            {{ form.hidden_tag() }}
-                {% for field in form if field.name not in ['csrf_token', 'submit'] %}
-                <p>
-                    <h5>{{ field.label() }}</h5>
-                    {% if field.errors %}
-                        {{ field(class="invalid") }}
-                    <span class="invalid-feedback">
-                        {% for e in field.errors %}
-                        {{ e }}
+        <div class="row">
+            <div class="d-flex align-items-center">
+                <form method="post">
+                    {{ form.hidden_tag() }}
+                        {% for field in form if field.name not in ['csrf_token', 'submit'] %}
+                        <p>
+                            <h5>{{ field.label() }}</h5>
+                            {% if field.errors %}
+                                {{ field(class="invalid") }}
+                            <span class="invalid-feedback">
+                                {% for e in field.errors %}
+                                {{ e }}
+                                {% endfor %}
+                            </span>
+                            {% else %}
+                                {{ field(class="form-control") }}
+                            {% endif %}
+                        </p>
                         {% endfor %}
-                    </span>
-                    {% else %}
-                        {{ field(class="form-control") }}
-                    {% endif %}
-                </p>
-                {% endfor %}
-                <button type="submit" class="btn btn-primary">Продолжить</button>
-            </form>
-    </form>
+                        <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">ФИО</th>
+                            <th scope="col">Присутствие</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for personal_attendance in sts %}
+                            <tr>
+                                <td>
+                                    <a>
+                                        {{ personal_attendance[1] }} {{ personal_attendance[2] }}
+                                        {% if personal_attendance[3] %} {{ personal_attendance[3] }} {% endif %}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a>
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               name="{{ personal_attendance[0] }}">
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <button type="submit" class="btn btn-primary">Продолжить</button>
+                </form>
+            </div>
+        </div>
     </div>
 </main>
 

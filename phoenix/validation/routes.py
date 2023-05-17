@@ -1,13 +1,14 @@
 from flask import Blueprint, redirect, render_template, session, request, flash, url_for
 from flask_login import current_user
-from .. import db
 
+from .. import db, login_required
 from ..registration.models import Account, ValAccount
 
 validation = Blueprint('validation', __name__, template_folder='templates')
 
 
 @validation.route("/", methods=['GET', 'POST'])
+@login_required
 def val():
     val_table = ValAccount.query.all()
 
@@ -15,6 +16,7 @@ def val():
 
 
 @validation.route("/del/<int:account_id>")
+@login_required
 def val_del(account_id):
     ValAccount.query.filter_by(account_id=account_id).delete()
     db.session.commit()
@@ -23,6 +25,7 @@ def val_del(account_id):
 
 
 @validation.route("/confirm/<int:account_id>")
+@login_required
 def val_confirm(account_id):
     val_data = ValAccount.query.filter_by(account_id=account_id).one()
 

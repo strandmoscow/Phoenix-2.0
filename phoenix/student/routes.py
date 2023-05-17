@@ -1,12 +1,12 @@
 from flask import Blueprint, redirect, render_template, session, request, flash, Response, send_file
-from flask_login import login_user, login_required, current_user
+from flask_login import login_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from .models import Students
 
 from ..registration.models import Account
 from ..groups.models import Group
-from .. import db, auth
+from .. import db, login_required
 from openpyxl import Workbook
 from io import BytesIO
 
@@ -29,6 +29,7 @@ def student():
 
 
 @students.route('/export', methods=['GET'])
+@login_required
 def export_students_table():
     sts_table_data = db.session.query(Account.account_id, Account.account_surname, Account.account_name,
                             Account.account_patronymic, Students.student_health_insurance,
