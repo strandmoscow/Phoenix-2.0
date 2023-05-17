@@ -6,7 +6,8 @@ from .models import Building
 from .forms import GymForm1, GymForm2
 
 from ..clubs.models import Address
-from .. import db, login_required
+from ..decoraters import login_required
+from .. import db
 
 
 gym = Blueprint('gym', __name__, template_folder='templates', static_folder='static')

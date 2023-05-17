@@ -1,13 +1,12 @@
-from flask import Blueprint, redirect, render_template, session, request, flash, url_for
-from flask_login import login_user, current_user, user_logged_in, user_unauthorized
-from werkzeug.security import generate_password_hash, check_password_hash
-from ..registration.models import Account
-from ..student.models import Students
-from sqlalchemy.orm import joinedload
-from .. import db, login_required
-from .models import Club
-from .models import Federation, City, Address
+from flask import Blueprint, redirect, render_template, flash, url_for
+from flask_login import current_user
+
 from .forms import ClubForm1, ClubForm2
+from .models import Club
+from .models import Federation, Address
+
+from .. import db
+from ..decoraters import login_required
 
 club = Blueprint('club', __name__, template_folder='templates', static_folder='static')
 

@@ -3,8 +3,8 @@ from flask_login import LoginManager, current_user
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 import os
+
 from .config_vars import *
-from functools import wraps
 
 
 # app initialisation
@@ -71,36 +71,3 @@ def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
-
-def logout_required(func):
-    @wraps(func)
-    def decorated_function(*args, **kwargs):
-        if current_user.is_authenticated:
-            flash("You are already authenticated.", "info")
-            return redirect(url_for("main.index"))
-        return func(*args, **kwargs)
-
-    return decorated_function
-
-
-def login_required(func):
-    @wraps(func)
-    def decorated_function(*args, **kwargs):
-        if not current_user.is_authenticated:
-            flash("You are not authenticated.", "info")
-            return redirect(url_for("auth.auth"))
-        return func(*args, **kwargs)
-
-    return decorated_function
-
-
-def role_required(func):
-    @wraps(func)
-    def decorated_function(*args, **kwargs):
-
-        if current_user.is_authenticated:
-            flash("You are already authenticated.", "info")
-            return redirect(url_for("main.index"))
-        return func(*args, **kwargs)
-
-    return decorated_function

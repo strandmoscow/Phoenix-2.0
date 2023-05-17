@@ -6,7 +6,8 @@ from .models import Attendance, Lesson
 from .forms import AttendanceForm
 from datetime import datetime
 
-from .. import db, login_required
+from .. import db
+from ..decoraters import login_required
 from ..groups.models import Group
 from ..student.models import Students
 from ..registration.models import Account

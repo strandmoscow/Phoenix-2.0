@@ -1,11 +1,13 @@
 from flask import Blueprint, redirect, render_template, session, request, url_for, flash
 from werkzeug.security import check_password_hash
 from flask_login import login_user, logout_user, current_user, user_logged_in
-from .. import db, login_manager, logout_required
 
 from .userLogin import UserLogin
 from .forms import Login
 from .models import Account
+
+from .. import db, login_manager
+from ..decoraters import logout_required
 
 authentication = Blueprint('auth', __name__, template_folder='templates')
 
