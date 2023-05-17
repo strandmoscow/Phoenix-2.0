@@ -1,44 +1,62 @@
 {% extends 'base.html' %}
-{% block title %}Группы{% endblock %}
+{% block title %}Посещение группы{% endblock %}
 {% block body %}
 
 <main class="d-flex flex-nowrap">
     {% include 'side_menu.html' %}
-
     <div class="content">
         <div class="container-fluid flex-nowrap">
-            <br>
-            <div class="d-flex align-items-center">
-                <h1 class="mr-3">Посещение группы {{ group.group_name }}</h1>
+            <div class="row">
+                <br>
+                <div class="d-flex align-items-center">
+                    <a href="{{ url_for('groups.singlegroup', group_id=group.group_id) }}"
+                       class="btn btn-primary btn-sm align-self-center">
+                        <
+                    </a>
+
+                    <a href="{{ url_for('attendance.att_new', group_id=group.group_id) }}"
+                       class="btn btn-primary btn-sm align-self-center ms-1">
+                        Добавить занятие
+                    </a>
+                </div>
+                <br>
             </div>
-            <br>
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th scope="col">ФИО</th>
-                {% for date in dates %}
-                    <th scope="col"> {{ date }}</th>
-                {% endfor %}
-            </tr>
-            </thead>
-            <tbody>
-            {% for personal_attendance in att_to_func.keys() %}
+            <div class="row">
+                <h2 class="mr-3">Посещение группы {{ group.group_name }}</h2>
+            </div>
+            <table class="table table-hover">
+                <thead>
                 <tr>
-                    <td>
-                        <a href="#">{{ personal_attendance }}</a>
-                    </td>
-                {% for pa in att_to_func[personal_attendance] %}
-                    <td>
-                        <a>{{ pa }}</a>
-                    </td>
-                {% endfor %}
+                    <th scope="col">ФИО</th>
+                    {% for date in dates %}
+                        <th scope="col"> {{ date }}</th>
+                    {% endfor %}
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for personal_attendance in att_to_func.keys() %}
+                    <tr>
+                        <td>
+                            <a href="{{url_for('account.accountfull', account_id=personal_attendance.split(':')[0])}}">
+                                {{ personal_attendance.split(':')[1] }}
+                            </a>
+                        </td>
+                    {% for pa in att_to_func[personal_attendance] %}
+                        <td>
+                            {% if pa %}
+                                <a> ✓ </a>
+                            {% else %}
+                                <a> Н </a>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
-    </main>
+</main>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

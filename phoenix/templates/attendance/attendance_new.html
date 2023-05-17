@@ -1,47 +1,45 @@
 {% extends 'base.html' %}
-{% block title %}Группа{% endblock %}
+{% block title %}Создание занятия{% endblock %}
 {% block body %}
 
 <main class="d-flex flex-nowrap">
     {% include 'side_menu.html' %}
+
     <div class="container-fluid h-200">
         <div class="row">
-            <br>
             <div class="d-flex align-items-center">
-                <a href="{{ url_for('groups.singlegroup', group_id=group.group_id) }}"
+                <a href="{{ url_for('attendance.att', group_id=group.group_id) }}"
                    class="btn btn-primary btn-sm align-self-center">
                     <
                 </a>
             </div>
+        </div>
+        <div class="row">
+            <div class="d-flex align-items-center">
+                <h1 class="mr-3"> Новое занятие группы "{{ group.group_name }}" </h1>
+            </div>
             <br>
         </div>
-
-        <div class="row">
-            <h2 class="mr-3">Изменение группы {{ group.group_name }}</h2>
-        </div>
-
-        <div class="row">
-            <form method="post">
+        <form method="post">
             {{ form.hidden_tag() }}
-                <div class="form-group">
-                  {{ form.group_name.label }} {{ form.group_name(class='form-control') }}
-                  {% for error in form.group_name.errors %}
-                    <span class="text-danger">{{ error }}</span>
-                  {% endfor %}
-                </div>
-                <div class="form-group">
-                  {{ form.group_trainer.label }} {{ form.group_trainer(class='form-control') }}
-                  {% for error in form.group_trainer.errors %}
-                    <span class="text-danger">{{ error }}</span>
-                  {% endfor %}
-                </div>
-                <div class="form-group">
-                  <input type="submit" value="Сохранить" class="btn btn-primary">
-                </div>
+                {% for field in form if field.name not in ['csrf_token', 'submit'] %}
+                <p>
+                    <h5>{{ field.label() }}</h5>
+                    {% if field.errors %}
+                        {{ field(class="invalid") }}
+                    <span class="invalid-feedback">
+                        {% for e in field.errors %}
+                        {{ e }}
+                        {% endfor %}
+                    </span>
+                    {% else %}
+                        {{ field(class="form-control") }}
+                    {% endif %}
+                </p>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary">Продолжить</button>
             </form>
-            </div>
-            </div>
-        </div>
+    </form>
     </div>
 </main>
 
