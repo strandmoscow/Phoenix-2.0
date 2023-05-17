@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, send_from_directory, url_for
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
@@ -18,6 +18,7 @@ app.config.from_mapping(
         SECRET_KEY='dev'
     )
 
+
 # database handle
 app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}'
 db = SQLAlchemy(app)
@@ -29,6 +30,7 @@ bcrypt = Bcrypt()
 login_manager = LoginManager(app)
 
 UPLOAD_FOLDER = os.path.join('static')
+
 
 
 def create_app():
@@ -61,3 +63,9 @@ def create_app():
         app.register_blueprint(attendance, url_prefix="/attendance")
 
         return app
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')

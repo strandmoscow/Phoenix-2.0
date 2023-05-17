@@ -82,6 +82,7 @@ def group_add():
 @groups.route("/group_edit/<int:group_id>", methods=['GET', 'POST'])
 @login_required
 def group_edit(group_id):
+    group = Group.query.get(group_id)
     gp = Group.query.get_or_404(group_id)
     form = GroupForm2(obj=Group.query.get_or_404(group_id))
 
@@ -95,7 +96,7 @@ def group_edit(group_id):
     # Установить выбранное значение для поля group_trainer
     form.group_trainer.data = gp.group_trainer_id
 
-    return render_template('groups/group_edit.html', form=form, cu=current_user.get_id())
+    return render_template('groups/group_edit.html', form=form, cu=current_user.get_id(), group=group)
 
 
 @groups.route("/add_students/<int:group_id>", methods=['GET', 'POST'])
