@@ -6,7 +6,7 @@ from .models import Attendance, Lesson
 from .forms import AttendanceForm
 from datetime import datetime
 
-from .. import db
+from .. import db, login_required
 from ..groups.models import Group
 from ..student.models import Students
 from ..registration.models import Account
@@ -16,6 +16,7 @@ attendance = Blueprint('attendance', __name__, template_folder='templates', stat
 
 
 @attendance.route("/<int:group_id>", methods=['GET', 'POST'])
+@login_required
 def att(group_id):
     group = Group.query.get(group_id)
 
@@ -58,6 +59,7 @@ def att(group_id):
 
 
 @attendance.route('/<int:group_id>/new', methods=['GET', 'POST'])
+@login_required
 def att_new(group_id):
     group = Group.query.get(group_id)
 

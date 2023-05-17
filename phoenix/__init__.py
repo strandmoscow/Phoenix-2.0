@@ -81,3 +81,26 @@ def logout_required(func):
         return func(*args, **kwargs)
 
     return decorated_function
+
+
+def login_required(func):
+    @wraps(func)
+    def decorated_function(*args, **kwargs):
+        if not current_user.is_authenticated:
+            flash("You are not authenticated.", "info")
+            return redirect(url_for("auth.auth"))
+        return func(*args, **kwargs)
+
+    return decorated_function
+
+
+def role_required(func):
+    @wraps(func)
+    def decorated_function(*args, **kwargs):
+
+        if current_user.is_authenticated:
+            flash("You are already authenticated.", "info")
+            return redirect(url_for("main.index"))
+        return func(*args, **kwargs)
+
+    return decorated_function

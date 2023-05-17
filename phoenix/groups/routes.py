@@ -1,12 +1,13 @@
 from flask import Blueprint, redirect, render_template, session, request, flash, url_for
-
-from .. import db, auth
-from ..registration.models import Account
 from flask_login import login_user, login_required, current_user
+
+from .forms import GroupForm1, GroupForm2, GroupForm3
+
+from .. import db, login_required
+from ..registration.models import Account
 from .models import Group
 from ..account.models import Trainer
 from ..student.models import Students
-from .forms import GroupForm1, GroupForm2, GroupForm3
 
 groups = Blueprint('groups', __name__, template_folder='templates', static_folder='static')
 

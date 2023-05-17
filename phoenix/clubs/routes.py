@@ -1,10 +1,10 @@
 from flask import Blueprint, redirect, render_template, session, request, flash, url_for
-from flask_login import login_user, login_required, current_user, user_logged_in, user_unauthorized
+from flask_login import login_user, current_user, user_logged_in, user_unauthorized
 from werkzeug.security import generate_password_hash, check_password_hash
 from ..registration.models import Account
 from ..student.models import Students
 from sqlalchemy.orm import joinedload
-from .. import db, auth
+from .. import db, login_required
 from .models import Club
 from .models import Federation, City, Address
 from .forms import ClubForm1, ClubForm2
