@@ -8,7 +8,8 @@ from .models import Parents, Manager, Trainer
 from ..registration.models import Account
 from ..registration.models import ValAccount
 from ..student.models import Students
-from .. import db, login_required
+from ..decoraters import login_required
+from .. import db
 
 
 account = Blueprint('account', __name__, template_folder='templates', static_folder='static')

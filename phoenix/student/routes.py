@@ -1,14 +1,14 @@
 from flask import Blueprint, redirect, render_template, session, request, flash, Response, send_file
 from flask_login import login_user, current_user
-from werkzeug.security import generate_password_hash, check_password_hash
+from openpyxl import Workbook
+from io import BytesIO
 
 from .models import Students
 
 from ..registration.models import Account
 from ..groups.models import Group
-from .. import db, login_required
-from openpyxl import Workbook
-from io import BytesIO
+from .. import db
+from ..decoraters import login_required
 
 students = Blueprint('students', __name__, template_folder='templates', static_folder='static')
 

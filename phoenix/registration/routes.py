@@ -1,9 +1,12 @@
 from flask import Blueprint, redirect, render_template, session, request
 from flask_login import current_user, user_logged_in
+from werkzeug.security import generate_password_hash, check_password_hash
+
 from .forms import RegistrationForm1, RegistrationForm2
 from .models import Account, ValAccount
-from werkzeug.security import generate_password_hash, check_password_hash
-from .. import db, logout_required
+
+from .. import db
+from ..decoraters import logout_required
 
 registration = Blueprint('registration', __name__, template_folder='templates')
 
