@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, DateField, PasswordField, SubmitField
-from wtforms.validators import Email, DataRequired, Length, EqualTo
+from wtforms.validators import Email, DataRequired, Length, EqualTo, Regexp
 
 
 class RegistrationForm1(FlaskForm):
@@ -9,7 +9,8 @@ class RegistrationForm1(FlaskForm):
     patronymic = StringField("Отчество")
     email = StringField("Email", validators=[Email(message="Некорректный ввод"), DataRequired()])
     dob = DateField("Дата рождения", validators=[DataRequired()])
-    phone = StringField("Номер телефона", validators=[DataRequired()])
+    phone = StringField("Номер телефона", validators=[DataRequired(), Regexp(r'^\d+$', message="Некорректный формат")],
+                        render_kw={"placeholder": "89998887766"})
     passport = StringField("Паспорт", validators=[DataRequired()])
     submit = SubmitField("Продолжить")
 
