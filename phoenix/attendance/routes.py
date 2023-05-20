@@ -65,7 +65,7 @@ def att_new(group_id):
     group = Group.query.get(group_id)
 
     sts = db.session.query(Account.account_id, Account.account_surname, Account.account_name,
-                           Account.account_patronymic). \
+                           Account.account_patronymic, Students.student_id). \
         join(Students, Account.account_student_id == Students.student_id). \
         join(Group, Students.student_group_id == Group.group_id) \
         .filter(Group.group_id == group_id) \
@@ -107,7 +107,7 @@ def att_new(group_id):
             if request.form.get(str(s[0])):
                 a = Attendance(
                     attendance_lesson_id=lesson.lesson_id,
-                    attendance_student_id=s[0]
+                    attendance_student_id=s[4]
                 )
                 db.session.add(a)
                 db.session.commit()
