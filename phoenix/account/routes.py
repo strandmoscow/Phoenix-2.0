@@ -2,13 +2,13 @@ from flask import Blueprint, redirect, render_template, session, request, flash,
 from flask_login import login_user, current_user, user_logged_in, user_unauthorized
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from .forms import AccountForm1
-from .models import Parents, Manager, Trainer
+from .forms import AccountForm1, PassportForm
+from .models import Parents, Manager, Trainer, Passport
 
 from ..registration.models import Account
 from ..registration.models import ValAccount
 from ..student.models import Students
-from ..decoraters import login_required
+from ..decoraters import login_required, manager_required
 from .. import db
 
 
@@ -49,22 +49,47 @@ def acc_edit():
 @account.route('/<int:account_id>')
 @login_required
 def accountfull(account_id):
-    profile_icon = './static/svg/abstract-user-flat-4.svg'
-    eye_icon = './static/svg/eye.svg'
     acc = Account.query.get(account_id)
     if acc:
         if acc.account_trainer_id:
             tr = Trainer.query.get(acc.account_trainer_id)
-            return render_template('account/account.html', img=profile_icon, eye=eye_icon, acc=acc, trainer=tr, cu=int(current_user.get_id()))
+            return render_template('account/account.html', acc=acc, trainer=tr, cu=int(current_user.get_id()))
         elif acc.account_student_id:
             st = Students.query.get(acc.account_student_id)
-            return render_template('account/account.html', img=profile_icon, eye=eye_icon, acc=acc, student=st, cu=int(current_user.get_id()))
+            return render_template('account/account.html', acc=acc, student=st, cu=int(current_user.get_id()))
         elif acc.account_parent_id:
             pr = Parents.query.get(acc.account_parent_id)
-            return render_template('account/account.html', img=profile_icon, eye=eye_icon, acc=acc, parent=pr, cu=int(current_user.get_id()))
+            return render_template('account/account.html', acc=acc, parent=pr, cu=int(current_user.get_id()))
         elif acc.account_manager_id:
             mr = Manager.query.get(acc.account_manager_id)
-            return render_template('account/account.html', img=profile_icon, eye=eye_icon, acc=acc, manager=mr, cu=int(current_user.get_id()))
+            return render_template('account/account.html', acc=acc, manager=mr, cu=int(current_user.get_id()))
         else:
-            return render_template('account/account.html', img=profile_icon, eye=eye_icon, acc=acc, cu=int(current_user.get_id()))
+            return render_template('account/account.html', acc=acc, cu=int(current_user.get_id()))
     return "Account not found", 404
+
+
+@account.route('/<int:account_id>/docs')
+@login_required
+def documents(account_id):
+    acc = Account.query.get(account_id)
+    passport_data = Passport.query.filter_by(passport_id=acc.account_passport_id).first()
+    if acc:
+        if passport_data:
+            return render_template('account/documents.html',
+                                   acc=acc,
+                                   cu=current_user.get_id(),
+                                   pas=passport_data)
+        else:
+            return render_template('account/documents.html',
+                                   acc=acc,
+                                   cu=current_user.get_id(),
+                                   pas=False)
+    return "Account not found", 404
+
+
+@account.route('/<int:account_id>/docs/pasadd')
+@login_required
+def passadd(account_id):
+    form = PassportForm()
+    acc = Account.query.get(account_id)
+    return render_template('account/passport_add.html', form=form, acc=acc, cu=current_user.get_id())

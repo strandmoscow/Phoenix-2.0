@@ -10,30 +10,36 @@
             <div class="col-md-3 gradient-custom text-center text-white" style="border-radius: .5rem;">
                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
                 alt="Avatar" class="img-fluid my-5" style="width: 160px;" />
-              <h4>{{acc.account_name}} {{acc.account_surname}} {% if account_patronymic %}{{acc.account_patronymic}}{% endif %}</h4>
-              {% if trainer %}
-              <p>Тренер</p>
-              {% elif student %}
-              <p>Ученик</p>
-              {% elif parent %}
-              <p>Опекун</p>
-              {% elif manager %}
-              <p>Менеджер</p>
-              {% endif %}
+                <h4>{{acc.account_name}} {{acc.account_surname}} {% if account_patronymic %}{{acc.account_patronymic}}{% endif %}</h4>
+                {% if acc.trainer_id %}
+                <p>Тренер</p>
+                {% elif acc.student_id %}
+                <p>Ученик</p>
+                {% elif acc.parent_id %}
+                <p>Опекун</p>
+                {% elif acc.manager_id %}
+                <p>Менеджер</p>
+                {% endif %}
             </div>
             <div class="col-md-8">
-              <div class="card-body p-4">
-                <h4>Общая информация</h4>
-                <hr class="mt-0 mb-4">
-                <div class="row pt-1">
-                  <div class="col-6 mb-3">
-                    <h5>Email</h5>
-                    <p class="text-muted">{{acc.account_email}}</p>
-                  </div>
-                  <div class="col-6 mb-3">
-                    <h5>Телефон</h5>
-                    <p class="text-muted">{{acc.account_phone}}</p>
-                  </div>
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">Общая информация</h4>
+                        <a href="{{ url_for('account.documents', account_id=acc.account_id) }}" class="btn btn-transparent ml-2">
+                            <img src="{{ url_for('static', filename='png/document.png') }}" alt="Документы" width="16" height="16">
+                            Документы
+                        </a>
+                    </div>
+                    <hr class="mt-0 mb-4">
+                    <div class="row pt-1">
+                        <div class="col-6 mb-3">
+                            <h5>Email</h5>
+                            <p class="text-muted">{{acc.account_email}}</p>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <h5>Телефон</h5>
+                            <p class="text-muted">{{acc.account_phone}}</p>
+                        </div>
                     </div>
                     <div class="row pt-1">
                         <div class="col-6 mb-3">
@@ -42,60 +48,60 @@
                         </div>
                         <div class="col-6 mb-3">
                         </div>
-                    </div>
-                    {% if trainer %}
-                    <h4>Информация о тренере</h4>
-                    <hr class="mt-0 mb-4">
-                    <div class="row pt-1">
-                        <div class="col-6 mb-3">
-                            <h6>Спортивная федерация</h6>
-                            <p class="text-muted">{{ trainer.federation_federation_id}}</p>
                         </div>
-                        <div class="col-6 mb-3">
+                        {% if trainer %}
+                        <h4>Информация о тренере</h4>
+                        <hr class="mt-0 mb-4">
+                        <div class="row pt-1">
+                            <div class="col-6 mb-3">
+                                <h6>Спортивная федерация</h6>
+                                <p class="text-muted">{{ trainer.federation_federation_id}}</p>
+                            </div>
+                            <div class="col-6 mb-3">
+                            </div>
                         </div>
-                    </div>
-                    {% elif student %}
-                    <h4>Информация об ученике</h4>
-                    <hr class="mt-0 mb-4">
-                    <div class="row pt-1">
-                        <div class="col-6 mb-3">
-                            <h5>ОМС</h5>
-                            <p class="text-muted">{{student.student_health_insurance}}</p>
+                        {% elif student %}
+                        <h4>Информация об ученике</h4>
+                        <hr class="mt-0 mb-4">
+                        <div class="row pt-1">
+                            <div class="col-6 mb-3">
+                                <h5>ОМС</h5>
+                                <p class="text-muted">{{student.student_health_insurance}}</p>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <h5>Свидетельство о рождении</h5>
+                                <p class="text-muted">{{student.student_birth_certificate}}</p>
+                            </div>
                         </div>
-                        <div class="col-6 mb-3">
-                            <h5>Свидетельство о рождении</h5>
-                            <p class="text-muted">{{student.student_birth_certificate}}</p>
+                        <div class="row pt-1">
+                            <div class="col-6 mb-3">
+                                <h5>СНИЛС</h5>
+                                <p class="text-muted">{{student.student_health_insurance}}</p>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <h5>Номер группы</h5>
+                                <p class="text-muted">{{student.student_group_id}}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row pt-1">
-                        <div class="col-6 mb-3">
-                            <h5>СНИЛС</h5>
-                            <p class="text-muted">{{student.student_health_insurance}}</p>
+                        {% elif parent %}
+                        <div class="row pt-1">
+                            <div class="col-6 mb-3">
+                                <h5>Тип законного представителя</h5>
+                                <p class="text-muted">{{parent.parent_type_parent_type_id}}</p>
+                            </div>
+                            <div class="col-6 mb-3">
+                            </div>
                         </div>
-                        <div class="col-6 mb-3">
-                            <h5>Номер группы</h5>
-                            <p class="text-muted">{{student.student_group_id}}</p>
+                        {% elif manager %}
+                        <div class="row pt-1">
+                            <div class="col-6 mb-3">
+                                <h5>Номер</h5>
+                                <p class="text-muted">{{manager.manager_id}}</p>
+                            </div>
+                            <div class="col-6 mb-3">
+                            </div>
                         </div>
-                    </div>
-                    {% elif parent %}
-                    <div class="row pt-1">
-                        <div class="col-6 mb-3">
-                            <h5>Тип законного представителя</h5>
-                            <p class="text-muted">{{parent.parent_type_parent_type_id}}</p>
-                        </div>
-                        <div class="col-6 mb-3">
-                        </div>
-                    </div>
-                    {% elif manager %}
-                    <div class="row pt-1">
-                        <div class="col-6 mb-3">
-                            <h5>Номер</h5>
-                            <p class="text-muted">{{manager.manager_id}}</p>
-                        </div>
-                        <div class="col-6 mb-3">
-                        </div>
-                    </div>
-                    {% endif %}
+                        {% endif %}
                     {% if cu == acc.account_id %}
                     <a class="btn btn-outline-primary" href="{{url_for('account.acc_edit')}}" type="button">
                         Редактировать аккаунт
