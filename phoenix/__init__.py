@@ -28,7 +28,8 @@ db = SQLAlchemy(app)
 bcrypt = Bcrypt()
 
 # manage user login
-login_manager = LoginManager(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 UPLOAD_FOLDER = os.path.join('static')
 

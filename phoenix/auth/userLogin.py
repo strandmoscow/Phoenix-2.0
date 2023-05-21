@@ -3,7 +3,8 @@ from .models import Account
 from flask_login import UserMixin
 
 
-class UserLogin(UserMixin):
+class UserLogin(Account, UserMixin):
+
     def getUser(self, user_id):
         try:
             res = Account.query.filter_by(account_id=user_id).first()
@@ -17,7 +18,7 @@ class UserLogin(UserMixin):
 
         return False
 
-    def fromDB(self, user_id, db):
+    def fromDB(self, user_id):
         self.__user = self.getUser(user_id)
         return self
 

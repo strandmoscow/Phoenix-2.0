@@ -3,6 +3,7 @@ from flask_login import current_user
 from functools import wraps
 from .registration.models import Account
 
+
 def logout_required(func):
     @wraps(func)
     def decorated_function(*args, **kwargs):
