@@ -31,7 +31,9 @@
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 {% if cu %}
+                {% if manager %}
                 <a class="btn btn-outline-primary" href="{{url_for('validation.val')}}" type="button">Валидация</a>
+                {% endif %}
                 <a class="btn btn-outline-secondary" href="{{url_for('auth.exit')}}" type="button">Выйти</a>
                 {% else %}
                 <a class="btn btn-outline-secondary" href="{{url_for('auth.auth')}}" type="button">Войти</a>

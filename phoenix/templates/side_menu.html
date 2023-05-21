@@ -3,13 +3,21 @@
 
     <ul class="list-unstyled px-2">
         <li class=""><a href="{{url_for('account.accountfull', account_id=cu)}}" class="nav-link text-black">Аккаунт</a></li>
+        {% if manager or trainer %}
         <li class=""><a href="{{url_for('students.student')}}" class="nav-link text-black">Ученики</a></li>
-        <li class=""><a href="#" class="nav-link text-black">Занятия/Расписание</a></li>
+        {% endif %}
+        <li class=""><a href="#" class="nav-link text-black">Расписание</a></li>
         <li class=""><a href="#" class="nav-link text-black">Посещаемость</a></li>
+        {% if parent or student %}
         <li class=""><a href="#" class="nav-link text-black">Тренер</a></li>
+        {% endif %}
+        {% if manager %}
         <li class=""><a href="{{url_for('club.clubs')}}" class="nav-link text-black">Клубы</a></li>
+        {% endif %}
         <li class=""><a href="{{url_for('gym.gyms')}}" class="nav-link text-black">Залы</a></li>
+        {% if manager or trainer %}
         <li class=""><a href="{{url_for('groups.group')}}" class="nav-link text-black">Группы</a></li>
+        {% endif %}
         <li class=""><a href="#" class="nav-link text-black">Платежи</a></li>
     </ul>
     <ul class="list-unstyled px-2">

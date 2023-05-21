@@ -28,7 +28,7 @@ def regi1():
         regi['gender'] = form.gender.data
         regi['type'] = form.account_type.data
         session['regi'] = regi
-        print(regi['gender'],  regi['type'])
+
         return redirect("regi2")
     else:
         return render_template('registration/registration.html', form=form, cu=current_user.get_id())

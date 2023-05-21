@@ -39,32 +39,34 @@
                         </p>
                         {% endfor %}
                         <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th scope="col">ФИО</th>
-                            <th scope="col">Присутствие</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for personal_attendance in sts %}
-                            <tr>
-                                <td>
-                                    <a>
-                                        {{ personal_attendance[1] }} {{ personal_attendance[2] }}
-                                        {% if personal_attendance[3] %} {{ personal_attendance[3] }} {% endif %}
-                                    </a>
-                                </td>
-                                <td>
-                                    <a>
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               name="{{ personal_attendance[0] }}">
-                                    </a>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">ФИО</th>
+                                    <th scope="col">Присутствие</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for personal_attendance in sts %}
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <a>
+                                                    {{ personal_attendance[1] }} {{ personal_attendance[2] }}
+                                                    {% if personal_attendance[3] %} {{ personal_attendance[3] }} {% endif %}
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input"
+                                                       type="checkbox"
+                                                       name="{{ personal_attendance[0] }}">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     <button type="submit" class="btn btn-primary">Продолжить</button>
                 </form>
             </div>

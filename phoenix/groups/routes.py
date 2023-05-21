@@ -7,7 +7,7 @@ from .models import Group
 from .. import db
 from ..decoraters import login_required
 
-from ..account.models import Trainer
+from ..account.models import Trainer, Parents, Manager
 from ..registration.models import Account
 from ..student.models import Students
 
@@ -17,39 +17,86 @@ groups = Blueprint('groups', __name__, template_folder='templates', static_folde
 @groups.route("/", methods=['GET', 'POST'])
 @login_required
 def group():
-    groups = db.session.query(Group.group_name, Account.account_id, Account.account_surname,
-                              Account.account_name, db.func.count(Students.student_id), Group.group_id) \
-        .join(Trainer, Group.group_trainer_id == Trainer.trainer_id) \
-        .join(Account, Trainer.trainer_id == Account.account_trainer_id) \
-        .outerjoin(Students, Group.group_id == Students.student_group_id) \
-        .group_by(Group.group_name, Account.account_id, Account.account_surname,
-                  Account.account_name, Group.group_id) \
-        .all()
+    acc = Account.query.get(current_user.get_id())
+    tr = None
+    st = None
+    pr = None
+    mr = None
+    if acc:
+        if acc.account_trainer_id:
+            tr = Trainer.query.get(acc.account_trainer_id)
+        elif acc.account_student_id:
+            st = Students.query.get(acc.account_student_id)
+        elif acc.account_parent_id:
+            pr = Parents.query.get(acc.account_parent_id)
+        elif acc.account_manager_id:
+            mr = Manager.query.get(acc.account_manager_id)
 
-    return render_template('groups/groups.html', groups=groups, cu=current_user.get_id())
+    if tr:
+        groups = db.session.query(Group.group_name, Account.account_id, Account.account_surname,
+                                  Account.account_name, db.func.count(Students.student_id), Group.group_id) \
+            .join(Trainer, Group.group_trainer_id == Trainer.trainer_id) \
+            .join(Account, Trainer.trainer_id == Account.account_trainer_id) \
+            .outerjoin(Students, Group.group_id == Students.student_group_id) \
+            .group_by(Group.group_name, Account.account_id, Account.account_surname,
+                      Account.account_name, Group.group_id) \
+            .filter(Group.group_trainer_id == tr.trainer_id).all()
+    elif mr:
+        groups = db.session.query(Group.group_name, Account.account_id, Account.account_surname,
+                                  Account.account_name, db.func.count(Students.student_id), Group.group_id) \
+            .join(Trainer, Group.group_trainer_id == Trainer.trainer_id) \
+            .join(Account, Trainer.trainer_id == Account.account_trainer_id) \
+            .outerjoin(Students, Group.group_id == Students.student_group_id) \
+            .group_by(Group.group_name, Account.account_id, Account.account_surname,
+                      Account.account_name, Group.group_id) \
+            .all()
+    else:
+        groups = []
+
+    return render_template('groups/groups.html', groups=groups, cu=current_user.get_id(), trainer=tr, student=st, parent=pr, manager=mr)
 
 
 @groups.route("/<int:group_id>", methods=['GET', 'POST'])
 @login_required
 def singlegroup(group_id):
-    gr = Group.query.get(group_id)
-    grinf = db.session.query(Group.group_name, Account.account_id, Account.account_surname,
-                             Account.account_name, Account.account_patronymic) \
-        .join(Trainer, Group.group_trainer_id == Trainer.trainer_id) \
-        .join(Account, Trainer.trainer_id == Account.account_trainer_id) \
-        .filter(Group.group_id == group_id) \
-        .all()
+    acc = Account.query.get(current_user.get_id())
+    tr = None
+    st = None
+    pr = None
+    mr = None
+    if acc:
+        if acc.account_trainer_id:
+            tr = Trainer.query.get(acc.account_trainer_id)
+        elif acc.account_student_id:
+            st = Students.query.get(acc.account_student_id)
+        elif acc.account_parent_id:
+            pr = Parents.query.get(acc.account_parent_id)
+        elif acc.account_manager_id:
+            mr = Manager.query.get(acc.account_manager_id)
 
-    sts = db.session.query(Account.account_id, Account.account_surname, Account.account_name,
-                           Account.account_patronymic). \
-        join(Students, Account.account_student_id == Students.student_id). \
-        join(Group, Students.student_group_id == Group.group_id) \
-        .filter(Group.group_id == group_id) \
-        .all()
+    gr = Group.query.get(group_id)
+
+    if tr or mr:
+
+        grinf = db.session.query(Group.group_name, Account.account_id, Account.account_surname,
+                                 Account.account_name, Account.account_patronymic) \
+            .join(Trainer, Group.group_trainer_id == Trainer.trainer_id) \
+            .join(Account, Trainer.trainer_id == Account.account_trainer_id) \
+            .filter(Group.group_id == group_id) \
+            .all()
+
+        sts = db.session.query(Account.account_id, Account.account_surname, Account.account_name,
+                               Account.account_patronymic). \
+            join(Students, Account.account_student_id == Students.student_id). \
+            join(Group, Students.student_group_id == Group.group_id) \
+            .filter(Group.group_id == group_id) \
+            .all()
+    else:
+        return redirect("/")
 
     # print(sts)
     return render_template('groups/group.html', group=gr, grinf=grinf, students=sts, num_students=len(sts),
-                           cu=current_user.get_id())
+                           cu=current_user.get_id(), trainer=tr, student=st, parent=pr, manager=mr)
 
 
 @groups.route("/group_add", methods=['GET', 'POST'])
@@ -57,29 +104,48 @@ def singlegroup(group_id):
 def group_add():
     form = GroupForm1()
 
-    if form.validate_on_submit():
-        g = Group(
-            group_name=form.group_name.data,
-            group_trainer_id=form.group_trainer.data,
-        )
+    acc = Account.query.get(current_user.get_id())
+    tr = None
+    st = None
+    pr = None
+    mr = None
+    if acc:
+        if acc.account_trainer_id:
+            tr = Trainer.query.get(acc.account_trainer_id)
+        elif acc.account_student_id:
+            st = Students.query.get(acc.account_student_id)
+        elif acc.account_parent_id:
+            pr = Parents.query.get(acc.account_parent_id)
+        elif acc.account_manager_id:
+            mr = Manager.query.get(acc.account_manager_id)
 
-        db.session.add(g)
-        db.session.commit()
+    if tr or mr:
 
-        selected_students = form.group_students.data
-        for account_id in selected_students:
-            acc = Account.query.filter_by(account_id=account_id).first()
-            if acc:
-                student = Students.query.filter(Students.student_id == acc.account_student_id).first()
-                if student:
-                    student.student_group_id = g.group_id
+        if form.validate_on_submit():
+            g = Group(
+                group_name=form.group_name.data,
+                group_trainer_id=form.group_trainer.data,
+            )
 
-        db.session.commit()
+            db.session.add(g)
+            db.session.commit()
 
-        flash('Группа успешно создана', 'success')
-        return redirect("group")
+            selected_students = form.group_students.data
+            for account_id in selected_students:
+                acc = Account.query.filter_by(account_id=account_id).first()
+                if acc:
+                    student = Students.query.filter(Students.student_id == acc.account_student_id).first()
+                    if student:
+                        student.student_group_id = g.group_id
 
-    return render_template('groups/group_add.html', form=form, cu=current_user.get_id())
+            db.session.commit()
+
+            flash('Группа успешно создана', 'success')
+            return redirect("groups.group")
+    else:
+        return redirect("/")
+
+    return render_template('groups/group_add.html', form=form, cu=current_user.get_id(), trainer=tr, student=st, parent=pr, manager=mr)
 
 
 @groups.route("/group_edit/<int:group_id>", methods=['GET', 'POST'])
@@ -89,15 +155,35 @@ def group_edit(group_id):
     gp = Group.query.get_or_404(group_id)
     form = GroupForm2(obj=Group.query.get_or_404(group_id))
 
-    if form.validate_on_submit():
-        form.populate_obj(Group.query.get_or_404(group_id))
-        gp.group_trainer_id = form.group_trainer.data
-        db.session.commit()
-        flash('Информация о группе успешно обновлена', 'success')
-        return redirect(url_for('groups.singlegroup', group_id=group_id))
+    acc = Account.query.get(current_user.get_id())
+    tr = None
+    st = None
+    pr = None
+    mr = None
+    if acc:
+        if acc.account_trainer_id:
+            tr = Trainer.query.get(acc.account_trainer_id)
+        elif acc.account_student_id:
+            st = Students.query.get(acc.account_student_id)
+        elif acc.account_parent_id:
+            pr = Parents.query.get(acc.account_parent_id)
+        elif acc.account_manager_id:
+            mr = Manager.query.get(acc.account_manager_id)
 
-    # Установить выбранное значение для поля group_trainer
-    form.group_trainer.data = gp.group_trainer_id
+    if tr or mr:
+
+        if form.validate_on_submit():
+            form.populate_obj(Group.query.get_or_404(group_id))
+            gp.group_trainer_id = form.group_trainer.data
+            db.session.commit()
+            flash('Информация о группе успешно обновлена', 'success')
+            return redirect(url_for('groups.singlegroup', group_id=group_id))
+
+        # Установить выбранное значение для поля group_trainer
+        form.group_trainer.data = gp.group_trainer_id
+
+    else:
+        return redirect("/")
 
     return render_template('groups/group_edit.html', form=form, cu=current_user.get_id(), group=group)
 

@@ -18,10 +18,12 @@
                             <img src="{{ url_for('static', filename='svg/att.svg') }}" alt="Посещения" width="16" height="16">
                             Посещения
                         </a>
+                        {% if manager or trainer %}
                         <a href="{{ url_for('groups.group_edit', group_id=group.group_id) }}" class="btn btn-transparent ml-2">
                             <img src="{{ url_for('static', filename='svg/edit.svg') }}" alt="Редактировать" width="16" height="16">
                             Редактировать
                         </a>
+                        {% endif %}
                     </div>
                     <hr class="mt-0 mb-4">
                     <div class="row pt-1">

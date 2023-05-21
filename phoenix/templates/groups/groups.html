@@ -4,13 +4,13 @@
 
 <main class="d-flex flex-nowrap">
     {% include 'side_menu.html' %}
-
-    <div class="content">
         <div class="container-fluid flex-nowrap">
             <br>
             <div class="d-flex align-items-center">
                 <h1 class="mr-3">Группы</h1>
+                {% if manager or trainer %}
                 <a href="{{url_for('groups.group_add')}}" class="btn btn-primary">+</a>
+                {% endif %}
             </div>
             <br>
         <table class="table table-hover">
@@ -42,7 +42,6 @@
             </tbody>
         </table>
         </div>
-    </div>
     </main>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
