@@ -7,7 +7,10 @@
     <div class="content">
         <div class="container-fluid flex-nowrap">
             <div class="row d-flex flex-row flex-nowrap" id="account_first_row">
+                <div class="col-1 d-flex flex-column">
+                </div>
                 <div class="col-6 d-flex flex-column">
+                    <h4>Введите данные паспорта</h4>
                     <form method="post">
                         {{ form.hidden_tag() }}
                         {% for field in form if field.name not in ['csrf_token', 'submit'] %}

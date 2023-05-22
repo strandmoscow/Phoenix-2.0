@@ -87,9 +87,26 @@ def documents(account_id):
     return "Account not found", 404
 
 
-@account.route('/<int:account_id>/docs/pasadd')
+@account.route('/<int:account_id>/docs/pasadd', methods=['GET', 'POST'])
 @login_required
 def passadd(account_id):
     form = PassportForm()
     acc = Account.query.get(account_id)
+
+    if form.validate_on_submit():
+        p = Passport(
+            passport_ser=form.passport_ser.data,
+            passport_num=form.passport_num.data,
+            passport_podr_code=form.passport_podr_code.data,
+            passport_podr_name=form.passport_podr_name.data
+        )
+
+        db.session.add(p)
+        db.session.flush()
+        db.session.refresh(p)
+
+        acc.account_passport_id = p.passport_id
+        db.session.commit()
+        return redirect(url_for('account.documents', account_id=acc.account_id))
+
     return render_template('account/passport_add.html', form=form, acc=acc, cu=current_user.get_id())
