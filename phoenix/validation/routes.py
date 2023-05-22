@@ -48,3 +48,5 @@ def val_confirm(account_id):
     db.session.commit()
 
     return redirect(url_for('validation.val'))
+
+

@@ -16,7 +16,7 @@ class Account(db.Model):
     account_student_id = db.Column(db.Integer, db.ForeignKey('students.student_id'))
     account_parent_id = db.Column(db.Integer, db.ForeignKey('parents.parent_id'))
     account_manager_id = db.Column(db.Integer, db.ForeignKey('manager.manager_id'))
-    passport_passport_id = db.Column(db.Integer, db.ForeignKey('passport.passport_id'))
+    account_passport_id = db.Column(db.Integer, db.ForeignKey('passport.passport_id'))
     account_validated = db.Column(db.Boolean)
     account_gender = db.Column(db.Integer)
     students = db.relationship('Students', backref='account')

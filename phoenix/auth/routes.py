@@ -15,7 +15,7 @@ authentication = Blueprint('auth', __name__, template_folder='templates')
 @login_manager.user_loader
 def load_user(user_id):
     print("load_user")
-    return UserLogin().fromDB(user_id, db)
+    return UserLogin().fromDB(user_id)
 
 
 @authentication.route("/", methods=['GET', 'POST'])
@@ -32,7 +32,6 @@ def auth():
                 login_user(userLogin)
             return redirect(url_for('main.index'))
         else:
-            print("Some problems")
             return render_template('auth/auth.html', form=form, logging_in_err=True, cu=current_user.get_id(), loginer=True)
 
     return render_template('auth/auth.html', form=form, logging_in_err=False, cu=current_user.get_id())
@@ -42,7 +41,6 @@ def auth():
 def exit():
     logout_user()
     if session.get('was_once_logged_in'):
-        # prevent flashing automatically logged out message
         del session['was_once_logged_in']
     flash('You have successfully logged yourself out.')
     return redirect(url_for('main.index'))
