@@ -13,12 +13,12 @@
                 <thead>
                 <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">Имя</th>
                     <th scope="col">Фамилия</th>
+                    <th scope="col">Имя</th>
                     <th scope="col">Отчество</th>
                     <th scope="col">Дата рождения</th>
                     <th scope="col">Номер телефона</th>
-                    <th scope="col">EMail</th>
+                    <th scope="col">Email</th>
                     <th scope="col">Действия</th>
                 </tr>
                 </thead>
@@ -26,10 +26,10 @@
                 {% for v in val_table %}
                     <tr>
                         <td>{{v.account_id}}</td>
+                        <td>{{v.val_account_surname}}</td>
                         <td>{{v.val_account_name}}</td>
                         <td>{{v.val_account_patronymic}}</td>
-                        <td>{{v.val_account_surname}}</td>
-                        <td>{{v.val_account_birthday}}</td>
+                        <td>{{v.val_account_birthday.strftime("%d.%m.%Y")}}</td>
                         <td>{{v.val_account_phone}}</td>
                         <td>{{v.val_account_email}}</td>
                         <td>

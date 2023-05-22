@@ -73,9 +73,7 @@ def singlegroup(group_id):
             pr = Parents.query.get(acc.account_parent_id)
         elif acc.account_manager_id:
             mr = Manager.query.get(acc.account_manager_id)
-
     gr = Group.query.get(group_id)
-
     if tr or mr:
 
         grinf = db.session.query(Group.group_name, Account.account_id, Account.account_surname,
@@ -93,8 +91,6 @@ def singlegroup(group_id):
             .all()
     else:
         return redirect("/")
-
-    # print(sts)
     return render_template('groups/group.html', group=gr, grinf=grinf, students=sts, num_students=len(sts),
                            cu=current_user.get_id(), trainer=tr, student=st, parent=pr, manager=mr)
 
@@ -103,7 +99,6 @@ def singlegroup(group_id):
 @login_required
 def group_add():
     form = GroupForm1()
-
     acc = Account.query.get(current_user.get_id())
     tr = None
     st = None
@@ -118,9 +113,7 @@ def group_add():
             pr = Parents.query.get(acc.account_parent_id)
         elif acc.account_manager_id:
             mr = Manager.query.get(acc.account_manager_id)
-
     if tr or mr:
-
         if form.validate_on_submit():
             g = Group(
                 group_name=form.group_name.data,
@@ -185,7 +178,7 @@ def group_edit(group_id):
     else:
         return redirect("/")
 
-    return render_template('groups/group_edit.html', form=form, cu=current_user.get_id(), group=group)
+    return render_template('groups/group_edit.html', form=form, cu=current_user.get_id(), group=group, trainer=tr, student=st, parent=pr, manager=mr)
 
 
 @groups.route("/add_students/<int:group_id>", methods=['GET', 'POST'])
@@ -194,22 +187,41 @@ def add_students(group_id):
     sts_gp = Group.query.get_or_404(group_id)
     form = GroupForm3()
 
-    if form.validate_on_submit():
-        selected_students = form.students.data
-        for account_id in selected_students:
-            acc = Account.query.filter_by(account_id=account_id).first()
-            if acc:
-                student = Students.query.filter(Students.student_id == acc.account_student_id).first()
-                if student:
-                    student.student_group_id = group_id
+    acc = Account.query.get(current_user.get_id())
+    tr = None
+    st = None
+    pr = None
+    mr = None
+    if acc:
+        if acc.account_trainer_id:
+            tr = Trainer.query.get(acc.account_trainer_id)
+        elif acc.account_student_id:
+            st = Students.query.get(acc.account_student_id)
+        elif acc.account_parent_id:
+            pr = Parents.query.get(acc.account_parent_id)
+        elif acc.account_manager_id:
+            mr = Manager.query.get(acc.account_manager_id)
 
-        db.session.commit()
+    if tr or mr:
 
-        flash('Студенты успешно добавлены в группу', 'success')
-        return redirect(url_for('groups.singlegroup', group_id=group_id))
+        if form.validate_on_submit():
+            selected_students = form.students.data
+            for account_id in selected_students:
+                acc = Account.query.filter_by(account_id=account_id).first()
+                if acc:
+                    student = Students.query.filter(Students.student_id == acc.account_student_id).first()
+                    if student:
+                        student.student_group_id = group_id
+
+            db.session.commit()
+
+            flash('Студенты успешно добавлены в группу', 'success')
+            return redirect(url_for('groups.singlegroup', group_id=group_id))
+    else:
+        return redirect("/")
 
     return render_template('groups/add_students.html', group=sts_gp, form=form,
-                           cu=current_user.get_id())
+                           cu=current_user.get_id(),  trainer=tr, student=st, parent=pr, manager=mr)
 
 
 @groups.route("/remove_student/<int:group_id>/<int:student_id>", methods=['GET', 'POST'])
