@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, DateField, PasswordField, SubmitField, IntegerField
-from wtforms.validators import Email, DataRequired, Length, EqualTo
+from wtforms.validators import Email, DataRequired, Regexp
 
 
 class AccountForm1(FlaskForm):
@@ -16,7 +16,13 @@ class AccountForm1(FlaskForm):
 
 
 class PassportForm(FlaskForm):
-    passport_ser = IntegerField('Серия паспорта', validators=[DataRequired()])
-    passport_num = IntegerField('Номер паспорта', validators=[DataRequired()])
-    passport_podr_code = IntegerField('Код подразделения')
+    passport_ser = StringField('Серия паспорта', validators=[DataRequired(),
+                                                              Regexp(r'/^\d{4}$/',
+                                                                     message="Некоректно введена серия")
+                                                              ])
+    passport_num = StringField('Номер паспорта', validators=[DataRequired(),
+                                                              Regexp(r'/^\d{6}$/',
+                                                                     message="Некоректно введен номер")
+                                                              ])
+    passport_podr_code = StringField('Код подразделения')
     passport_podr_name = StringField('Название подразделения', validators=[DataRequired()])
