@@ -3,40 +3,40 @@
 {% block body %}
 
 <main class="d-flex flex-nowrap">
-    <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-info border-start-0 rounded-end fixed-start bg-light" id="side_nav">
-<!--         <div class="header-box px-2 pt-3 pb-4">-->
-<!--         </div>-->
-        <ul class="list-unstyled px-2">
-            <li class=""><a href="{{url_for('account.base_acc')}}" class="nav-link text-black">Аккаунт</a></li>
-            <li class=""><a href="{{url_for('students.student')}}" class="nav-link text-black">Ученики</a></li>
-            <li class=""><a href="#" class="nav-link text-black">Занятия/Расписание</a></li>
-            <li class=""><a href="#" class="nav-link text-black">Посещаемость</a></li>
-            <li class=""><a href="#" class="nav-link text-black">Тренер</a></li>
-            <li class=""><a href="#" class="nav-link text-black">Клубы</a></li>
-            <li class=""><a href="#" class="nav-link text-black">Залы</a></li>
-            <li class=""><a href="{{url_for('groups.group')}}" class="nav-link text-black">Группы</a></li>
-        </ul>
-        <ul class="list-unstyled px-2">
-            <li class=""><a href="#" class="nav-link text-black">Настройки</a></li>
-        </ul>
-    </aside>
+    {% include 'side_menu.html' %}
+
     <div class="content">
         <div class="container-fluid flex-nowrap">
-        <label class="py-4 px-4">Таблица групп</label>
+            <br>
+            <div class="d-flex align-items-center">
+                <h1 class="mr-3">Группы</h1>
+                <a href="{{url_for('groups.group_add')}}" class="btn btn-primary">+</a>
+            </div>
+            <br>
         <table class="table table-hover">
             <thead>
             <tr>
-                <th scope="col">Название</th>
+                <th scope="col">Название группы</th>
                 <th scope="col">Тренер</th>
                 <th scope="col">Количество учеников</th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
             {% for g in groups %}
                 <tr>
-                    <td>{{g.group_name}}</td>
-                    <td>{{g.trainer.trainer_id}}</td>
-                    <td>{{group_student_counts[loop.index0][1]}}</td>
+                    <td>
+                        <a href="{{url_for('groups.singlegroup', group_id=g[5])}}">{{g[0]}}</a>
+                    </td>
+                    <td>
+                        <a href="{{url_for('account.accountfull', account_id=g[1])}}">{{g[2]}} {{g[3]}}</a>
+                    </td>
+                    <td>{{g[4]}}</td>
+                    <td>
+                        <a href="{{ url_for('groups.remove_group', group_id=g[5]) }}" class="btn btn-transparent btn-sm">
+                            <img src="{{ url_for('static', filename='svg/delete-button-svgrepo-com.svg') }}" alt="Удалить" width="16" height="16">
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

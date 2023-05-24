@@ -10,20 +10,20 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" type=text/css href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" type=text/css href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
     <title>{% block title %}{% endblock %}</title>
 </head>
 
 <body>
-<div class="row">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container-fluid">
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <a href="/">
                     <img class="navbar-brand" height="75px" src="https://yt3.googleusercontent.com/ytc/AL5GRJU-CaLfToqGMMbtThv-eHztrGPo0pE7pxJgG9Q9=s900-c-k-c0x00ffffff-no-rj">
                 </a>
                 {% if cu %}
-                    <a href="{{url_for('account.base_acc')}}">
+                    <a href="{{url_for('account.accountfull', account_id=cu)}}">
                         <img class="navbar-brand" height="75px" src="https://cdn.onlinewebfonts.com/svg/download_519969.png">
                     </a>
                 {% endif %}
@@ -31,7 +31,6 @@
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 {% if cu %}
-                <a class="btn btn-outline-primary" href="{{url_for('validation.val')}}" type="button">Валидация</a>
                 <a class="btn btn-outline-secondary" href="{{url_for('auth.exit')}}" type="button">Выйти</a>
                 {% else %}
                 <a class="btn btn-outline-secondary" href="{{url_for('auth.auth')}}" type="button">Войти</a>
@@ -41,18 +40,17 @@
             </div>
         </div>
     </nav>
-</div>
 
-<div class="row">
+<div class="row" style="margin-top: 120px;">
     {% block body %}{% endblock %}
 </div>
 
-<!--<footer class="text-center text-lg-start bg-light text-muted">-->
-<!--    <div class="text-center p-4" style="bg-light">-->
-<!--    © 2023 Copyright:-->
-<!--        <a class="text-reset fw-bold" href="https://tkd-phoenix.moscow/">tkd-phoenix.moscow</a>-->
-<!--    </div>-->
-<!--</footer>-->
+<footer class="text-center text-lg-start bg-light text-muted fixed-bottom">
+    <div class="text-center p-4" style="bg-light">
+    © 2023 Copyright:
+        <a class="text-reset fw-bold" href="https://tkd-phoenix.moscow/">tkd-phoenix.moscow</a>
+    </div>
+</footer>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

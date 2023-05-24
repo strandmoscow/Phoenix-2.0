@@ -3,54 +3,45 @@
 {% block body %}
 
 <main class="d-flex flex-nowrap">
-    <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-info border-start-0 rounded-end fixed-start bg-light" id="side_nav">
-<!--         <div class="header-box px-2 pt-3 pb-4">-->
-<!--         </div>-->
-        <ul class="list-unstyled px-2">
-            <li class=""><a href="{{url_for('account.base_acc')}}" class="nav-link text-black">Аккаунт</a></li>
-            <li class=""><a href="{{url_for('students.student')}}" class="nav-link text-black">Ученики</a></li>
-            <li class=""><a href="#" class="nav-link text-black">Занятия/Расписание</a></li>
-            <li class=""><a href="#" class="nav-link text-black">Посещаемость</a></li>
-            <li class=""><a href="#" class="nav-link text-black">Тренер</a></li>
-            <li class=""><a href="#" class="nav-link text-black">Клубы</a></li>
-            <li class=""><a href="#" class="nav-link text-black">Залы</a></li>
-            <li class=""><a href="{{url_for('groups.group')}}" class="nav-link text-black">Группы</a></li>
-        </ul>
-        <ul class="list-unstyled px-2">
-            <li class=""><a href="#" class="nav-link text-black">Настройки</a></li>
-        </ul>
-    </aside>
+    {% include 'side_menu.html' %}
     <div class="content">
     <div class="container-fluid flex-nowrap">
-        <label class="py-4 px-4">Таблица учеников</label>
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th scope="col">Фамилия</th>
-                <th scope="col">Имя</th>
-                <th scope="col">Отчество</th>
-                <th scope="col">ОМС</th>
-                <th scope="col">Свидетельство о рождении</th>
-                <th scope="col">СНИЛС</th>
-                <th scope="col">Группа</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for acc in accs %}
-                <tr>
-                    <td>{{acc.account_surname}}</td>
-                    <td>{{acc.account_name}}</td>
-                    <td>{{acc.account_patronymic}}</td>
-                    <td>{{acc.students.student_health_insurance}}</td>
-                    <td>{{acc.students.student_birth_certificate}}</td>
-                    <td>{{acc.students.student_snils}}</td>
-                    <td>{{acc.students.student_group_id}}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        <div class="row">
+            <div class="col-md-12">
+                <br>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h1 class="mr-auto">Таблица учеников</h1>
+                    <a href="{{ url_for('students.export_students_table') }}" class="btn btn-primary">Экспорт</a>
+                </div>
+                <br>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        {% for item in ["ФИО","ОМС", "Свидетельство о рождении", "СНИЛС", "Группа"] %}
+                        <th scope="col">{{ item }}</th>
+                        {% endfor %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for acc in accs %}
+                        <tr>
+                            <td>
+                                <a href="{{url_for('account.accountfull', account_id=acc[0])}}">{{acc[1]}} {{acc[2]}} {% if acc[3] %} {{acc[3]}} {% endif %}</a>
+                            </td>
+                            <td>{{acc[4]}}</td>
+                            <td>{{acc[5]}}</td>
+                            <td>{{acc[6]}}</td>
+                            <td>
+                                <a href="{{url_for('groups.singlegroup', group_id=acc[8])}}">{{acc[7]}}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-</div>
+    </div>
 </main>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

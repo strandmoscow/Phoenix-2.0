@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block title %}Группа{% endblock %}
+{% block body %}
+
+<main class="d-flex flex-nowrap">
+    {% include 'side_menu.html' %}
+    <div class="container-fluid h-200">
+        <div class="row">
+            <div class="col-md-3 gradient-group text-center text-white d-flex align-items-center justify-content-center"
+                 style="border-radius: .5rem;">
+              <h1>{{group.group_name}}</h1>
+            </div>
+            <div class="col-md-8">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">Информация о группе</h4>
+                        <a href="{{ url_for('attendance.att', group_id=group.group_id) }}" class="btn btn-transparent ml-2">
+                            <img src="{{ url_for('static', filename='svg/att.svg') }}" alt="Посещения" width="16" height="16">
+                            Посещения
+                        </a>
+                        <a href="{{ url_for('groups.group_edit', group_id=group.group_id) }}" class="btn btn-transparent ml-2">
+                            <img src="{{ url_for('static', filename='svg/edit.svg') }}" alt="Редактировать" width="16" height="16">
+                            Редактировать
+                        </a>
+                    </div>
+                    <hr class="mt-0 mb-4">
+                    <div class="row pt-1">
+                        <div class="col-6 mb-3">
+                            <h5>Тренер</h5>
+                            <p class="text-muted">
+                                <a href="{{url_for('account.accountfull', account_id=grinf[0][1])}}">{{grinf[0][2]}} {{grinf[0][3]}} {% if account_patronymic %} {{grinf[0][4]}} {% endif %} </a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row pt-1">
+                        <div class="col-6 mb-3 d-flex align-items-center">
+                            <h5 class="mr-3">Ученики в группе</h5>
+                            <a href="{{ url_for('groups.add_students', group_id=group.group_id) }}" class="btn btn-primary btn-sm align-self-center">+</a>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <h5>Общее количество учеников: {{num_students}}</h5>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ФИО</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                <tbody>
+                                {% for student in students %}
+                                    <tr>
+                                        <td>
+                                            <a href="{{url_for('account.accountfull', account_id=student.account_id)}}">
+                                                {{student.account_surname}} {{student.account_name}}
+                                                {% if account_patronymic %} {{student.patronymic}}
+                                                {% endif %}</a>
+                                        </td>
+                                        <td>
+                                             <a href="{{ url_for('groups.remove_student', group_id=group.group_id, student_id=student.account_id) }}"
+                                                class="btn btn-transparent btn-sm">
+                                                 <img src="{{ url_for('static', filename='svg/delete-button-svgrepo-com.svg') }}" alt="Удалить" width="16" height="16">
+                                             </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script>
+    $(".sidenav ul li").on('click', function (){
+        $(".sidenav ul li.active").removeClass('active');
+        $(this).addClass('active');
+    })
+</script>
+
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block title %}Создание занятия{% endblock %}
+{% block body %}
+
+<main class="d-flex flex-nowrap">
+    {% include 'side_menu.html' %}
+
+    <div class="container-fluid h-200">
+        <div class="row">
+            <div class="d-flex align-items-center">
+                <a href="{{ url_for('attendance.att', group_id=group.group_id) }}"
+                   class="btn btn-primary btn-sm align-self-center">
+                    <
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="d-flex align-items-center">
+                <h2 class="mr-3"> Новое занятие группы "{{ group.group_name }}" </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="d-flex align-items-center">
+                <form method="post">
+                    {{ form.hidden_tag() }}
+                        {% for field in form if field.name not in ['csrf_token', 'submit'] %}
+                        <p>
+                            <h5>{{ field.label() }}</h5>
+                            {% if field.errors %}
+                                {{ field(class="invalid") }}
+                            <span class="invalid-feedback">
+                                {% for e in field.errors %}
+                                {{ e }}
+                                {% endfor %}
+                            </span>
+                            {% else %}
+                                {{ field(class="form-control") }}
+                            {% endif %}
+                        </p>
+                        {% endfor %}
+                        <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">ФИО</th>
+                            <th scope="col">Присутствие</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for personal_attendance in sts %}
+                            <tr>
+                                <td>
+                                    <a>
+                                        {{ personal_attendance[1] }} {{ personal_attendance[2] }}
+                                        {% if personal_attendance[3] %} {{ personal_attendance[3] }} {% endif %}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a>
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               name="{{ personal_attendance[0] }}">
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <button type="submit" class="btn btn-primary">Продолжить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script>
+    $(".sidenav ul li").on('click', function (){
+        $(".sidenav ul li.active").removeClass('active');
+        $(this).addClass('active');
+    })
+</script>
+
+{% endblock %}

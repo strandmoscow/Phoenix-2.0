@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}Залы{% endblock %}
+{% block body %}
+
+<main class="d-flex flex-nowrap">
+    {% include 'side_menu.html' %}
+    <div class="content">
+    <div class="container-fluid flex-nowrap">
+        <div class="row">
+            <div class="col-md-12">
+                <br>
+                <div class="d-flex align-items-center">
+                <h1 class="mr-3">Залы</h1>
+                    <a href="{{url_for('gym.gym_add')}}" class="btn btn-primary">+</a>
+                </div>
+                <br>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        {% for item in ["Название","Здание", "Адрес здания", "Клуб", "", ""] %}
+                        <th scope="col">{{ item }}</th>
+                        {% endfor %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for gym in gyms %}
+                        <tr>
+                            <td>{{ gym.gym_name }}</td>
+                            <td>{{ gym.building.building_name }}</td>
+                            <td>г.{{ gym.building.address.city.city_name}}, {{ gym.building.address.address_street}}, {{ gym.building.address.address_house}}, {{ gym.building.address.address_building}}</td>
+                            <td>{{ gym.building.club.club_name }}</td>
+                            <td>
+                                <a href="{{ url_for('gym.gym_edit', gym_id=gym.gym_id) }}" class="btn btn-transparent btn-sm">
+                                    <img src="{{ url_for('static', filename='svg/edit.svg') }}" alt="Редактировать" width="16" height="16">
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ url_for('gym.remove_gym', gym_id=gym.gym_id) }}" class="btn btn-transparent btn-sm">
+                                    <img src="{{ url_for('static', filename='svg/delete-button-svgrepo-com.svg') }}" alt="Удалить" width="16" height="16">
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script>
+    $(".sidenav ul li").on('click', function (){
+        $(".sidenav ul li.active").removeClass('active');
+        $(this).addClass('active');
+    })
+</script>
+
+{% endblock %}

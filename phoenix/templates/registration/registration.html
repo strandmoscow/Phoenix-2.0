@@ -5,33 +5,36 @@
 
 <div class="container-fluid position-absolute top-50 start-50 translate-middle">
     <div class="row">
-        <div class="col-md-3">
-        </div>
+        <div class="col-md-3"></div>
         <div class="col-md-6">
-            <form method="post">
-            {{ form.hidden_tag() }}
-                <h1>Регистрация</h1>
-                <h6>Мы никогда никому не передадим ваши данные.</h6>
-                {% for field in form if field.name not in ['csrf_token', 'submit'] %}
-                    <p><h5>{{ field.label() }}</h5>
-                    {% if field.errors %}
-                        {{ field(class="invalid") }}
-                    <span class="invalid-feedback">
-                        {% for e in field.errors %}
-                        {{ e }}
+            <div style="height: 400px; overflow-y: auto;">
+                <form method="post">
+                    {{ form.hidden_tag() }}
+                    <h1>Регистрация</h1>
+                    <h6>Мы никогда никому не передадим ваши данные.</h6>
+                    <div class="form-group">
+                        {% for field in form if field.name not in ['csrf_token', 'submit'] %}
+                        <br>
+                            <h5>{{ field.label() }}</h5>
+                            {% if field.errors %}
+                                {{ field(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in field.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ field(class="form-control") }}
+                            {% endif %}
                         {% endfor %}
-                    </span>
-                    {% else %}
-                        {{ field(class="form-control") }}
-                    {% endif %}
-                </p>
-                {% endfor %}
-                <button type="submit" class="btn btn-primary">Продолжить</button>
-            </form>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Продолжить</button>
+                </form>
+            </div>
         </div>
-        <div class="col-md-3">
-        </div>
+        <div class="col-md-3"></div>
     </div>
 </div>
+
 
 {% endblock %}
