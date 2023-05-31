@@ -52,7 +52,7 @@ def att(group_id):
             if flag:
                 att_to_func[key].append(False)
 
-    return render_template("attendance/attendance_of_group.html",
+    return render_template("attendance_of_group.html",
                            group=group,
                            dates=att_by_date.keys(),
                            att_to_func=att_to_func,
@@ -113,7 +113,7 @@ def att_new(group_id):
                 db.session.commit()
         return redirect(url_for('attendance.att', group_id=group.group_id))
 
-    return render_template("attendance/attendance_new.html",
+    return render_template("attendance_new.html",
                            group=group,
                            cu=current_user.get_id(),
                            form=form,

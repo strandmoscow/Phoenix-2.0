@@ -26,7 +26,7 @@ def regi1():
         session['regi'] = regi
         return redirect("regi2")
     else:
-        return render_template('registration/registration.html', form=form, cu=current_user.get_id())
+        return render_template('registration.html', form=form, cu=current_user.get_id())
 
 
 @registration.route("/regi2", methods=['GET', 'POST'])
@@ -38,7 +38,7 @@ def regi2():
         session['pwdhash'] = hash
         return redirect("regi3")
     else:
-        return render_template('registration/registration2.html', password_dont_match=False,
+        return render_template('registration2.html', password_dont_match=False,
                                form=form, cu=current_user.get_id())
 
 
@@ -74,4 +74,4 @@ def regi3():
 
     session.pop('regi')
 
-    return render_template('registration/registration3.html', password_dont_match=False, cu=current_user.get_id())
+    return render_template('registration3.html', password_dont_match=False, cu=current_user.get_id())

@@ -25,7 +25,7 @@ def student():
 
     # accs = Account.query.filter(Account.account_student_id != None).all()
 
-    return render_template('students/students.html', accs=accs, cu=current_user.get_id())
+    return render_template('students.html', accs=accs, cu=current_user.get_id())
 
 
 @students.route('/export', methods=['GET'])

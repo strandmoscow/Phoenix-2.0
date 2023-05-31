@@ -21,7 +21,7 @@ def gyms():
 
     gymstable = session.query(Gym).join(Gym.building).join(Building.address).join(Building.club).join(Address.city).all()
 
-    return render_template('gyms/gyms.html', gyms=gymstable, cu=current_user.get_id())
+    return render_template('gyms.html', gyms=gymstable, cu=current_user.get_id())
 
 
 @gym.route("/gym_add", methods=['GET', 'POST'])
@@ -41,7 +41,7 @@ def gym_add():
         flash('Зал успешно создан', 'success')
         return redirect("gyms")
 
-    return render_template('gyms/gym_add.html', form=form, cu=current_user.get_id())
+    return render_template('gym_add.html', form=form, cu=current_user.get_id())
 
 
 @gym.route("/gym_edit/<int:gym_id>", methods=['GET', 'POST'])
@@ -59,7 +59,7 @@ def gym_edit(gym_id):
 
     form.gym_building.data = gm.gym_building_id
 
-    return render_template('gyms/gym_edit.html', form=form, cu=current_user.get_id())
+    return render_template('gym_edit.html', form=form, cu=current_user.get_id())
 
 
 @gym.route("/remove_gym/<int:gym_id>", methods=['GET', 'POST'])

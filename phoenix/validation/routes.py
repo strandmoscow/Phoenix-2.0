@@ -14,7 +14,7 @@ validation = Blueprint('validation', __name__, template_folder='templates')
 def val():
     val_table = ValAccount.query.all()
 
-    return render_template("validation/validation.html", cu=current_user.get_id(), val_table=val_table)
+    return render_template("validation.html", cu=current_user.get_id(), val_table=val_table)
 
 
 @validation.route("/del/<int:account_id>")

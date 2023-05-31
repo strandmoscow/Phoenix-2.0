@@ -11,7 +11,7 @@ from ..decoraters import login_required
 club = Blueprint('club', __name__, template_folder='templates', static_folder='static')
 
 
-@club.route("/clubs", methods=['GET', 'POST'])
+@club.route("/templates", methods=['GET', 'POST'])
 @login_required
 def clubs():
     session = db.session()
@@ -19,7 +19,7 @@ def clubs():
     clubstable = session.query(Club).join(Club.address).join(Club.federation).\
         join(Federation.sport).join(Address.city).all()
 
-    return render_template('clubs/clubs.html', clubs=clubstable, cu=current_user.get_id())
+    return render_template('templates.html', clubs=clubstable, cu=current_user.get_id())
 
 
 @club.route("/club_add", methods=['GET', 'POST'])
@@ -40,9 +40,9 @@ def club_add():
         db.session.commit()
 
         flash('Клуб успешно создан', 'success')
-        return redirect("clubs")
+        return redirect("templates")
 
-    return render_template('clubs/club_add.html', form=form, cu=current_user.get_id())
+    return render_template('club_add.html', form=form, cu=current_user.get_id())
 
 
 @club.route("/club_edit/<int:club_id>", methods=['GET', 'POST'])
@@ -57,12 +57,12 @@ def club_edit(club_id):
         cl.club_federation_id = form.club_federation.data
         db.session.commit()
         flash('Информация о клубе успешно обновлена', 'success')
-        return redirect(url_for('club.clubs', cu=current_user.get_id()))
+        return redirect(url_for('club.templates', cu=current_user.get_id()))
 
     form.club_address.data = cl.club_address_id
     form.club_federation.data = cl.club_federation_id
 
-    return render_template('clubs/club_edit.html', form=form, cu=current_user.get_id())
+    return render_template('club_edit.html', form=form, cu=current_user.get_id())
 
 
 @club.route("/remove_club/<int:club_id>", methods=['GET', 'POST'])
@@ -75,5 +75,5 @@ def remove_club(club_id):
 
     flash('Клуб успешно удален', 'success')
 
-    return redirect(url_for('club.clubs', cu=current_user.get_id()))
+    return redirect(url_for('club.templates', cu=current_user.get_id()))
 
