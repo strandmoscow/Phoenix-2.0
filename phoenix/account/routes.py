@@ -42,7 +42,7 @@ def acc_edit():
 
     profile_icon = './static/svg/abstract-user-flat-4.svg'
     eye_icon = './static/svg/eye.svg'
-    return render_template('account/account_edit.html', img=profile_icon, eye=eye_icon, form=form,
+    return render_template('account_edit.html', img=profile_icon, eye=eye_icon, form=form,
                            cu=current_user.get_id(), acc=acc)
 
 
@@ -53,18 +53,18 @@ def accountfull(account_id):
     if acc:
         if acc.account_trainer_id:
             tr = Trainer.query.get(acc.account_trainer_id)
-            return render_template('account/account.html', acc=acc, trainer=tr, cu=int(current_user.get_id()))
+            return render_template('account.html', acc=acc, trainer=tr, cu=int(current_user.get_id()))
         elif acc.account_student_id:
             st = Students.query.get(acc.account_student_id)
-            return render_template('account/account.html', acc=acc, student=st, cu=int(current_user.get_id()))
+            return render_template('account.html', acc=acc, student=st, cu=int(current_user.get_id()))
         elif acc.account_parent_id:
             pr = Parents.query.get(acc.account_parent_id)
-            return render_template('account/account.html', acc=acc, parent=pr, cu=int(current_user.get_id()))
+            return render_template('account.html', acc=acc, parent=pr, cu=int(current_user.get_id()))
         elif acc.account_manager_id:
             mr = Manager.query.get(acc.account_manager_id)
-            return render_template('account/account.html', acc=acc, manager=mr, cu=int(current_user.get_id()))
+            return render_template('account.html', acc=acc, manager=mr, cu=int(current_user.get_id()))
         else:
-            return render_template('account/account.html', acc=acc, cu=int(current_user.get_id()))
+            return render_template('account.html', acc=acc, cu=int(current_user.get_id()))
     return "Account not found", 404
 
 
@@ -75,12 +75,12 @@ def documents(account_id):
     passport_data = Passport.query.filter_by(passport_id=acc.account_passport_id).first()
     if acc:
         if passport_data:
-            return render_template('account/documents.html',
+            return render_template('documents.html',
                                    acc=acc,
                                    cu=current_user.get_id(),
                                    pas=passport_data)
         else:
-            return render_template('account/documents.html',
+            return render_template('documents.html',
                                    acc=acc,
                                    cu=current_user.get_id(),
                                    pas=False)
@@ -109,4 +109,4 @@ def passadd(account_id):
         db.session.commit()
         return redirect(url_for('account.documents', account_id=acc.account_id))
 
-    return render_template('account/passport_add.html', form=form, acc=acc, cu=current_user.get_id())
+    return render_template('passport_add.html', form=form, acc=acc, cu=current_user.get_id())

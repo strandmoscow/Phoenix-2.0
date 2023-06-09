@@ -26,7 +26,7 @@ def group():
                   Account.account_name, Group.group_id) \
         .all()
 
-    return render_template('groups/groups.html', groups=groups, cu=current_user.get_id())
+    return render_template('groups.html', groups=groups, cu=current_user.get_id())
 
 
 @groups.route("/<int:group_id>", methods=['GET', 'POST'])
@@ -48,7 +48,7 @@ def singlegroup(group_id):
         .all()
 
     # print(sts)
-    return render_template('groups/group.html', group=gr, grinf=grinf, students=sts, num_students=len(sts),
+    return render_template('group.html', group=gr, grinf=grinf, students=sts, num_students=len(sts),
                            cu=current_user.get_id())
 
 
@@ -79,7 +79,7 @@ def group_add():
         flash('Группа успешно создана', 'success')
         return redirect("group")
 
-    return render_template('groups/group_add.html', form=form, cu=current_user.get_id())
+    return render_template('group_add.html', form=form, cu=current_user.get_id())
 
 
 @groups.route("/group_edit/<int:group_id>", methods=['GET', 'POST'])
@@ -99,7 +99,7 @@ def group_edit(group_id):
     # Установить выбранное значение для поля group_trainer
     form.group_trainer.data = gp.group_trainer_id
 
-    return render_template('groups/group_edit.html', form=form, cu=current_user.get_id(), group=group)
+    return render_template('group_edit.html', form=form, cu=current_user.get_id(), group=group)
 
 
 @groups.route("/add_students/<int:group_id>", methods=['GET', 'POST'])
@@ -122,7 +122,7 @@ def add_students(group_id):
         flash('Студенты успешно добавлены в группу', 'success')
         return redirect(url_for('groups.singlegroup', group_id=group_id))
 
-    return render_template('groups/add_students.html', group=sts_gp, form=form,
+    return render_template('add_students.html', group=sts_gp, form=form,
                            cu=current_user.get_id())
 
 

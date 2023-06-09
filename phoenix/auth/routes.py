@@ -32,9 +32,9 @@ def auth():
                 login_user(userLogin)
             return redirect(url_for('main.index'))
         else:
-            return render_template('auth/auth.html', form=form, logging_in_err=True, cu=current_user.get_id(), loginer=True)
+            return render_template('auth.html', form=form, logging_in_err=True, cu=current_user.get_id(), loginer=True)
 
-    return render_template('auth/auth.html', form=form, logging_in_err=False, cu=current_user.get_id())
+    return render_template('auth.html', form=form, logging_in_err=False, cu=current_user.get_id())
 
 
 @authentication.route("/exit")
