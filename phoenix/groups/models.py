@@ -12,6 +12,3 @@ class Group(db.Model):
 
     def __repr__(self):
         return f"group('{self.group_id}')"
-
-
-

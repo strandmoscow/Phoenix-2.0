@@ -17,13 +17,16 @@ class Club(db.Model):
 
 
 class Federation(db.Model):
-    federation_id = db.Column(db.Integer, primary_key=True)
-    federation_sport = db.Column(db.Integer, db.ForeignKey('sport.sport_id'), nullable=False)
+    __tablename__ = 'federation'
 
-    sport = db.relationship('Sport')
+    federation_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    federation_sport = db.Column(db.Integer, db.ForeignKey('sport.sport_id'), nullable=False)
+    federation_name = db.Column(db.String(255))
+
+    sport = db.relationship('Sport', backref='federations')
 
     def __repr__(self):
-        return f"<Federation {self.federation_id}>"
+        return f"Federation('{self.federation_id}', '{self.federation_name}')"
 
 
 class Sport(db.Model):

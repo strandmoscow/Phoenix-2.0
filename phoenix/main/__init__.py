@@ -1,7 +1,6 @@
-from flask import render_template, flash, url_for, redirect, Blueprint, current_app
-from flask_login import login_required, current_user, user_logged_in, user_unauthorized
+from flask import render_template, Blueprint, current_app
+from flask_login import current_user
 from configparser import ConfigParser
-from .. import login_manager, db
 
 parser = ConfigParser()
 
@@ -10,7 +9,6 @@ main = Blueprint('main', __name__)
 
 @main.route("/")
 def index():
-    print(current_user.get_id())
     return render_template('index.html', cu=(current_user.get_id()))
 
 

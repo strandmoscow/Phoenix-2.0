@@ -11,4 +11,4 @@ class Students(db.Model):
     student_group_id = db.Column(db.Integer, db.ForeignKey('group.group_id'))
 
     def __repr__(self):
-        return f"Students('{self.student_Id}')"
+        return f"Students('{self.student_id}')"

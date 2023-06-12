@@ -2,56 +2,53 @@
 {% block title %}Валидация{% endblock %}
 {% block body %}
 
-<div class="content">
-    <div class="container-fluid flex-nowrap">
+<main class="d-flex flex-nowrap">
+    {% include 'side_menu.html' %}
+    <div class="container-fluid h-200">
         <div class="row">
-            <div class="col-md-1">
-            </div>
-            <div class="col-md-10">
+            <div class="col-md-11">
                 <h2 class="py-4 px-4">Таблица валидации</h2>
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Имя</th>
-                    <th scope="col">Фамилия</th>
-                    <th scope="col">Отчество</th>
-                    <th scope="col">Дата рождения</th>
-                    <th scope="col">Номер телефона</th>
-                    <th scope="col">EMail</th>
-                    <th scope="col">Действия</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for v in val_table %}
+                <table class="table table-hover">
+                    <thead>
                     <tr>
-                        <td>{{v.account_id}}</td>
-                        <td>{{v.val_account_name}}</td>
-                        <td>{{v.val_account_patronymic}}</td>
-                        <td>{{v.val_account_surname}}</td>
-                        <td>{{v.val_account_birthday}}</td>
-                        <td>{{v.val_account_phone}}</td>
-                        <td>{{v.val_account_email}}</td>
-                        <td>
-                            <a class="btn btn-outline-success"
-                               href="{{ url_for('validation.val_confirm', account_id=v.account_id) }}"
-                               type="button">Подтвердить</a>
-                            <a class="btn btn-outline-warning"
-                               href="#"
-                               type="button">Редактировать</a>
-                            <a class="btn btn-outline-danger"
-                               href="{{ url_for('validation.val_del', account_id=v.account_id) }}"
-                               type="button">Удалить</a>
-                        </td>
+                        <th scope="col">ID</th>
+                        <th scope="col">Имя</th>
+                        <th scope="col">Фамилия</th>
+                        <th scope="col">Отчество</th>
+                        <th scope="col">Дата рождения</th>
+                        <th scope="col">Номер телефона</th>
+                        <th scope="col">EMail</th>
+                        <th scope="col">Действия</th>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-            </div>
-            <div class="col-md-1">
+                    </thead>
+                    <tbody>
+                    {% for v in val_table %}
+                        <tr>
+                            <td>{{v.account_id}}</td>
+                            <td>{{v.val_account_name}}</td>
+                            <td>{{v.val_account_patronymic}}</td>
+                            <td>{{v.val_account_surname}}</td>
+                            <td>{{v.val_account_birthday}}</td>
+                            <td>{{v.val_account_phone}}</td>
+                            <td>{{v.val_account_email}}</td>
+                            <td>
+                                <a class="btn btn-outline-success"
+                                   href="{{ url_for('validation.val_confirm', account_id=v.account_id) }}"
+                                   type="button">Подтвердить</a>
+                                <a class="btn btn-outline-warning"
+                                   href="#"
+                                   type="button">Редактировать</a>
+                                <a class="btn btn-outline-danger"
+                                   href="{{ url_for('validation.val_del', account_id=v.account_id) }}"
+                                   type="button">Удалить</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-</div>
+</main>
 
 {% endblock %}

@@ -10,7 +10,6 @@ class AccountForm1(FlaskForm):
     email = StringField("Email", validators=[Email(), DataRequired()])
     dob = DateField("Дата рождения", validators=[DataRequired()])
     phone = StringField("Номер телефона", validators=[DataRequired()])
-    passport = StringField("Паспорт", validators=[DataRequired()])
 
     submit = SubmitField("Продолжить")
 

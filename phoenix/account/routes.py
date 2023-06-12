@@ -18,11 +18,10 @@ account = Blueprint('account', __name__, template_folder='templates', static_fol
 @account.route("/edit", methods=['GET', 'POST'])
 @login_required
 def acc_edit():
-    acc = Account.query.get(current_user.get_id())
+    acc = Account.query.filter_by(account_id=current_user.get_id()).first()
     form = AccountForm1()
 
     if form.validate_on_submit():
-        acc = Account.query.filter_by(account_id=current_user.get_id()).first()
         v = ValAccount(
             account_id=int(current_user.get_id()),
             val_account_name=form.firstname.data,
@@ -39,6 +38,13 @@ def acc_edit():
         db.session.commit()
         flash('Your data is on validation', 'success')
         return redirect(url_for('account.accountfull', account_id=current_user.get_id()))
+    else:
+        form.firstname.data = acc.account_name
+        form.surname.data = acc.account_surname
+        form.patronymic.data = acc.account_patronymic
+        form.email.data = acc.account_email
+        form.dob.data = acc.account_birthday
+        form.phone.data = acc.account_phone
 
     profile_icon = './static/svg/abstract-user-flat-4.svg'
     eye_icon = './static/svg/eye.svg'

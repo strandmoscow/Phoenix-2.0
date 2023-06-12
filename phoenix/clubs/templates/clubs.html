@@ -29,7 +29,11 @@
                             <td>{{club.club_phone}}</td>
                             <td>{{club.club_email}}</td>
                             <td>{{club.address.city.city_name}}</td>
-                            <td>{{ club.address.address_street }} {{ club.address.address_house }} {{ club.address.address_building }}</td>
+                            <td>{{ club.address.address_street }}, д. {{ club.address.address_house }}
+                                {% if club.address.address_building %}
+                                    {{ club.address.address_building }}
+                                {% endif %}
+                            </td>
                             <td>{{ club.federation.sport.sport_name }}</td>
                             <td>
                                 <a href="{{ url_for('club.club_edit', club_id=club.club_id) }}" class="btn btn-transparent btn-sm">

@@ -27,7 +27,9 @@
                         <tr>
                             <td>{{ gym.gym_name }}</td>
                             <td>{{ gym.building.building_name }}</td>
-                            <td>г.{{ gym.building.address.city.city_name}}, {{ gym.building.address.address_street}}, {{ gym.building.address.address_house}}, {{ gym.building.address.address_building}}</td>
+                            <td>г.{{ gym.building.address.city.city_name}}, {{ gym.building.address.address_street}}, {{ gym.building.address.address_house}} {% if gym.building.address.address_building %}
+                                    , {{ gym.building.address.address_building}}
+                                {% endif %} </td>
                             <td>{{ gym.building.club.club_name }}</td>
                             <td>
                                 <a href="{{ url_for('gym.gym_edit', gym_id=gym.gym_id) }}" class="btn btn-transparent btn-sm">

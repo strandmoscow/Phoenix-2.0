@@ -14,7 +14,6 @@ authentication = Blueprint('auth', __name__, template_folder='templates')
 
 @login_manager.user_loader
 def load_user(user_id):
-    print("load_user")
     return UserLogin().fromDB(user_id)
 
 

@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 {% block title %}Phoenix{% endblock %}
 {% block body %}
-
-<h1>
-    Привет, Феникс!
-</h1>
-
+<main class="d-flex flex-nowrap">
+    {% if cu %}
+        {% include 'side_menu.html' %}
+    {% endif %}
+    <h1>
+        Привет, Феникс!
+    </h1>
+</main>
 
 {% endblock %}

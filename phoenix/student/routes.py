@@ -59,5 +59,5 @@ def export_students_table():
     buffer.seek(0)
 
     # Отправляем файл пользователю для загрузки
-    return send_file(buffer, as_attachment=True, download_name='students_data')
+    return send_file(buffer, as_attachment=True, download_name='students_data.xlsx')
 

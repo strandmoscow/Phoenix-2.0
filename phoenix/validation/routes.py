@@ -22,6 +22,10 @@ def val():
 @manager_required
 def val_del(account_id):
     ValAccount.query.filter_by(account_id=account_id).delete()
+
+    a = Account.query.filter_by(account_id=account_id).first()
+    a.account_validated = True
+
     db.session.commit()
 
     return redirect(url_for('validation.val'))
