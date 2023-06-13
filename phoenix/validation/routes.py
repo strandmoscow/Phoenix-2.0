@@ -9,16 +9,14 @@ validation = Blueprint('validation', __name__, template_folder='templates')
 
 
 @validation.route("/", methods=['GET', 'POST'])
-@login_required
 @manager_required
 def val():
     val_table = ValAccount.query.all()
 
-    return render_template("validation.html", cu=current_user.get_id(), val_table=val_table)
+    return render_template("validation.html", cu=current_user.get_id(), roles=current_user.get_roles(), val_table=val_table)
 
 
 @validation.route("/del/<int:account_id>")
-@login_required
 @manager_required
 def val_del(account_id):
     ValAccount.query.filter_by(account_id=account_id).delete()

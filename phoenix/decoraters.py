@@ -28,10 +28,10 @@ def login_required(func):
 
 def manager_required(func):
     @wraps(func)
+    @login_required
     def decorated_function(*args, **kwargs):
-        account = Account.query.filter_by(account_id=current_user.get_id()).first()
 
-        if not account.account_manager_id:
+        if not current_user.get_roles()['is_manager']:
             flash("You are manager, great.", "info")
             return redirect(url_for("main.index"))
         return func(*args, **kwargs)
@@ -41,10 +41,10 @@ def manager_required(func):
 
 def trainer_required(func):
     @wraps(func)
+    @login_required
     def decorated_function(*args, **kwargs):
-        account = Account.query.filter_by(account_id=current_user.get_id()).first()
 
-        if not account.account_trainer_id:
+        if not current_user.get_roles()['is_trainer']:
             flash("You are trainer, great.", "info")
             return redirect(url_for("main.index"))
         return func(*args, **kwargs)

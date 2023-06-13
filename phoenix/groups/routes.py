@@ -26,7 +26,7 @@ def group():
                   Account.account_name, Group.group_id) \
         .all()
 
-    return render_template('groups.html', groups=groups, cu=current_user.get_id())
+    return render_template('groups.html', groups=groups, cu=current_user.get_id(), roles=current_user.get_roles())
 
 
 @groups.route("/<int:group_id>", methods=['GET', 'POST'])
@@ -49,7 +49,7 @@ def singlegroup(group_id):
 
     # print(sts)
     return render_template('group.html', group=gr, grinf=grinf, students=sts, num_students=len(sts),
-                           cu=current_user.get_id())
+                           cu=current_user.get_id(), roles=current_user.get_roles())
 
 
 @groups.route("/group_add", methods=['GET', 'POST'])
@@ -79,7 +79,7 @@ def group_add():
         flash('Группа успешно создана', 'success')
         return redirect("group")
 
-    return render_template('group_add.html', form=form, cu=current_user.get_id())
+    return render_template('group_add.html', form=form, cu=current_user.get_id(), roles=current_user.get_roles())
 
 
 @groups.route("/group_edit/<int:group_id>", methods=['GET', 'POST'])
@@ -99,7 +99,7 @@ def group_edit(group_id):
     # Установить выбранное значение для поля group_trainer
     form.group_trainer.data = gp.group_trainer_id
 
-    return render_template('group_edit.html', form=form, cu=current_user.get_id(), group=group)
+    return render_template('group_edit.html', form=form, cu=current_user.get_id(), roles=current_user.get_roles(), group=group)
 
 
 @groups.route("/add_students/<int:group_id>", methods=['GET', 'POST'])
@@ -123,7 +123,7 @@ def add_students(group_id):
         return redirect(url_for('groups.singlegroup', group_id=group_id))
 
     return render_template('add_students.html', group=sts_gp, form=form,
-                           cu=current_user.get_id())
+                           cu=current_user.get_id(), roles=current_user.get_roles())
 
 
 @groups.route("/remove_student/<int:group_id>/<int:student_id>", methods=['GET', 'POST'])
@@ -152,4 +152,4 @@ def remove_group(group_id):
 
     flash('Группа успешно удалена', 'success')
 
-    return redirect(url_for('groups.group', cu=current_user.get_id()))
+    return redirect(url_for('groups.group', cu=current_user.get_id(), roles=current_user.get_roles()))

@@ -2,9 +2,8 @@ from flask import Blueprint, redirect, render_template, session, request, url_fo
 from werkzeug.security import check_password_hash
 from flask_login import login_user, logout_user, current_user, user_logged_in
 
-from .userLogin import UserLogin
 from .forms import Login
-from .models import Account
+from .models import Account, UserLogin
 
 from .. import db, login_manager
 from ..decoraters import logout_required
@@ -31,7 +30,8 @@ def auth():
                 login_user(userLogin)
             return redirect(url_for('main.index'))
         else:
-            return render_template('auth.html', form=form, logging_in_err=True, cu=current_user.get_id(), loginer=True)
+            return render_template('auth.html', form=form, logging_in_err=True, cu=current_user.get_id(),
+                                   loginer=True)
 
     return render_template('auth.html', form=form, logging_in_err=False, cu=current_user.get_id())
 
@@ -39,8 +39,6 @@ def auth():
 @authentication.route("/exit")
 def exit():
     logout_user()
-    if session.get('was_once_logged_in'):
-        del session['was_once_logged_in']
     flash('You have successfully logged yourself out.')
     return redirect(url_for('main.index'))
 

@@ -11,7 +11,6 @@ class RegistrationForm1(FlaskForm):
     dob = DateField("Дата рождения", validators=[DataRequired()])
     phone = StringField("Номер телефона", validators=[DataRequired(), Regexp(r'^\d+$', message="Некорректный формат")],
                         render_kw={"placeholder": "89998887766"})
-    passport = StringField("Паспорт", validators=[DataRequired()])
     submit = SubmitField("Продолжить")
 
 

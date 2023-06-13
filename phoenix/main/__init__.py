@@ -9,11 +9,19 @@ main = Blueprint('main', __name__)
 
 @main.route("/")
 def index():
-    return render_template('index.html', cu=(current_user.get_id()))
+    try:
+        roles=current_user.get_roles()
+    except:
+        roles=None
+    return render_template('index.html', cu=current_user.get_id(), roles=roles)
 
 
 @current_app.errorhandler(404)
 def page_not_found(error):
-    return render_template('404.html', title="Oops! Page Not Found", error=error, cu=current_user.get_id()), 404
+    return render_template('404.html',
+                           title="Oops! Page Not Found",
+                           error=error,
+                           cu=current_user.get_id(),
+                           roles=current_user.get_roles()), 404
 
 

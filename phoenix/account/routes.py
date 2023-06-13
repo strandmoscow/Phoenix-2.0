@@ -49,7 +49,7 @@ def acc_edit():
     profile_icon = './static/svg/abstract-user-flat-4.svg'
     eye_icon = './static/svg/eye.svg'
     return render_template('account_edit.html', img=profile_icon, eye=eye_icon, form=form,
-                           cu=current_user.get_id(), acc=acc)
+                           cu=current_user.get_id(), roles=current_user.get_roles(), acc=acc)
 
 
 @account.route('/<int:account_id>')
@@ -83,12 +83,12 @@ def documents(account_id):
         if passport_data:
             return render_template('documents.html',
                                    acc=acc,
-                                   cu=current_user.get_id(),
+                                   cu=current_user.get_id(), roles=current_user.get_roles(),
                                    pas=passport_data)
         else:
             return render_template('documents.html',
                                    acc=acc,
-                                   cu=current_user.get_id(),
+                                   cu=current_user.get_id(), roles=current_user.get_roles(),
                                    pas=False)
     return "Account not found", 404
 

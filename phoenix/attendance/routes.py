@@ -56,7 +56,8 @@ def att(group_id):
                            group=group,
                            dates=att_by_date.keys(),
                            att_to_func=att_to_func,
-                           cu=current_user.get_id())
+                           cu=current_user.get_id(),
+                           roles=current_user.get_roles())
 
 
 @attendance.route('/<int:group_id>/new', methods=['GET', 'POST'])
@@ -96,7 +97,8 @@ def att_new(group_id):
             lesson_name=f"g:{group_id}_{form.date.data}_{form.time.data}",
             lesson_datetime=datetime.combine(form.date.data, form.time.data),
             lesson_group_id=group_id,
-            lesson_gym_id=form.gym.data
+            lesson_gym_id=form.gym.data,
+            roles = current_user.get_roles()
         )
         db.session.add(lesson)
         db.session.commit()
@@ -117,4 +119,4 @@ def att_new(group_id):
                            group=group,
                            cu=current_user.get_id(),
                            form=form,
-                           sts=sts)
+                           sts=sts, roles=current_user.get_roles())

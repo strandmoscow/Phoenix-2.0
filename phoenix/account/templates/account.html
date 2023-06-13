@@ -25,6 +25,10 @@
                 <div class="card-body p-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <h4 class="mb-0">Общая информация</h4>
+                        <a href="{{url_for('account.acc_edit')}}" class="btn btn-transparent ml-2">
+                            <img src="{{ url_for('static', filename='svg/edit.svg') }}" alt="Редактировать" width="16" height="16">
+                            Редактировать
+                        </a>
                         <a href="{{ url_for('account.documents', account_id=acc.account_id) }}" class="btn btn-transparent ml-2">
                             <img src="{{ url_for('static', filename='png/document.png') }}" alt="Документы" width="16" height="16">
                             Документы
@@ -103,9 +107,6 @@
                         </div>
                         {% endif %}
                     {% if cu == acc.account_id %}
-                    <a class="btn btn-outline-primary" href="{{url_for('account.acc_edit')}}" type="button">
-                        Редактировать аккаунт
-                    </a>
                     {% endif %}
                     {% if acc.account_validated %}
                     <b style="color:green">Аккаунт проверен, все хорошо</b>

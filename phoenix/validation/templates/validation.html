@@ -24,7 +24,9 @@
                     <tbody>
                     {% for v in val_table %}
                         <tr>
-                            <td>{{v.account_id}}</td>
+                            <td><a href="{{url_for('account.accountfull', account_id=v.account_id)}}">
+                                {{v.account_id}}</a>
+                            </td>
                             <td>{{v.val_account_name}}</td>
                             <td>{{v.val_account_patronymic}}</td>
                             <td>{{v.val_account_surname}}</td>
@@ -36,7 +38,7 @@
                                    href="{{ url_for('validation.val_confirm', account_id=v.account_id) }}"
                                    type="button">Подтвердить</a>
                                 <a class="btn btn-outline-warning"
-                                   href="#"
+                                   href="{{ url_for('account.acc_edit', account_id=v.account_id) }}"
                                    type="button">Редактировать</a>
                                 <a class="btn btn-outline-danger"
                                    href="{{ url_for('validation.val_del', account_id=v.account_id) }}"

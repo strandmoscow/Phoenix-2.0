@@ -19,7 +19,7 @@ def clubs():
     clubstable = session.query(Club).join(Club.address).join(Club.federation).\
         join(Federation.sport).join(Address.city).all()
 
-    return render_template('clubs.html', clubs=clubstable, cu=current_user.get_id())
+    return render_template('clubs.html', clubs=clubstable, cu=current_user.get_id(), roles=current_user.get_roles())
 
 
 @club.route("/club_add", methods=['GET', 'POST'])
@@ -42,7 +42,7 @@ def club_add():
         flash('Клуб успешно создан', 'success')
         return redirect("templates")
 
-    return render_template('club_add.html', form=form, cu=current_user.get_id())
+    return render_template('club_add.html', form=form, cu=current_user.get_id(), roles=current_user.get_roles())
 
 
 @club.route("/club_edit/<int:club_id>", methods=['GET', 'POST'])
@@ -62,7 +62,7 @@ def club_edit(club_id):
     form.club_address.data = cl.club_address_id
     form.club_federation.data = cl.club_federation_id
 
-    return render_template('club_edit.html', form=form, cu=current_user.get_id())
+    return render_template('club_edit.html', form=form, cu=current_user.get_id(), roles=current_user.get_roles())
 
 
 @club.route("/remove_club/<int:club_id>", methods=['GET', 'POST'])
